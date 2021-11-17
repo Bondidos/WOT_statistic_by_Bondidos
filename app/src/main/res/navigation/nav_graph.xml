@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment" />
+    <fragment
+        android:id="@+id/statisticFragment"
+        android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.StatisticFragment"
+        android:label="statistic_fragment"
+        tools:layout="@layout/statistic_fragment" />
+    <fragment
+        android:id="@+id/searchPlayer"
+        android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.SearchPlayer"
+        android:label="search_player_fragment"
+        tools:layout="@layout/search_player_fragment" />
+</navigation>
