@@ -1,16 +1,15 @@
 package com.bondidos.wotstatisticbybondidos.presentation.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.bondidos.wotstatisticbybondidos.R
+import com.bondidos.wotstatisticbybondidos.databinding.LoginFragmentBinding
 import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel
-import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -19,28 +18,54 @@ class LoginFragment : Fragment() {
 
     @Inject
     lateinit var viewModel: LoginViewModel
-    private lateinit var searchBtn : Button
+
+    private var _binding : LoginFragmentBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.login_fragment, container, false)
+    ): View {
+        _binding = LoginFragmentBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchBtn = view.findViewById(R.id.search_player)
+        setListeners()
+        setObservers()
+    }
 
-        searchBtn.setOnClickListener {
-            viewModel.search("Legitim")
+    private fun setListeners(){
+        with(binding) {
+
+            searchPlayer.setOnClickListener {
+                if(searchEditText.text.isNotEmpty()){
+                    viewModel.search(searchEditText.text.toString())
+                }
+                else makeToast("Please enter player's name")
+            }
+
+            logIn.setOnClickListener {
+                //todo implement method
+            }
         }
+    }
+
+    private fun setObservers(){
 
         viewModel.list.observe(viewLifecycleOwner){
-            if(it.isNotEmpty())
-                Toast.makeText(context,"Success",Toast.LENGTH_LONG).show()
-            else Toast.makeText(context,"Fail",Toast.LENGTH_LONG).show()
+            if(it.isNotEmpty()) {
+                makeToast("Success")
+                findNavController().navigate(R.id.searchPlayerFragment)
+            }
+            else makeToast("Fail")
+
         }
+    }
+
+    private fun makeToast(message: String){
+        Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
     }
 }

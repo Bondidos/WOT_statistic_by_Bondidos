@@ -16,7 +16,7 @@
         android:label="statistic_fragment"
         tools:layout="@layout/statistic_fragment" />
     <fragment
-        android:id="@+id/searchPlayer"
+        android:id="@+id/searchPlayerFragment"
         android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.SearchPlayer"
         android:label="search_player_fragment"
         tools:layout="@layout/search_player_fragment" />

@@ -1,10 +1,10 @@
 package com.bondidos.wotstatisticbybondidos.data.repository
 
+import com.bondidos.wotstatisticbybondidos.data.entiyes.WotUser
 import com.bondidos.wotstatisticbybondidos.domain.Repository
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Response
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor (private val networkService: WotApi) : Repository {

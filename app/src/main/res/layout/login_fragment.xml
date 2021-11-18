@@ -1,45 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/wallpapper"
-    tools:context=".presentation.fragments.LoginFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="300dp"
-        android:layout_height="30dp"
-        android:background="@color/white"
+    <data>
+        <variable
+            name="login"
+            type="com.bondidos.wotstatisticbybondidos.presentation.fragments.LoginFragment" />
+    </data>
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.681" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/wallpapper"
+        tools:context=".presentation.fragments.LoginFragment">
 
-    <Button
-        android:id="@+id/search_player"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="search player"
-        app:layout_constraintEnd_toEndOf="@+id/editText"
-        app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:background="@color/white"
+            android:inputType="text"
 
-    <Button
-        android:id="@+id/log_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="login with WG token"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/search_player"
-        app:layout_constraintStart_toStartOf="@+id/search_player"
-        app:layout_constraintTop_toBottomOf="@+id/search_player" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.681" />
+
+        <Button
+            android:id="@+id/search_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="search player"
+            app:layout_constraintEnd_toEndOf="@+id/searchEditText"
+            app:layout_constraintStart_toStartOf="@+id/searchEditText"
+            app:layout_constraintTop_toBottomOf="@+id/searchEditText" />
+
+        <Button
+            android:id="@+id/log_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="login with WG token"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/search_player"
+            app:layout_constraintStart_toStartOf="@+id/search_player"
+            app:layout_constraintTop_toBottomOf="@+id/search_player" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

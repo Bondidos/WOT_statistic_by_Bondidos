@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.data.repository
+package com.bondidos.wotstatisticbybondidos.data.entiyes
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
