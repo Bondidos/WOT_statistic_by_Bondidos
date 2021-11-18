@@ -4,9 +4,7 @@ import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 
 interface Repository {
 
-    fun saveUser(user: User)
+    suspend fun login(): User
 
-    fun getUser(): User
-
-    fun getStatistic()
+    suspend fun searchUser(search: String): List<User>
 }

@@ -1,4 +1,8 @@
 package com.bondidos.wotstatisticbybondidos.domain.entityes
 
-class User {
-}
+data class User(
+    val nickName: String,
+    val id: Long,
+    val access_token: String?,
+    val expires_at: Long?
+    )

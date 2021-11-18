@@ -22,24 +22,24 @@
         app:layout_constraintVertical_bias="0.681" />
 
     <Button
-        android:id="@+id/log_in"
+        android:id="@+id/search_player"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="Login"
+        android:text="search player"
         app:layout_constraintEnd_toEndOf="@+id/editText"
         app:layout_constraintStart_toStartOf="@+id/editText"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
 
     <Button
-        android:id="@+id/search_player"
+        android:id="@+id/log_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="search player"
+        android:text="login with WG token"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/log_in"
-        app:layout_constraintStart_toStartOf="@+id/log_in"
-        app:layout_constraintTop_toBottomOf="@+id/log_in" />
+        app:layout_constraintEnd_toEndOf="@+id/search_player"
+        app:layout_constraintStart_toStartOf="@+id/search_player"
+        app:layout_constraintTop_toBottomOf="@+id/search_player" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
