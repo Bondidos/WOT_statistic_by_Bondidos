@@ -24,7 +24,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun search(search: String){
-        viewModelScope.launch(Dispatchers.IO) { _list.value = searchUser.execute(search = search) }
+        viewModelScope.launch{ _list.value = searchUser.execute(search = search) }
     }
 }
 

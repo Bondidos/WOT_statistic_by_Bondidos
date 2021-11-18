@@ -2,22 +2,26 @@ package com.bondidos.wotstatisticbybondidos.data.repository
 
 import com.bondidos.wotstatisticbybondidos.domain.Repository
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import retrofit2.Response
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor (private val networkService: WotApi) : Repository {
-
-    /*@Inject
-    lateinit var networkService: WotApi*/
 
     override suspend fun login(): User {
         TODO("Not yet implemented")
     }
 
     override suspend fun searchUser(search: String): List<User> {
-        return mapWotUserToUser(networkService.searchUser(search = search))
+
+        return withContext(Dispatchers.IO) {
+            val apiData = networkService.searchUser()
+            if(apiData.status == "ok") mapWotUserToUser(apiData.data) else emptyList()
+        }
     }
 
     private fun mapWotUserToUser(listOfWotUser: List<WotUser>) : List<User>{
-        return listOfWotUser.map { it -> User(it.nickname,it.account_id, null, null) }
+        return listOfWotUser.map { User(it.nickname,it.account_id, null, null) }
     }
 }
