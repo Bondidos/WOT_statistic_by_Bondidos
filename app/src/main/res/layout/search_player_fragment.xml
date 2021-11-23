@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
+
+<androidx.recyclerview.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
 
-    <data>
-        <variable
-            name="players_list"
-            type="com.bondidos.wotstatisticbybondidos.presentation.fragments.SearchPlayer" />
-    </data>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/searched_user_item"/>
-
-</layout>
+    android:id="@+id/recycler"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:listitem="@layout/searched_user_item"/>
