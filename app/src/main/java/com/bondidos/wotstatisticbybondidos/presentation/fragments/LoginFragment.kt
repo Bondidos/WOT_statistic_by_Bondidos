@@ -40,15 +40,15 @@ class LoginFragment : Fragment() {
     private fun setListeners(){
         with(binding) {
 
-            searchPlayer.setOnClickListener {
+            /*searchPlayer.setOnClickListener {
                 if(searchEditText.text.isNotEmpty()){
                     viewModel.search(searchEditText.text.toString())
                 }
                 else makeToast("Please enter player's name")
-            }
+            }*/
 
             logIn.setOnClickListener {
-                //todo implement method
+                findNavController().navigate(R.id.webViewFragment)
             }
         }
     }

@@ -20,4 +20,8 @@
         android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.SearchPlayer"
         android:label="search_player_fragment"
         tools:layout="@layout/search_player_fragment" />
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.WebViewFragment"
+        android:label="WebViewFragment" />
 </navigation>

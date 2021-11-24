@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.data.repository
+package com.bondidos.wotstatisticbybondidos.data.remout_repository
 
 import com.bondidos.wotstatisticbybondidos.data.entiyes.WotUser
 import com.bondidos.wotstatisticbybondidos.domain.Repository

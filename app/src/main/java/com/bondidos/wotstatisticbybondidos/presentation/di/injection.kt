@@ -1,7 +1,6 @@
 package com.bondidos.wotstatisticbybondidos.presentation.di
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,14 +9,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 import com.bondidos.wotstatisticbybondidos.data.constatnts.Constants.BASE_URL
-import com.bondidos.wotstatisticbybondidos.data.repository.RepositoryImpl
-import com.bondidos.wotstatisticbybondidos.data.repository.WotApi
+import com.bondidos.wotstatisticbybondidos.data.remout_repository.RepositoryImpl
+import com.bondidos.wotstatisticbybondidos.data.remout_repository.WotApi
 import com.bondidos.wotstatisticbybondidos.domain.Repository
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogin
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseSearch
 import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel
 import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModelFactory
-import java.lang.IllegalArgumentException
 
 @Module
 @InstallIn(SingletonComponent::class)
