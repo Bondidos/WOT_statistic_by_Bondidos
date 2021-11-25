@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.data.room_repository
+package com.bondidos.wotstatisticbybondidos.data.repository.room
 
 import androidx.room.Dao
 import androidx.room.Delete

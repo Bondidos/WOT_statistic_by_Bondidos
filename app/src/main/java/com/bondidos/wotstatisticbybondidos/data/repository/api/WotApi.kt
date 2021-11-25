@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.data.remout_repository
+package com.bondidos.wotstatisticbybondidos.data.repository.api
 
 import com.bondidos.wotstatisticbybondidos.data.entiyes.ApiData
 import retrofit2.Response
