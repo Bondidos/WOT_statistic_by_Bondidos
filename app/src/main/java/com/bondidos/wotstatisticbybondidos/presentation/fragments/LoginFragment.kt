@@ -6,11 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.databinding.LoginFragmentBinding
 import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -48,21 +52,39 @@ class LoginFragment : Fragment() {
             }*/
 
             logIn.setOnClickListener {
-                findNavController().navigate(R.id.webViewFragment)
+                viewModel.logIn()
+                //findNavController().navigate(R.id.webViewFragment)
+                 viewModel.search("LegitimateKiller")
             }
         }
     }
 
     private fun setObservers(){
 
-        viewModel.list.observe(viewLifecycleOwner){
+        lifecycleScope.launchWhenCreated {
+            viewModel.list.collect{ list ->
+                    list.isNotEmpty().let {
+                       binding.textView2.text = list.toString()
+                    }
+                }
+        }
+      /*
+        viewModel.list
+            .onEach { list ->
+                list.isNotEmpty().let {
+                    findNavController().navigate(R.id.searchPlayerFragment)
+                }
+            }
+            .launchIn(lifecycleScope)*/
+
+/*        viewModel.list.observe(viewLifecycleOwner){
             if(it.isNotEmpty()) {
                 makeToast("Success")
                 findNavController().navigate(R.id.searchPlayerFragment)
             }
             else makeToast("Fail")
 
-        }
+        }*/
     }
 
     private fun makeToast(message: String){

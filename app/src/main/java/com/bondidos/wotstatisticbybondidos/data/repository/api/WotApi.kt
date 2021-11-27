@@ -8,7 +8,7 @@ private const val FUNCTION_SEARCH = "/wot/account/list/?application_id=5d489c586
 
 interface WotApi {
 
-    @GET("/wot/account/list/?application_id=5d489c586717c2b76ade8bea16607167&search=legitim")
+    @GET("/wot/account/list/?application_id=5d489c586717c2b76ade8bea16607167&search=LegitimateKiller")
     suspend fun searchUser() : ApiData
 
     @GET("/wot/account/list/?application_id=5d489c586717c2b76ade8bea16607167&search=legitim")

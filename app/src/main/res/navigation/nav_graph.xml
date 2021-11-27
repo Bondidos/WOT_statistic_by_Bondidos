@@ -9,7 +9,14 @@
         android:id="@+id/loginFragment"
         android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.LoginFragment"
         android:label="login_fragment"
-        tools:layout="@layout/login_fragment" />
+        tools:layout="@layout/login_fragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_statisticFragment"
+            app:destination="@id/statisticFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
+    </fragment>
     <fragment
         android:id="@+id/statisticFragment"
         android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.StatisticFragment"
@@ -23,5 +30,9 @@
     <fragment
         android:id="@+id/webViewFragment"
         android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.WebViewFragment"
-        android:label="WebViewFragment" />
+        android:label="WebViewFragment" >
+        <action
+            android:id="@+id/action_webViewFragment_to_statisticFragment2"
+            app:destination="@id/statisticFragment" />
+    </fragment>
 </navigation>

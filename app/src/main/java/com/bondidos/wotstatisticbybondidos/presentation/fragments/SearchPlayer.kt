@@ -42,9 +42,9 @@ class SearchPlayer : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.list.observe(viewLifecycleOwner){ list ->
-            //todo implement method
-        }
+//        viewModel.list.observe(viewLifecycleOwner){ list ->
+//            //todo implement method
+//        }
     }
 
 }

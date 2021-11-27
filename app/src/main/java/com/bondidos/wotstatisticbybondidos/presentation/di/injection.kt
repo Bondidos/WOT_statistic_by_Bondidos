@@ -2,7 +2,12 @@ package com.bondidos.wotstatisticbybondidos.presentation.di
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.room.Room
+import com.bondidos.wotstatisticbybondidos.R
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,9 +24,15 @@ import com.bondidos.wotstatisticbybondidos.domain.Repository
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogin
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseSaveUser
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseSearch
+import com.bondidos.wotstatisticbybondidos.presentation.MainActivity
 import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel
 import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModelFactory
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ActivityScoped
+import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -35,7 +46,6 @@ object DataModule {
         .build()
         .create(WotApi::class.java)
 
-    @Singleton
     @Provides
     fun provideRoomDatabaseDao(@ApplicationContext context: Context): RoomRepositoryDao =
         Room.databaseBuilder(
@@ -44,7 +54,6 @@ object DataModule {
             "database"
         ).build().userDataBase()
 
-    @Singleton
     @Provides
     fun provideRepository(
         wotApi: WotApi,
@@ -54,28 +63,35 @@ object DataModule {
 }
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 object DomainModule {
 
+    @ViewModelScoped
     @Provides
     fun provideUseCaseLogin(repository: Repository): UseCaseLogin = UseCaseLogin(repository)
 
+    @ViewModelScoped
     @Provides
     fun provideUseCaseSearch(repository: Repository): UseCaseSearch = UseCaseSearch(repository)
 
+    @ViewModelScoped
     @Provides
     fun provideUseCaseSaveUser(repository: Repository): UseCaseSaveUser = UseCaseSaveUser(repository)
 }
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ActivityComponent::class)
 object PresentationModule {
 
-    @Singleton
+    @ActivityScoped
     @Provides
     fun provideLoginViewModel(
         login: UseCaseLogin,
         search: UseCaseSearch
     ): ViewModel = LoginViewModelFactory(login, search).create(LoginViewModel::class.java)
 
+
+
 }
+
+//TODO SET INIT BLOCK INTO THIS OBJECTS AND LOOK FOR RECREATING
