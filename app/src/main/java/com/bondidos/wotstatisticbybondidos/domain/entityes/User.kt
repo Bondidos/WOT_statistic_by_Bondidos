@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class User(
     val nickName: String,
     @PrimaryKey
-    val id: Long,
+    val id: Int,
     val access_token: String?,
     val expires_at: Long?
     )

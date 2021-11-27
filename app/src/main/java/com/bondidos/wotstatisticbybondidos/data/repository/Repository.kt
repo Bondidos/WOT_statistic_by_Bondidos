@@ -1,6 +1,7 @@
 package com.bondidos.wotstatisticbybondidos.data.repository
 
-import com.bondidos.wotstatisticbybondidos.data.entiyes.WotUser
+import com.bondidos.wotstatisticbybondidos.data.entiyes.Data
+import com.bondidos.wotstatisticbybondidos.data.entiyes.WotApiResponse
 import com.bondidos.wotstatisticbybondidos.data.repository.api.WotApi
 import com.bondidos.wotstatisticbybondidos.data.repository.room.AppDatabase
 import com.bondidos.wotstatisticbybondidos.data.repository.room.RoomRepositoryDao
@@ -27,7 +28,7 @@ class RepositoryImpl @Inject constructor (
         }
     }
 
-    private fun mapWotUserToUser(listOfWotUser: List<WotUser>) : List<User>{
-        return listOfWotUser.map { User(it.nickname,it.account_id, null, null) }
+    private fun mapWotUserToUser(listOfWotUser: List<Data>) : List<User>{
+        return listOfWotUser.map { User(it.nickname,it.accountId, null, null) }
     }
 }

@@ -1,4 +1,5 @@
 package com.bondidos.wotstatisticbybondidos.data.entiyes
+/*
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -14,6 +15,7 @@ data class WotUser (
     @Json(name = "nickname")
     val nickname : String,
     @Json(name = "account_id")
-    val account_id : Long
+    val account_id : Int
 )
+*/
 

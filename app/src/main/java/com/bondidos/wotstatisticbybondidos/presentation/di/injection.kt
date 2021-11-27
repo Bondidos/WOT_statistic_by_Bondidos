@@ -13,7 +13,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 import com.bondidos.wotstatisticbybondidos.data.constatnts.Constants.BASE_URL
 import com.bondidos.wotstatisticbybondidos.data.repository.RepositoryImpl
@@ -33,6 +32,7 @@ import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityScoped
 import dagger.hilt.android.scopes.ViewModelScoped
+import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -41,7 +41,7 @@ object DataModule {
     @Singleton
     @Provides
     fun provideApi(): WotApi = Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(BASE_URL)
         .build()
         .create(WotApi::class.java)
