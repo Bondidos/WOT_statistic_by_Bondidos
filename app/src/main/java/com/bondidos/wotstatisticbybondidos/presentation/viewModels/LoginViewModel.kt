@@ -6,6 +6,8 @@ import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogin
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseSearch
+import com.bondidos.wotstatisticbybondidos.presentation.other.Resource
+import com.bondidos.wotstatisticbybondidos.presentation.other.Status
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,6 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.IllegalArgumentException
+import java.lang.Thread.sleep
 import javax.inject.Inject
 
 
@@ -21,8 +24,10 @@ class LoginViewModel @Inject constructor(
     private val searchUser: UseCaseSearch
     ) : ViewModel() {
 
-    private val _list = MutableStateFlow<List<User>>(emptyList())
-    val list : StateFlow<List<User>> = _list.asStateFlow()
+    private val _list = MutableStateFlow<Resource<List<User>>>(
+        Resource.success(null)
+    )
+    val list : StateFlow<Resource<List<User>>> = _list.asStateFlow()
 
     fun logIn(){
         //viewModelScope.launch(Dispatchers.IO) { login.execute() }
@@ -30,7 +35,12 @@ class LoginViewModel @Inject constructor(
     }
 
     fun search(search: String){
-        viewModelScope.launch{ _list.value = searchUser.execute(search = search) }
+        _list.value = Resource.loading(null)
+        viewModelScope.launch {
+            val data = searchUser.execute(search = search)
+            _list.value = Resource.success(data)
+
+        }
     }
 }
 

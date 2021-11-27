@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.databinding.LoginFragmentBinding
+import com.bondidos.wotstatisticbybondidos.presentation.other.Resource
+import com.bondidos.wotstatisticbybondidos.presentation.other.Status
 import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -62,10 +65,19 @@ class LoginFragment : Fragment() {
     private fun setObservers(){
 
         lifecycleScope.launchWhenCreated {
-            viewModel.list.collect{ list ->
-                    list.isNotEmpty().let {
-                       binding.textView2.text = list.toString()
+            viewModel.list.collect{ resource ->
+                when(resource.status){
+                    Status.LOADING -> binding.loginProgressBar.isVisible = true
+                    Status.SUCCESS -> {
+                        resource.data?.let { list ->
+                            binding.loginProgressBar.isVisible = false
+                            binding.textView2.text = list.toString()
+                        }
                     }
+                    Status.ERROR -> binding.textView2.text = "Connection problem"
+                }
+
+
                 }
         }
       /*
