@@ -46,24 +46,13 @@ class LoginFragment : Fragment() {
 
     private fun setListeners(){
         with(binding) {
-
-            /*searchPlayer.setOnClickListener {
-                if(searchEditText.text.isNotEmpty()){
-                    viewModel.search(searchEditText.text.toString())
-                }
-                else makeToast("Please enter player's name")
-            }*/
-
-            logIn.setOnClickListener {
-                viewModel.logIn()
-                //findNavController().navigate(R.id.webViewFragment)
-                 viewModel.search("LegitimateKiller")
-            }
+            logIn.setOnClickListener { viewModel.logIn() }
         }
     }
 
     private fun setObservers(){
 
+        // update UI State
         lifecycleScope.launchWhenCreated {
             viewModel.list.collect{ resource ->
                 when(resource.status){
@@ -76,27 +65,17 @@ class LoginFragment : Fragment() {
                     }
                     Status.ERROR -> binding.textView2.text = "Connection problem"
                 }
-
-
-                }
+            }
         }
-      /*
-        viewModel.list
-            .onEach { list ->
-                list.isNotEmpty().let {
-                    findNavController().navigate(R.id.searchPlayerFragment)
-                }
-            }
-            .launchIn(lifecycleScope)*/
 
-/*        viewModel.list.observe(viewLifecycleOwner){
-            if(it.isNotEmpty()) {
-                makeToast("Success")
-                findNavController().navigate(R.id.searchPlayerFragment)
-            }
-            else makeToast("Fail")
+        // navigate WebView
+        lifecycleScope.launchWhenCreated {
+            viewModel.navigateToWebViewFragment.collect{ event ->
 
-        }*/
+                if(event.getContentIfNotHandled() == true)
+                    findNavController().navigate(R.id.webViewFragment)
+            }
+        }
     }
 
     private fun makeToast(message: String){

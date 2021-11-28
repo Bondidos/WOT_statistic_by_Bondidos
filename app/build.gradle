@@ -72,7 +72,6 @@ dependencies {
     kapt 'com.google.dagger:hilt-compiler:2.40.2'
 
     // ViewModel
-
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     //implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
    // implementation 'androidx.activity:activity-ktx:2.4.0'

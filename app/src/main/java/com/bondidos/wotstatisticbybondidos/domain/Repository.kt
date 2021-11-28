@@ -7,4 +7,6 @@ interface Repository {
     suspend fun login(): User
 
     suspend fun searchUser(search: String): List<User>
+
+    suspend fun saveUserToCash(user: User): Long
 }

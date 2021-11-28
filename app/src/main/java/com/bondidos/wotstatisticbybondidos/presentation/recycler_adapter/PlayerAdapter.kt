@@ -1,6 +1,5 @@
 package com.bondidos.wotstatisticbybondidos.presentation.recycler_adapter
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -24,7 +23,7 @@ class PlayerHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 }
 
 class NoteDiffCallback : DiffUtil.ItemCallback<User>() {
-    override fun areItemsTheSame(oldItem: User, newItem: User): Boolean = oldItem.id == newItem.id
+    override fun areItemsTheSame(oldItem: User, newItem: User): Boolean = oldItem.account_id == newItem.account_id
 
     override fun areContentsTheSame(oldItem: User, newItem: User): Boolean = oldItem == newItem
 

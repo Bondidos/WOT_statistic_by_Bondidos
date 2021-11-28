@@ -79,7 +79,7 @@ object DomainModule {
     fun provideUseCaseSaveUser(repository: Repository): UseCaseSaveUser = UseCaseSaveUser(repository)
 }
 
-@Module
+/*@Module
 @InstallIn(ActivityComponent::class)
 object PresentationModule {
 
@@ -89,9 +89,6 @@ object PresentationModule {
         login: UseCaseLogin,
         search: UseCaseSearch
     ): ViewModel = LoginViewModelFactory(login, search).create(LoginViewModel::class.java)
-
-
-
-}
+}*/
 
 //TODO SET INIT BLOCK INTO THIS OBJECTS AND LOOK FOR RECREATING

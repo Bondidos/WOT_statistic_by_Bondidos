@@ -28,6 +28,10 @@ class RepositoryImpl @Inject constructor (
         }
     }
 
+    override suspend fun saveUserToCash(user: User): Long {
+        return roomStorage.saveUser(user)
+    }
+
     private fun mapWotUserToUser(listOfWotUser: List<Data>) : List<User>{
         return listOfWotUser.map { User(it.nickname,it.accountId, null, null) }
     }
