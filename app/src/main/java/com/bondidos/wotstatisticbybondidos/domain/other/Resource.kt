@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.presentation.other
+package com.bondidos.wotstatisticbybondidos.domain.other
 
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
 

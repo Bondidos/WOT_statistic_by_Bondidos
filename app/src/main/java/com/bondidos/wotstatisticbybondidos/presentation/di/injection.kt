@@ -20,6 +20,7 @@ import com.bondidos.wotstatisticbybondidos.data.repository.api.WotApi
 import com.bondidos.wotstatisticbybondidos.data.repository.room.AppDatabase
 import com.bondidos.wotstatisticbybondidos.data.repository.room.RoomRepositoryDao
 import com.bondidos.wotstatisticbybondidos.domain.Repository
+import com.bondidos.wotstatisticbybondidos.domain.useCase.CreateAchievesDBIfNotExist
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogin
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseSaveUser
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseSearch
@@ -77,18 +78,31 @@ object DomainModule {
     @ViewModelScoped
     @Provides
     fun provideUseCaseSaveUser(repository: Repository): UseCaseSaveUser = UseCaseSaveUser(repository)
+
+    @ViewModelScoped
+    @Provides
+    fun provideCreateDataBaseUseCAse(context: Context, repository: Repository):CreateAchievesDBIfNotExist =
+        CreateAchievesDBIfNotExist(context.applicationContext,repository)
+
+
 }
 
-/*@Module
+@Module
 @InstallIn(ActivityComponent::class)
 object PresentationModule {
 
-    @ActivityScoped
+   /* @ActivityScoped
     @Provides
     fun provideLoginViewModel(
         login: UseCaseLogin,
-        search: UseCaseSearch
-    ): ViewModel = LoginViewModelFactory(login, search).create(LoginViewModel::class.java)
-}*/
+        search: UseCaseSearch,
+        createDB: CreateAchievesDBIfNotExist
+    ): ViewModel = LoginViewModelFactory(login, search,createDB).create(LoginViewModel::class.java)
+*/
+
+    @ActivityScoped
+    @Provides
+    fun provideAppContext(@ApplicationContext context: Context): Context = context
+}
 
 //TODO SET INIT BLOCK INTO THIS OBJECTS AND LOOK FOR RECREATING

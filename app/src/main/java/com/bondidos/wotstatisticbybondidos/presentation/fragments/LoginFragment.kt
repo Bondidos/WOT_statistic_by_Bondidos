@@ -5,19 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.databinding.LoginFragmentBinding
-import com.bondidos.wotstatisticbybondidos.presentation.other.Resource
-import com.bondidos.wotstatisticbybondidos.presentation.other.Status
+import com.bondidos.wotstatisticbybondidos.domain.other.Status
 import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -76,9 +72,5 @@ class LoginFragment : Fragment() {
                     findNavController().navigate(R.id.webViewFragment)
             }
         }
-    }
-
-    private fun makeToast(message: String){
-        Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
     }
 }

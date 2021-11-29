@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.presentation.other
+package com.bondidos.wotstatisticbybondidos.domain.other
 
 open class  Event<out T>(private val data: T) {
 

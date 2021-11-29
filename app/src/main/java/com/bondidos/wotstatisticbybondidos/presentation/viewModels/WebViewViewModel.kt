@@ -3,12 +3,8 @@ package com.bondidos.wotstatisticbybondidos.presentation.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.bondidos.wotstatisticbybondidos.domain.entityes.User
-import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogin
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseSaveUser
-import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseSearch
-import com.bondidos.wotstatisticbybondidos.presentation.other.Event
-import com.bondidos.wotstatisticbybondidos.presentation.other.Resource
+import com.bondidos.wotstatisticbybondidos.domain.other.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

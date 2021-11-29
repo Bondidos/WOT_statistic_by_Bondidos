@@ -1,14 +1,12 @@
 package com.bondidos.wotstatisticbybondidos.presentation.viewModels
 
 import androidx.lifecycle.*
-import androidx.navigation.NavController
-import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogin
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseSearch
-import com.bondidos.wotstatisticbybondidos.presentation.other.Event
-import com.bondidos.wotstatisticbybondidos.presentation.other.Resource
-import com.bondidos.wotstatisticbybondidos.presentation.other.Status
+import com.bondidos.wotstatisticbybondidos.domain.other.Event
+import com.bondidos.wotstatisticbybondidos.domain.other.Resource
+import com.bondidos.wotstatisticbybondidos.domain.useCase.CreateAchievesDBIfNotExist
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,15 +14,23 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.IllegalArgumentException
-import java.lang.Thread.sleep
 import javax.inject.Inject
 
 
 class LoginViewModel @Inject constructor(
     private val login: UseCaseLogin,
-    private val searchUser: UseCaseSearch
+    private val searchUser: UseCaseSearch,
+    private val createAchievesDBIfNotExist: CreateAchievesDBIfNotExist
     ) : ViewModel() {
 
+    init{
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                createAchievesDBIfNotExist.execute()
+            }
+        }
+
+    }
     private val _list = MutableStateFlow<Resource<List<User>>>(Resource.success(null))
     val list : StateFlow<Resource<List<User>>> = _list.asStateFlow()
 
@@ -48,14 +54,15 @@ class LoginViewModel @Inject constructor(
 
 class LoginViewModelFactory (
     private val login: UseCaseLogin,
-    private val search: UseCaseSearch
+    private val search: UseCaseSearch,
+    private val createAchievesDBIfNotExist: CreateAchievesDBIfNotExist
     ): ViewModelProvider.Factory{
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
 
         if(modelClass.isAssignableFrom(LoginViewModel::class.java)){
             @Suppress("UNCHECKED_CAST")
-            return LoginViewModel(login,search) as T
+            return LoginViewModel(login,search,createAchievesDBIfNotExist) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -3,7 +3,7 @@ package com.bondidos.wotstatisticbybondidos.domain.entityes
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "User")
 data class User(
     val nickname: String,
     @PrimaryKey
