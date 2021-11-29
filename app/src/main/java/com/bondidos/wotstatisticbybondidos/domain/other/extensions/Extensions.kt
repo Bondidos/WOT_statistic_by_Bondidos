@@ -4,8 +4,6 @@ import com.bondidos.wotstatisticbybondidos.data.entiyes.Data
 import com.bondidos.wotstatisticbybondidos.domain.entityes.Achieve
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
-import org.json.JSONArray
 import org.json.JSONObject
 
 fun JSONObject.toAchievesList(): List<Achieve> {

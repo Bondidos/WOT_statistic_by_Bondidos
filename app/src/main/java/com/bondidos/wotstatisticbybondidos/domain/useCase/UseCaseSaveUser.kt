@@ -11,7 +11,6 @@ class UseCaseSaveUser @Inject constructor(private val repository: Repository) {
     suspend fun execute(url: String): Boolean{
 
         val user = getUserFromUrl(url)
-        Log.d("UseCaseSaveUser", user.toString())
         if (user != null) {
                 return repository.saveUserToCash(user) == user.account_id.toLong()
             }

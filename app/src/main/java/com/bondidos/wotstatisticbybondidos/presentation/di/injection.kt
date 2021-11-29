@@ -1,20 +1,14 @@
 package com.bondidos.wotstatisticbybondidos.presentation.di
 
 import android.content.Context
-import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.room.Room
-import com.bondidos.wotstatisticbybondidos.R
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Singleton
-import com.bondidos.wotstatisticbybondidos.data.constatnts.Constants.BASE_URL
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.BASE_URL
 import com.bondidos.wotstatisticbybondidos.data.repository.RepositoryImpl
 import com.bondidos.wotstatisticbybondidos.data.repository.api.WotApi
 import com.bondidos.wotstatisticbybondidos.data.repository.room.AppDatabase
@@ -24,12 +18,8 @@ import com.bondidos.wotstatisticbybondidos.domain.useCase.CreateAchievesDBIfNotE
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogin
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseSaveUser
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseSearch
-import com.bondidos.wotstatisticbybondidos.presentation.MainActivity
-import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel
-import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModelFactory
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityScoped
 import dagger.hilt.android.scopes.ViewModelScoped

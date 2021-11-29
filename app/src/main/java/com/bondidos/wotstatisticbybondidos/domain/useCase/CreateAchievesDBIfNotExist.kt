@@ -16,15 +16,16 @@ class CreateAchievesDBIfNotExist @Inject constructor(
     private val repository: Repository
     ) {
 
-    suspend fun execute() {
+    suspend fun execute(): Boolean {
         if (repository.isAchievesDataBaseExist() != ACHIEVES_COUNT)
-            createAchievesDataBase()
+            return createAchievesDataBase()
+        return true
     }
 
-    private suspend fun createAchievesDataBase() {
+    private suspend fun createAchievesDataBase(): Boolean {
         val list = createAchievesFromJson()
-        val recorded = repository.createAchieveDataBase(list)
-       Log.d("Recorded",recorded.size.toString())
+        return list.size == repository.createAchieveDataBase(list).size
+       //Log.d("Recorded",recorded.size.toString())
     }
 
 

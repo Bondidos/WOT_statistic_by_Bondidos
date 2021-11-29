@@ -30,6 +30,7 @@ class WebViewViewModel@Inject constructor(private val saveUser: UseCaseSaveUser)
     }
 }
 
+/*
 class WebViewViewModelFactory (
     private val saveUser: UseCaseSaveUser
 ): ViewModelProvider.Factory{
@@ -42,4 +43,4 @@ class WebViewViewModelFactory (
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-}
+}*/

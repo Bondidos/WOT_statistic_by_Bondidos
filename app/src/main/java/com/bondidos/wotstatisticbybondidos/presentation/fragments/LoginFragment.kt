@@ -10,7 +10,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.databinding.LoginFragmentBinding
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.ACHIEVES_FRAGMENT
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.WEB_VIEW_FRAGMENT
+import com.bondidos.wotstatisticbybondidos.domain.other.Resource
 import com.bondidos.wotstatisticbybondidos.domain.other.Status
+import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
 import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -42,7 +46,9 @@ class LoginFragment : Fragment() {
 
     private fun setListeners(){
         with(binding) {
-            logIn.setOnClickListener { viewModel.logIn() }
+            loginBtn.setOnClickListener {
+                viewModel.logIn()
+            }
         }
     }
 
@@ -50,26 +56,46 @@ class LoginFragment : Fragment() {
 
         // update UI State
         lifecycleScope.launchWhenCreated {
-            viewModel.list.collect{ resource ->
+            viewModel.isDatabaseCreated.collect{ resource ->
                 when(resource.status){
                     Status.LOADING -> binding.loginProgressBar.isVisible = true
                     Status.SUCCESS -> {
-                        resource.data?.let { list ->
+                        resource.data?.let {
                             binding.loginProgressBar.isVisible = false
-                            binding.textView2.text = list.toString()
+                            makeToast(requireContext(), "Achieves database initialized")
                         }
                     }
-                    Status.ERROR -> binding.textView2.text = "Connection problem"
+                    Status.ERROR -> {
+                        binding.loginProgressBar.isVisible = false
+                        makeToast(requireContext(), resource.message!!)
+                    }
                 }
             }
         }
 
-        // navigate WebView
         lifecycleScope.launchWhenCreated {
-            viewModel.navigateToWebViewFragment.collect{ event ->
+            viewModel.isExistSavedUser.collect{ resource ->
+                when(resource.status){
+                    Status.LOADING -> binding.loginBtn.text = "Searching user"
+                    Status.SUCCESS -> resource.data?.let {
+                        binding.loginBtn.text = "Continue as ${it.nickname}"
+                    }
+                    Status.ERROR -> {
+                        makeToast(requireContext(), resource.message!!)
+                        binding.loginBtn.text = "login with WG token"
+                    }
+                }
+            }
+        }
 
-                if(event.getContentIfNotHandled() == true)
-                    findNavController().navigate(R.id.webViewFragment)
+        // navigate WebView0
+        lifecycleScope.launchWhenCreated {
+            viewModel.navigation.collect{ event ->
+
+                when(event.getContentIfNotHandled()) {
+                    WEB_VIEW_FRAGMENT -> findNavController().navigate(R.id.webViewFragment)
+                    ACHIEVES_FRAGMENT -> findNavController()   //todo
+                }
             }
         }
     }

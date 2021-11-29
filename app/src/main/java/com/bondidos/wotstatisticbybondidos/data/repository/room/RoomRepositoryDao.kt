@@ -13,22 +13,23 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RoomRepositoryDao {
 
+    // User Table
     @Insert(onConflict = REPLACE)
     suspend fun saveUserToCache(user: User): Long
 
-    @Query("select * from user where account_id = :id")
-    fun getUserFromCache(id: Long): Flow<User>
+    @Query("select * from user")
+    fun getUserFromCache(): Flow<List<User?>>
 
     @Delete
     suspend fun deleteUserFromCache(user: User): Int
 
 
-
+    // Achieves table
     @Query("select count(name) from achieves")
     suspend fun isAchievesDataBaseExist(): Int
 
     @Insert(onConflict = IGNORE)
-    suspend fun createAchieveDataBase(achieves: List<Achieve>): List<Long>
+    suspend fun createAchieveDataBase(achieves: List<Achieve>): List<Long> //todo migrate flow?
 
     @Query("select * from achieves where name in (:achievesList) order by name ASC")
     fun getAchievesData(achievesList: List<String>): Flow<List<Achieve>>

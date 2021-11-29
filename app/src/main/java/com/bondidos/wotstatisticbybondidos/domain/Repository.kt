@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface Repository {
 
     // REMOTE API
-    suspend fun login(): User
+    fun login(): Flow<List<User?>>
 
     suspend fun searchUser(search: String): List<User>
 

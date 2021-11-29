@@ -16,9 +16,7 @@ class RepositoryImpl @Inject constructor (
     private val roomStorage: RoomRepositoryDao
     ) : Repository {
 
-    override suspend fun login(): User {
-        TODO("Not yet implemented")
-    }
+    override fun login(): Flow<List<User?>> = roomStorage.getUserFromCache()
 
     override suspend fun searchUser(search: String): List<User> {
 
@@ -49,7 +47,4 @@ class RepositoryImpl @Inject constructor (
     override fun getAchievesData(achievesList: List<String>): Flow<List<Achieve>> {
         TODO("Not yet implemented")
     }
-
-
-
 }
