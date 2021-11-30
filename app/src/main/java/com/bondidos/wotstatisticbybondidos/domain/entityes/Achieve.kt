@@ -51,13 +51,13 @@ data class Achieve(
     val type: String?
 )
 data class Option(
-    //@SerializedName("description")
+   // @SerializedName("description")
     val description: String?,
-    //@SerializedName("image")
+  //  @SerializedName("image")
     val image: String?,
-   // @SerializedName("image_big")
+  //  @SerializedName("image_big")
     val imageBig: String?,
-   // @SerializedName("name_i18n")
+  // @SerializedName("name_i18n")
     val nameI18n: String?,
    // @SerializedName("nation_images")
     val nationImages: String?

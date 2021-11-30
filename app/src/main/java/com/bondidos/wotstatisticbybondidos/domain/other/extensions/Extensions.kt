@@ -1,5 +1,6 @@
 package com.bondidos.wotstatisticbybondidos.domain.other.extensions
 
+import com.bondidos.wotstatisticbybondidos.data.response_entiyes.searchUser.Data
 import com.bondidos.wotstatisticbybondidos.domain.entityes.Achieve
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import com.google.gson.GsonBuilder

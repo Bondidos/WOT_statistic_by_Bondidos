@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 class UseCaseLogin @Inject constructor(private val repository: Repository) {
 
-    fun execute(): Flow<List<User?>> = repository.login()
+    fun execute(): List<User?> = repository.getUserFromCache()
 
 }

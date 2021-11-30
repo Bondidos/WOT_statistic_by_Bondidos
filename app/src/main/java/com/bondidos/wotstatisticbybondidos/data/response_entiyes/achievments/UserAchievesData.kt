@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.data.entiyes.achievments
+package com.bondidos.wotstatisticbybondidos.data.response_entiyes.achievments
 
 
 import com.google.gson.annotations.SerializedName

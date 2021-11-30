@@ -18,10 +18,10 @@ interface RoomRepositoryDao {
     suspend fun saveUserToCache(user: User): Long
 
     @Query("select * from user")
-    fun getUserFromCache(): Flow<List<User?>>
+    fun getUserFromCache(): List<User?>
 
     @Delete
-    suspend fun deleteUserFromCache(user: User): Int
+    fun deleteUserFromCache(user: User): Int
 
 
     // Achieves table

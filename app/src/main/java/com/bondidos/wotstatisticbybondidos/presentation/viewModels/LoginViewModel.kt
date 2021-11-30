@@ -1,12 +1,8 @@
 package com.bondidos.wotstatisticbybondidos.presentation.viewModels
 
 import androidx.lifecycle.*
-import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.ACHIEVES_FRAGMENT
-import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.NULL
-import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.WEB_VIEW_FRAGMENT
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogin
-import com.bondidos.wotstatisticbybondidos.domain.other.Event
 import com.bondidos.wotstatisticbybondidos.domain.useCase.CreateAchievesDBIfNotExist
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -17,62 +13,62 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val login: UseCaseLogin,
     private val createAchievesDBIfNotExist: CreateAchievesDBIfNotExist
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val _isDatabaseCreated = MutableStateFlow<LoginUiState>(LoginUiState.Empty)
-    val isDatabaseCreated : StateFlow<LoginUiState> = _isDatabaseCreated.asStateFlow()
+    val isDatabaseCreated: StateFlow<LoginUiState> = _isDatabaseCreated.asStateFlow()
 
     private val _isExistSavedUser = MutableStateFlow<LoginUiState>(LoginUiState.Empty)
-    val isExistSavedUser : StateFlow<LoginUiState> = _isExistSavedUser.asStateFlow()
+    val isExistSavedUser: StateFlow<LoginUiState> = _isExistSavedUser.asStateFlow()
 
     private val _navigation = MutableStateFlow<NavigateEvent>(NavigateEvent.Empty)
     val navigation: StateFlow<NavigateEvent> = _navigation.asStateFlow()
 
-    init{
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                createAchievesDBIfNotExist.execute().let { it ->
-                    _isDatabaseCreated.value = LoginUiState.Loading
-                    when (it){
-                        true -> _isDatabaseCreated.value = LoginUiState.Success(null)
-                        false -> _isDatabaseCreated.value = LoginUiState.Error(
-                            "Error while Initializing Database. Please restart Application"
-                        )
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            _isDatabaseCreated.value = LoginUiState.Loading
+            createAchievesDBIfNotExist.execute().let { it ->
+                when (it) {
+                    true -> _isDatabaseCreated.value = LoginUiState.Success(null)
+                    false -> _isDatabaseCreated.value = LoginUiState.Error(
+                        "Error while Initializing Database. Please restart Application"
+                    )
+                }
+            }
+
+            _isExistSavedUser.value = LoginUiState.Loading
+            login.execute().let { list ->
+
+                when (list.isNotEmpty()) {
+                    false -> _isExistSavedUser.value =
+                        LoginUiState.Error("Can't retrieve data about user")
+                    true -> if (list.isNotEmpty()) {
+                        _isExistSavedUser.value = LoginUiState.Success(list.first())
                     }
                 }
-                login.execute().let { userFlow ->
-                    _isExistSavedUser.value = LoginUiState.Loading
-                    userFlow.collect { listOfUser ->
-                        when(listOfUser.isNotEmpty()){
-                            false -> _isExistSavedUser.value = LoginUiState.Error("Can't retrieve data about user")
-                            true -> if(listOfUser.isNotEmpty()) {
-                                _isExistSavedUser.value = LoginUiState.Success(listOfUser.first())
-                            }
-                        }
-                    }
-                }
+
             }
         }
     }
 
-    fun logInWithWgOpenId(){
+    fun logInWithWgOpenId() {
         _navigation.value = NavigateEvent.ToWebView
     }
 
-    fun continueAsSavedUser(){
-        _navigation.value = NavigateEvent.ToUserStatistic
+    fun continueAsSavedUser() {
+        _navigation.value = NavigateEvent.ToUserAchieves
     }
 
-    sealed class LoginUiState{
-        data class Success(val data: User?): LoginUiState()
-        data class Error(val message: String): LoginUiState()
-        object Loading: LoginUiState()
-        object Empty: LoginUiState()
+    sealed class LoginUiState {
+        data class Success(val data: User?) : LoginUiState()
+        data class Error(val message: String) : LoginUiState()
+        object Loading : LoginUiState()
+        object Empty : LoginUiState()
     }
 
-    sealed class NavigateEvent{
-        object Empty: NavigateEvent()
-        object ToUserStatistic: NavigateEvent()
-        object ToWebView: NavigateEvent()
+    sealed class NavigateEvent {
+        object Empty : NavigateEvent()
+        object ToUserAchieves : NavigateEvent()
+        object ToWebView : NavigateEvent()
     }
 }

@@ -14,10 +14,7 @@ import com.bondidos.wotstatisticbybondidos.data.repository.api.WotApi
 import com.bondidos.wotstatisticbybondidos.data.repository.room.AppDatabase
 import com.bondidos.wotstatisticbybondidos.data.repository.room.RoomRepositoryDao
 import com.bondidos.wotstatisticbybondidos.domain.Repository
-import com.bondidos.wotstatisticbybondidos.domain.useCase.CreateAchievesDBIfNotExist
-import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogin
-import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseSaveUser
-import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseSearch
+import com.bondidos.wotstatisticbybondidos.domain.useCase.*
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -52,7 +49,7 @@ object DataModule {
     ): Repository = RepositoryImpl(wotApi,room)
 
 }
-
+/*
 @Module
 @InstallIn(ViewModelComponent::class)
 object DomainModule {
@@ -74,9 +71,13 @@ object DomainModule {
     fun provideCreateDataBaseUseCAse(context: Context, repository: Repository):CreateAchievesDBIfNotExist =
         CreateAchievesDBIfNotExist(context.applicationContext,repository)
 
+    @ViewModelScoped
+    @Provides
+    fun provideUseCaseGetAchieves(repository: Repository): UseCaseGetAchieves =
+        UseCaseGetAchieves(repository)
 
 }
-
+*/
 @Module
 @InstallIn(ActivityComponent::class)
 object PresentationModule {

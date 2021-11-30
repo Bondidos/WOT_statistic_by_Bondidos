@@ -1,6 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.data.entiyes.searchUser
-import com.bondidos.wotstatisticbybondidos.data.entiyes.achievments.Data
-import com.bondidos.wotstatisticbybondidos.data.entiyes.achievments.Meta
+package com.bondidos.wotstatisticbybondidos.data.response_entiyes.searchUser
 import com.google.gson.annotations.SerializedName
 
 data class SearchResponse(

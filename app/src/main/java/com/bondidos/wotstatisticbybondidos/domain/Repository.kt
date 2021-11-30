@@ -1,5 +1,7 @@
 package com.bondidos.wotstatisticbybondidos.domain
 
+import com.bondidos.wotstatisticbybondidos.data.response_entiyes.achievments.AchievesResponse
+import com.bondidos.wotstatisticbybondidos.data.response_entiyes.achievments.UserAchievesData
 import com.bondidos.wotstatisticbybondidos.domain.entityes.Achieve
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import kotlinx.coroutines.flow.Flow
@@ -7,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 interface Repository {
 
     // REMOTE API
-    fun login(): Flow<List<User?>>
 
     suspend fun searchUser(search: String): List<User>
 
@@ -15,7 +16,7 @@ interface Repository {
     // User table
     suspend fun saveUserToCash(user: User): Long
 
-    fun getUserFromCache(id: Long): Flow<User>
+    fun getUserFromCache(): List<User?>
 
     suspend fun deleteUserFromCache(user: User): Int
 
@@ -25,4 +26,6 @@ interface Repository {
     suspend fun createAchieveDataBase(achieves: List<Achieve>):List<Long>
 
     fun getAchievesData(achievesList: List<String>): Flow<List<Achieve>>
+
+    fun getAchieves(id: Int): Flow<AchievesResponse>
 }

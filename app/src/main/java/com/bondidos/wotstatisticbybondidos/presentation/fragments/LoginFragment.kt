@@ -5,8 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.StringRes
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -109,7 +107,7 @@ class LoginFragment : Fragment() {
 
                     when (event) {
                         NavigateEvent.ToWebView -> findNavController().navigate(R.id.webViewFragment)
-                        NavigateEvent.ToUserStatistic -> findNavController()   //todo
+                        NavigateEvent.ToUserAchieves -> findNavController().navigate(R.id.achievesFragment)
                         else -> Unit
                     }
                 }

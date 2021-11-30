@@ -16,17 +16,15 @@
         <action
             android:id="@+id/action_loginFragment_to_webViewFragment"
             app:destination="@id/webViewFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_achievesFragment"
+            app:destination="@id/achievesFragment" />
     </fragment>
     <fragment
         android:id="@+id/statisticFragment"
         android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.StatisticFragment"
         android:label="statistic_fragment"
         tools:layout="@layout/statistic_fragment" />
-    <fragment
-        android:id="@+id/searchPlayerFragment"
-        android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.SearchPlayer"
-        android:label="search_player_fragment"
-        tools:layout="@layout/search_player_fragment" />
     <fragment
         android:id="@+id/webViewFragment"
         android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.WebViewFragment"
@@ -35,4 +33,8 @@
             android:id="@+id/action_webViewFragment_to_statisticFragment2"
             app:destination="@id/statisticFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/achievesFragment"
+        android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.AchievesFragment"
+        android:label="AchievesFragment" />
 </navigation>
