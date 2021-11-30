@@ -23,13 +23,25 @@
 
     <Button
         android:id="@+id/loginBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
-        android:text="login with WG token"
+        android:layout_marginBottom="176dp"
+        android:text="@string/login_with_wg_openid"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.596"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/continueBtn"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="@string/continue_as"
+        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="@+id/loginBtn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

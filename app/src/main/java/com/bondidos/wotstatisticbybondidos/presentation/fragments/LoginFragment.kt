@@ -5,17 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.databinding.LoginFragmentBinding
-import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.ACHIEVES_FRAGMENT
-import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.WEB_VIEW_FRAGMENT
-import com.bondidos.wotstatisticbybondidos.domain.other.Resource
-import com.bondidos.wotstatisticbybondidos.domain.other.Status
 import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
 import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel
+import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel.*
+import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel.LoginUiState.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
@@ -47,54 +46,70 @@ class LoginFragment : Fragment() {
     private fun setListeners(){
         with(binding) {
             loginBtn.setOnClickListener {
-                viewModel.logIn()
+                viewModel.logInWithWgOpenId()
+            }
+            continueBtn.setOnClickListener {
+                viewModel.continueAsSavedUser()
             }
         }
     }
 
-    private fun setObservers(){
-
-        // update UI State
-        lifecycleScope.launchWhenCreated {
-            viewModel.isDatabaseCreated.collect{ resource ->
-                when(resource.status){
-                    Status.LOADING -> binding.loginProgressBar.isVisible = true
-                    Status.SUCCESS -> {
-                        resource.data?.let {
-                            binding.loginProgressBar.isVisible = false
+    private fun setObservers() {
+        with(binding) {
+            // update UI State
+            lifecycleScope.launchWhenCreated {
+                // isDataBaseCreated
+                viewModel.isDatabaseCreated.collect { uiStatae ->
+                    when (uiStatae) {
+                        is Loading -> {
+                            loginProgressBar.isVisible = true
+                        }
+                        is Success -> {
+                            loginProgressBar.isVisible = false
                             makeToast(requireContext(), "Achieves database initialized")
                         }
+                        is Error -> {
+                            loginProgressBar.isVisible = false
+                            makeToast(requireContext(), uiStatae.message)
+                            continueBtn.isActivated = false
+                            loginBtn.isActivated = false
+                        }
+                        else -> Unit
                     }
-                    Status.ERROR -> {
-                        binding.loginProgressBar.isVisible = false
-                        makeToast(requireContext(), resource.message!!)
+                }
+
+            }
+
+            lifecycleScope.launchWhenCreated {
+                viewModel.isExistSavedUser.collect { uiStatae ->
+                    when (uiStatae) {
+                        is Loading -> {
+                            /*loginBtn.text = "Searching user"*/
+                            continueBtn.isActivated = false
+                        }
+                        is Success -> uiStatae.data?.let {
+                            /*loginBtn.text = "Continue as ${it}"*/
+                            continueBtn.isActivated = true
+                            continueBtn.text = it.nickname
+                        }
+                        is Error -> {
+                            makeToast(requireContext(), uiStatae.message)
+                            loginBtn.setText(R.string.login_with_wg_openid)
+                        }
+                        else -> Unit
                     }
                 }
             }
-        }
 
-        lifecycleScope.launchWhenCreated {
-            viewModel.isExistSavedUser.collect{ resource ->
-                when(resource.status){
-                    Status.LOADING -> binding.loginBtn.text = "Searching user"
-                    Status.SUCCESS -> resource.data?.let {
-                        binding.loginBtn.text = "Continue as ${it.nickname}"
+            // Navigation
+            lifecycleScope.launchWhenCreated {
+                viewModel.navigation.collect { event ->
+
+                    when (event) {
+                        NavigateEvent.ToWebView -> findNavController().navigate(R.id.webViewFragment)
+                        NavigateEvent.ToUserStatistic -> findNavController()   //todo
+                        else -> Unit
                     }
-                    Status.ERROR -> {
-                        makeToast(requireContext(), resource.message!!)
-                        binding.loginBtn.text = "login with WG token"
-                    }
-                }
-            }
-        }
-
-        // navigate WebView0
-        lifecycleScope.launchWhenCreated {
-            viewModel.navigation.collect{ event ->
-
-                when(event.getContentIfNotHandled()) {
-                    WEB_VIEW_FRAGMENT -> findNavController().navigate(R.id.webViewFragment)
-                    ACHIEVES_FRAGMENT -> findNavController()   //todo
                 }
             }
         }

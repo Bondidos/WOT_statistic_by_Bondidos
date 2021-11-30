@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WOT statistic by Bondidos</string>
+    <string name="login_with_wg_openid">Login with WG OpenID</string>
+    <string name="continue_as">Continue as...</string>
 </resources>
