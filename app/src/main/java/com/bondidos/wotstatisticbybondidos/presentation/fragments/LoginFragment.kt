@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -71,8 +72,8 @@ class LoginFragment : Fragment() {
                         is Error -> {
                             loginProgressBar.isVisible = false
                             makeToast(requireContext(), uiStatae.message)
-                            continueBtn.isActivated = false
-                            loginBtn.isActivated = false
+                            continueBtn.isClickable = false
+                            loginBtn.isClickable = false
                         }
                         else -> Unit
                     }
@@ -85,16 +86,17 @@ class LoginFragment : Fragment() {
                     when (uiStatae) {
                         is Loading -> {
                             /*loginBtn.text = "Searching user"*/
-                            continueBtn.isActivated = false
+                            continueBtn.isClickable = false
                         }
                         is Success -> uiStatae.data?.let {
                             /*loginBtn.text = "Continue as ${it}"*/
-                            continueBtn.isActivated = true
+                            continueBtn.isClickable = true
                             continueBtn.text = it.nickname
                         }
                         is Error -> {
                             makeToast(requireContext(), uiStatae.message)
                             loginBtn.setText(R.string.login_with_wg_openid)
+                            continueBtn.isClickable = false
                         }
                         else -> Unit
                     }
