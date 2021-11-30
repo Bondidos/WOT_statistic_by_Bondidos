@@ -1,9 +1,11 @@
-package com.bondidos.wotstatisticbybondidos.data.entiyes
+package com.bondidos.wotstatisticbybondidos.data.entiyes.achievments
+
+
 import com.google.gson.annotations.SerializedName
 
-data class WotApiResponse(
+data class AchievesResponse(
     @SerializedName("data")
-    val data: List<Data>,
+    val data: Data,
     @SerializedName("meta")
     val meta: Meta,
     @SerializedName("status")

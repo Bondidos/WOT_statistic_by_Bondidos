@@ -1,4 +1,5 @@
-package com.bondidos.wotstatisticbybondidos.data.entiyes
+package com.bondidos.wotstatisticbybondidos.data.entiyes.searchUser
+
 import com.google.gson.annotations.SerializedName
 
 data class Data(

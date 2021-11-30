@@ -60,8 +60,8 @@ class LoginFragment : Fragment() {
             // update UI State
             lifecycleScope.launchWhenCreated {
                 // isDataBaseCreated
-                viewModel.isDatabaseCreated.collect { uiStatae ->
-                    when (uiStatae) {
+                viewModel.isDatabaseCreated.collect { uiState ->
+                    when (uiState) {
                         is Loading -> {
                             loginProgressBar.isVisible = true
                         }
@@ -71,7 +71,7 @@ class LoginFragment : Fragment() {
                         }
                         is Error -> {
                             loginProgressBar.isVisible = false
-                            makeToast(requireContext(), uiStatae.message)
+                            makeToast(requireContext(), uiState.message)
                             continueBtn.isClickable = false
                             loginBtn.isClickable = false
                         }
