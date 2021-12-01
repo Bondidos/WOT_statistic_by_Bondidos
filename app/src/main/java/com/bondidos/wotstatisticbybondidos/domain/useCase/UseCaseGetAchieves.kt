@@ -7,6 +7,7 @@ import com.bondidos.wotstatisticbybondidos.data.response_entiyes.achievments.Ach
 import com.bondidos.wotstatisticbybondidos.data.response_entiyes.achievments.UserAchievesData
 import com.bondidos.wotstatisticbybondidos.domain.Repository
 import com.bondidos.wotstatisticbybondidos.domain.entityes.Achieve
+import com.bondidos.wotstatisticbybondidos.domain.entityes.AchievesToDisplay
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import com.bondidos.wotstatisticbybondidos.domain.other.extensions.asMap
 import kotlinx.coroutines.flow.Flow
@@ -19,24 +20,25 @@ import kotlin.reflect.full.memberProperties
 class UseCaseGetAchieves @Inject constructor(private val repository: Repository) {
 
 
-    suspend fun execute(): Flow<Map<Int,Achieve>?> {
-        // get user from cache
-        val user: User = repository.getUserFromCache().first()!!
+    suspend fun execute(): Flow<List<AchievesToDisplay>> {
+        return flow {
+            // get user from cache
+            val user: User = repository.getUserFromCache().first()!!
 
-        // get user achieves from api
-        val achievesResponse: AchievesResponse = getAchievesData(user.account_id)
+            // get user achieves from api
+            val achievesResponse: AchievesResponse = getAchievesData(user.account_id)
 
-        // convert api response to Map
-        val listOfAchieveResponse: List<Map<String,Int>> = achievesResponse.convertToMap()
+            // convert api response to Map
+            val listOfAchieveResponse: List<Map<String, Int>> = achievesResponse.convertToMap()
 
-        // create lists for making call to Achieves database to retrieve list of requested Achieves (description)
-        val listAchieves: List<String> = createListForRequest(listOfAchieveResponse)
-        Log.d("achievementsObjAsMap", listAchieves.toString())
+            // create lists for making call to Achieves database to retrieve list of requested Achieves (description)
+            val listAchieves: List<String> = createListForRequest(listOfAchieveResponse)
+            Log.d("achievementsObjAsMap", listAchieves.toString())
 
-        // get achievesDescription
-        val descriptionOfUserAchieves = repository.getAchievesData(listAchieves)
-        Log.d("achievementsObjAsMap", descriptionOfUserAchieves.toString())
-        return flow {  }
+            // get achievesDescription
+            val descriptionOfUserAchieves:  List<Achieve> = repository.getAchievesData(listAchieves)
+            Log.d("achievementsObjAsMap", descriptionOfUserAchieves.toString())
+        }
     }
 
     private fun createListForRequest( list : List<Map<String,Int>>): List<String> {
@@ -48,7 +50,7 @@ class UseCaseGetAchieves @Inject constructor(private val repository: Repository)
                 result.add(it.key)
             }
         }
-        return result
+        return result.toList()
     }
 
     private suspend fun getAchievesData(id: Int): AchievesResponse {
@@ -68,3 +70,20 @@ private fun AchievesResponse.convertToMap(): List<Map<String,Int>>{
         this.data.userAchievesData.maxSeries.asMap())
 }
 
+private fun  List<Achieve>.mapToAchievesToDisplay(map: List<Map<String,Int>>): List<AchievesToDisplay>{
+
+    val listToDisplay = mutableListOf<AchievesToDisplay>()
+    this.forEach { achieve ->
+        listToDisplay.add(
+            AchievesToDisplay(
+            name = achieve.name,
+            received = map.find {
+                                it[achieve.name]
+            } ,
+            group = achieve.section,
+            description = achieve.description,
+            image = achieve.image
+            )
+        )
+    }
+}
