@@ -13,7 +13,7 @@ data class MaxSeries(
     @SerializedName("diehard")
     val diehard: Int,
     @SerializedName("EFC2016")
-    val eFC2016: Int,
+    val EFC2016: Int,
     @SerializedName("handOfDeath")
     val handOfDeath: Int,
     @SerializedName("invincible")
@@ -25,5 +25,5 @@ data class MaxSeries(
     @SerializedName("victoryMarch")
     val victoryMarch: Int,
     @SerializedName("WFC2014")
-    val wFC2014: Int
+    val WFC2014: Int
 )

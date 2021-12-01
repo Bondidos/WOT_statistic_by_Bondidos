@@ -18,10 +18,10 @@ interface RoomRepositoryDao {
     suspend fun saveUserToCache(user: User): Long
 
     @Query("select * from user")
-    fun getUserFromCache(): List<User?>
+    suspend fun getUserFromCache(): List<User?>
 
     @Delete
-    fun deleteUserFromCache(user: User): Int
+    suspend fun deleteUserFromCache(user: User): Int
 
 
     // Achieves table
@@ -32,5 +32,5 @@ interface RoomRepositoryDao {
     suspend fun createAchieveDataBase(achieves: List<Achieve>): List<Long> //todo migrate flow?
 
     @Query("select * from achieves where name in (:achievesList) order by name ASC")
-    fun getAchievesData(achievesList: List<String>): Flow<List<Achieve>>
+    suspend fun getAchievesData(achievesList: List<String>): List<Achieve>
 }

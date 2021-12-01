@@ -34,7 +34,7 @@ class RepositoryImpl @Inject constructor (
 
     override suspend fun saveUserToCash(user: User): Long = roomStorage.saveUserToCache(user)
 
-    override fun getUserFromCache(): List<User?> = roomStorage.getUserFromCache()
+    override suspend fun getUserFromCache(): List<User?> = roomStorage.getUserFromCache()
 
     override suspend fun deleteUserFromCache(user: User): Int {
         TODO("Not yet implemented")
@@ -47,8 +47,8 @@ class RepositoryImpl @Inject constructor (
     override suspend fun createAchieveDataBase(achieves: List<Achieve>): List<Long> =
         roomStorage.createAchieveDataBase(achieves)
 
-    override fun getAchievesData(achievesList: List<String>): Flow<List<Achieve>> {
-        TODO("Not yet implemented")
+    override suspend fun getAchievesData(achievesList: List<String>): List<Achieve> {
+        return roomStorage.getAchievesData(achievesList)
     }
 
     override fun getAchieves(id: Int): Flow<AchievesResponse> {

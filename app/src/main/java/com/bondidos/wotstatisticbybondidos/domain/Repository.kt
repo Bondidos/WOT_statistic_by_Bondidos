@@ -16,7 +16,7 @@ interface Repository {
     // User table
     suspend fun saveUserToCash(user: User): Long
 
-    fun getUserFromCache(): List<User?>
+    suspend fun getUserFromCache(): List<User?>
 
     suspend fun deleteUserFromCache(user: User): Int
 
@@ -25,7 +25,7 @@ interface Repository {
 
     suspend fun createAchieveDataBase(achieves: List<Achieve>):List<Long>
 
-    fun getAchievesData(achievesList: List<String>): Flow<List<Achieve>>
+    suspend fun getAchievesData(achievesList: List<String>): List<Achieve>
 
     fun getAchieves(id: Int): Flow<AchievesResponse>
 }

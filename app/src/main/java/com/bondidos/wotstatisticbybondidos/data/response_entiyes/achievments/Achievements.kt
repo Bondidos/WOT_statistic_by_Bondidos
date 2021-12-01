@@ -11,15 +11,15 @@ data class Achievements(
     @SerializedName("arsonist")
     val arsonist: Int,
     @SerializedName("BattlePassCommonPr_1")
-    val battlePassCommonPr1: Int,
+    val BattlePassCommonPr_1: Int,
     @SerializedName("BattlePassCommonPr_2")
-    val battlePassCommonPr2: Int,
+    val BattlePassCommonPr_2: Int,
     @SerializedName("BattlePassCommonPr_3")
-    val battlePassCommonPr3: Int,
+    val BattlePassCommonPr_3: Int,
     @SerializedName("beasthunter")
     val beasthunter: Int,
     @SerializedName("bob2021Orzanel_eu")
-    val bob2021OrzanelEu: Int,
+    val bob2021Orzanel_eu: Int,
     @SerializedName("bombardier")
     val bombardier: Int,
     @SerializedName("bonecrusher")
@@ -29,7 +29,7 @@ data class Achievements(
     @SerializedName("charmed")
     val charmed: Int,
     @SerializedName("DdaymarathonMedal")
-    val ddaymarathonMedal: Int,
+    val DdaymarathonMedal: Int,
     @SerializedName("defender")
     val defender: Int,
     @SerializedName("demolition")
@@ -49,13 +49,13 @@ data class Achievements(
     @SerializedName("evileye")
     val evileye: Int,
     @SerializedName("Fest19Collection1")
-    val fest19Collection1: Int,
+    val Fest19Collection1: Int,
     @SerializedName("Fest19Collection2")
-    val fest19Collection2: Int,
+    val Fest19Collection2: Int,
     @SerializedName("Fest19Collection3")
-    val fest19Collection3: Int,
+    val Fest19Collection3: Int,
     @SerializedName("Fest19Racer")
-    val fest19Racer: Int,
+    val Fest19Racer: Int,
     @SerializedName("fighter")
     val fighter: Int,
     @SerializedName("firstMerit")
@@ -147,25 +147,25 @@ data class Achievements(
     @SerializedName("mousebane")
     val mousebane: Int,
     @SerializedName("NY20A1")
-    val nY20A1: Int,
+    val NY20A1: Int,
     @SerializedName("NY20A2")
-    val nY20A2: Int,
+    val NY20A2: Int,
     @SerializedName("NY20A3")
-    val nY20A3: Int,
+    val NY20A3: Int,
     @SerializedName("NY21_AtmsphrLevel")
-    val nY21AtmsphrLevel: Int,
+    val NY21_AtmsphrLevel: Int,
     @SerializedName("NY21_CelebChallenge")
-    val nY21CelebChallenge: Int,
+    val NY21_CelebChallenge: Int,
     @SerializedName("newMeritPM2")
     val newMeritPM2: Int,
     @SerializedName("pattonValley")
     val pattonValley: Int,
     @SerializedName("RP2018firstmed")
-    val rP2018firstmed: Int,
+    val RP2018firstmed: Int,
     @SerializedName("RP2018secondmed")
-    val rP2018secondmed: Int,
+    val RP2018secondmed: Int,
     @SerializedName("RP2018thirdmed")
-    val rP2018thirdmed: Int,
+    val RP2018thirdmed: Int,
     @SerializedName("raider")
     val raider: Int,
     @SerializedName("rankedDivisionFighter")
@@ -213,11 +213,11 @@ data class Achievements(
     @SerializedName("tankwomen")
     val tankwomen: Int,
     @SerializedName("TenYearsCountdownBrawlMedal")
-    val tenYearsCountdownBrawlMedal: Int,
+    val TenYearsCountdownBrawlMedal: Int,
     @SerializedName("TenYearsCountdownParticipation")
-    val tenYearsCountdownParticipation: Int,
+    val TenYearsCountdownParticipation: Int,
     @SerializedName("TenYearsCountdownStageMedal")
-    val tenYearsCountdownStageMedal: Int,
+    val TenYearsCountdownStageMedal: Int,
     @SerializedName("titleSniper")
     val titleSniper: Int,
     @SerializedName("warrior")
@@ -231,5 +231,5 @@ data class Achievements(
     @SerializedName("wtxHunterWins")
     val wtxHunterWins: Int,
     @SerializedName("01YearsOfService")
-    val yearsOfService: Int
+    val YearsOfService: Int
 )

@@ -5,6 +5,7 @@ import com.bondidos.wotstatisticbybondidos.domain.entityes.Achieve
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import com.google.gson.GsonBuilder
 import org.json.JSONObject
+import kotlin.reflect.full.memberProperties
 
 fun JSONObject.toAchievesList(): List<Achieve> {
     val list: MutableList<Achieve> = mutableListOf()
@@ -22,4 +23,9 @@ fun JSONObject.toAchievesList(): List<Achieve> {
 
 fun List<Data>.mapToUserList() : List<User>{
     return this.map { User(it.nickname,it.accountId, null, null) }
+}
+
+inline fun <reified T : Any> T.asMap() : Map<String, Int> {
+    val props = T::class.memberProperties.associateBy { it.name }
+    return props.keys.associateWith { props[it]?.get(this) as Int}
 }
