@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 class AchievesViewModel @Inject constructor(
@@ -24,17 +25,15 @@ class AchievesViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
 
             _listOfAchieves.value = AchievesUiState.Loading
-            getAchieves.execute().let { flow ->
-                flow.collect { list ->
-                    when(list != null){
-                        true -> _listOfAchieves.value = AchievesUiState.Success(list)
-                        false -> _listOfAchieves.value = AchievesUiState.Error("Can't retrieve list")
-                    }
+            try {
+                getAchieves.execute().collect {
+                    _listOfAchieves.value = AchievesUiState.Success(it)
                 }
+            } catch (e: Exception) {
+                _listOfAchieves.value = AchievesUiState.Error("Can't retrieve list")
             }
         }
     }
-
 
     sealed class AchievesUiState {
         data class Success(val data: List<Achieve>) : AchievesUiState()

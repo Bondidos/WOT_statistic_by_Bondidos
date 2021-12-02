@@ -2,6 +2,9 @@ package com.bondidos.wotstatisticbybondidos.presentation.di
 
 import android.content.Context
 import androidx.room.Room
+import coil.Coil
+import coil.ImageLoader
+import com.bondidos.wotstatisticbybondidos.R
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +23,8 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityScoped
 import dagger.hilt.android.scopes.ViewModelScoped
+import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
@@ -87,13 +92,25 @@ object PresentationModule {
     fun provideLoginViewModel(
         login: UseCaseLogin,
         search: UseCaseSearch,
-        createDB: CreateAchievesDBIfNotExist
+        createDB: CreateAchievesDBIfNo           tExist
     ): ViewModel = LoginViewModelFactory(login, search,createDB).create(LoginViewModel::class.java)
 */
 
     @ActivityScoped
     @Provides
     fun provideAppContext(@ApplicationContext context: Context): Context = context
+
+    /*@ActivityScoped
+    @Provides
+    fun provideGlideInstance(
+        @ApplicationContext context: Context
+    ): RequestManager = Glide.with(context.applicationContext).setDefaultRequestOptions(
+        RequestOptions()
+            .placeholder(R.drawable.ic_baseline_leaderboard_24)
+            .error(R.drawable.ic_baseline_leaderboard_24)
+            .diskCacheStrategy(DiskCacheStrategy.DATA)
+    )*/
+
 }
 
 //TODO SET INIT BLOCK INTO THIS OBJECTS AND LOOK FOR RECREATING

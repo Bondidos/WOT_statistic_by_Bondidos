@@ -73,6 +73,11 @@ class WebViewFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     inner class AuthWebViewClient : WebViewClient(){
 
         override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
