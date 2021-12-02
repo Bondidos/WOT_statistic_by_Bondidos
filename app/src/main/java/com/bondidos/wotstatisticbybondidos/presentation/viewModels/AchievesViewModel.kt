@@ -27,8 +27,8 @@ class AchievesViewModel @Inject constructor(
             getAchieves.execute().let { flow ->
                 flow.collect { list ->
                     when(list != null){
-                        /*true -> _listOfAchieves.value = AchievesUiState.Success(list)
-                        false -> _listOfAchieves.value = AchievesUiState.Error("Can't retrieve list")*/
+                        true -> _listOfAchieves.value = AchievesUiState.Success(list)
+                        false -> _listOfAchieves.value = AchievesUiState.Error("Can't retrieve list")
                     }
                 }
             }

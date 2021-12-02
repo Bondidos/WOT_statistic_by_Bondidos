@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
@@ -27,29 +28,27 @@ class LoginViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             _isDatabaseCreated.value = LoginUiState.Loading
-            createAchievesDBIfNotExist.execute().let { it ->
-                when (it) {
-                    true -> _isDatabaseCreated.value = LoginUiState.Success(null)
-                    false -> _isDatabaseCreated.value = LoginUiState.Error(
-                        "Error while Initializing Database. Please restart Application"
-                    )
-                }
+            try {
+                createAchievesDBIfNotExist.execute()
+                _isDatabaseCreated.value = LoginUiState.Success(null)
+            }
+            catch (e: Exception) {
+                _isDatabaseCreated.value = LoginUiState.Error(
+                    "Error while Initializing Database. Please restart Application"
+                )
             }
 
             _isExistSavedUser.value = LoginUiState.Loading
-            login.execute().let { list ->
-
-                when (list.isNotEmpty()) {
-                    false -> _isExistSavedUser.value =
-                        LoginUiState.Error("Can't retrieve data about user")
-                    true -> if (list.isNotEmpty()) {
-                        _isExistSavedUser.value = LoginUiState.Success(list.first())
-                    }
+            try {
+                login.execute().let { user ->
+                    _isExistSavedUser.value = LoginUiState.Success(user)
                 }
-
+            }   catch (e: Exception){
+                _isExistSavedUser.value = LoginUiState.Error("Can't find user's data")
             }
         }
     }
+
 
     fun logInWithWgOpenId() {
         _navigation.value = NavigateEvent.ToWebView

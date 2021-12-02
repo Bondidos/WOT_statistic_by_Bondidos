@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 class UseCaseLogin @Inject constructor(private val repository: Repository) {
 
-    suspend fun execute(): List<User?> = repository.getUserFromCache()
+    suspend fun execute(): User = repository.getUserFromCache()
 
 }

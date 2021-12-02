@@ -16,7 +16,7 @@ interface Repository {
     // User table
     suspend fun saveUserToCash(user: User): Long
 
-    suspend fun getUserFromCache(): List<User?>
+    suspend fun getUserFromCache(): User
 
     suspend fun deleteUserFromCache(user: User): Int
 

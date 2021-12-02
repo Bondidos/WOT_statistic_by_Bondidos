@@ -49,7 +49,7 @@ data class Achieve(
 
     @SerializedName("type")
     val type: String?,
-
+    @SerializedName("received")
     var received: Int
 )
 data class Option(

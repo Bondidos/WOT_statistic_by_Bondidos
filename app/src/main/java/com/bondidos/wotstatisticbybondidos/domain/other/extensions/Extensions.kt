@@ -22,7 +22,13 @@ fun JSONObject.toAchievesList(): List<Achieve> {
 }
 
 fun List<Data>.mapToUserList() : List<User>{
-    return this.map { User(it.nickname,it.accountId, null, null) }
+    return this.map { User(
+        nickname = it.nickname,
+        account_id = it.accountId,
+        access_token = null,
+        expires_at = null
+        )
+    }
 }
 
 inline fun <reified T : Any> T.asMap() : Map<String, Int> {

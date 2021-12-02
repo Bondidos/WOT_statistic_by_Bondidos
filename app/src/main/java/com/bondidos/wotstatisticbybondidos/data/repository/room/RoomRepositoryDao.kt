@@ -17,8 +17,8 @@ interface RoomRepositoryDao {
     @Insert(onConflict = REPLACE)
     suspend fun saveUserToCache(user: User): Long
 
-    @Query("select * from user")
-    suspend fun getUserFromCache(): List<User?>
+    @Query("select * from user where id = 1")
+    suspend fun getUserFromCache(): User
 
     @Delete
     suspend fun deleteUserFromCache(user: User): Int

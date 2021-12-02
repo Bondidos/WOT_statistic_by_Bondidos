@@ -17,7 +17,7 @@ class UseCaseGetAchieves @Inject constructor(private val repository: Repository)
     suspend fun execute(): Flow<List<Achieve>> {
         return flow {
             // get user from cache
-            val user: User = repository.getUserFromCache().first()!!//todo kljj
+            val user: User = repository.getUserFromCache()
 
             // get user achieves from api
             val achievesResponse: AchievesResponse = getAchievesData(user.account_id)

@@ -31,7 +31,7 @@ class RepositoryImpl @Inject constructor (
 
     override suspend fun saveUserToCash(user: User): Long = roomStorage.saveUserToCache(user)
 
-    override suspend fun getUserFromCache(): List<User?> = roomStorage.getUserFromCache()
+    override suspend fun getUserFromCache(): User = roomStorage.getUserFromCache()
 
     override suspend fun deleteUserFromCache(user: User): Int = roomStorage.deleteUserFromCache(user)
 
