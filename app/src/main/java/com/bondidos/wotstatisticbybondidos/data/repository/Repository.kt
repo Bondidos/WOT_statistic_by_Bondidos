@@ -25,31 +25,23 @@ class RepositoryImpl @Inject constructor (
 
 
     override suspend fun searchUser(search: String): List<User> {
-
-        return withContext(Dispatchers.IO) {
             val apiData = networkService.searchUser()
-            if(apiData.status == "ok") apiData.data.mapToUserList() else emptyList()
-        }
+            return if(apiData.status == "ok") apiData.data.mapToUserList() else emptyList()
     }
 
     override suspend fun saveUserToCash(user: User): Long = roomStorage.saveUserToCache(user)
 
     override suspend fun getUserFromCache(): List<User?> = roomStorage.getUserFromCache()
 
-    override suspend fun deleteUserFromCache(user: User): Int {
-        TODO("Not yet implemented")
-    }
+    override suspend fun deleteUserFromCache(user: User): Int = roomStorage.deleteUserFromCache(user)
 
-    override suspend fun isAchievesDataBaseExist(): Int =
-        roomStorage.isAchievesDataBaseExist()
-
+    override suspend fun isAchievesDataBaseExist(): Int = roomStorage.isAchievesDataBaseExist()
 
     override suspend fun createAchieveDataBase(achieves: List<Achieve>): List<Long> =
         roomStorage.createAchieveDataBase(achieves)
 
-    override suspend fun getAchievesData(achievesList: List<String>): List<Achieve> {
-        return roomStorage.getAchievesData(achievesList)
-    }
+    override suspend fun getAchievesData(achievesList: List<String>): List<Achieve> =
+        roomStorage.getAchievesData(achievesList)
 
     override fun getAchieves(id: Int): Flow<AchievesResponse> {
         return flow{

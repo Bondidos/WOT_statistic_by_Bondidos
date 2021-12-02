@@ -1,54 +1,50 @@
 package com.bondidos.wotstatisticbybondidos.domain.useCase
 
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import com.bondidos.wotstatisticbybondidos.data.response_entiyes.achievments.AchievesResponse
-import com.bondidos.wotstatisticbybondidos.data.response_entiyes.achievments.UserAchievesData
 import com.bondidos.wotstatisticbybondidos.domain.Repository
 import com.bondidos.wotstatisticbybondidos.domain.entityes.Achieve
-import com.bondidos.wotstatisticbybondidos.domain.entityes.AchievesToDisplay
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import com.bondidos.wotstatisticbybondidos.domain.other.extensions.asMap
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
-import java.util.stream.Stream
 import javax.inject.Inject
-import kotlin.reflect.full.memberProperties
 
 class UseCaseGetAchieves @Inject constructor(private val repository: Repository) {
 
 
-    suspend fun execute(): Flow<List<AchievesToDisplay>> {
+    suspend fun execute(): Flow<List<Achieve>> {
         return flow {
             // get user from cache
-            val user: User = repository.getUserFromCache().first()!!
+            val user: User = repository.getUserFromCache().first()!!//todo kljj
 
             // get user achieves from api
             val achievesResponse: AchievesResponse = getAchievesData(user.account_id)
 
             // convert api response to Map
-            val listOfAchieveResponse: List<Map<String, Int>> = achievesResponse.convertToMap()
+            val listOfAchieveResponse: Map<String,Int> = achievesResponse.convertToMap()
 
             // create lists for making call to Achieves database to retrieve list of requested Achieves (description)
             val listAchieves: List<String> = createListForRequest(listOfAchieveResponse)
-            Log.d("achievementsObjAsMap", listAchieves.toString())
+           //Log.d("achievementsObjAsMap", listAchieves.toString())
 
             // get achievesDescription
             val descriptionOfUserAchieves:  List<Achieve> = repository.getAchievesData(listAchieves)
+            descriptionOfUserAchieves.map {
+                it.received = listOfAchieveResponse[it.name] ?: 0
+            }
             Log.d("achievementsObjAsMap", descriptionOfUserAchieves.toString())
+            emit(descriptionOfUserAchieves)
         }
     }
 
-    private fun createListForRequest( list : List<Map<String,Int>>): List<String> {
+    private fun createListForRequest( list : Map<String,Int>): List<String> {
 
         val result = mutableListOf<String>()
 
-        list.forEach { map ->
-            map.forEach { it ->
+        list.forEach {
                 result.add(it.key)
-            }
         }
         return result.toList()
     }
@@ -62,28 +58,11 @@ class UseCaseGetAchieves @Inject constructor(private val repository: Repository)
     }
 }
 
-private fun AchievesResponse.convertToMap(): List<Map<String,Int>>{
+private fun AchievesResponse.convertToMap(): Map<String,Int>{
 
-    return listOf(
-        this.data.userAchievesData.achievements.asMap(),
-        this.data.userAchievesData.frags.asMap(),
-        this.data.userAchievesData.maxSeries.asMap())
-}
-
-private fun  List<Achieve>.mapToAchievesToDisplay(map: List<Map<String,Int>>): List<AchievesToDisplay>{
-
-    val listToDisplay = mutableListOf<AchievesToDisplay>()
-    this.forEach { achieve ->
-        listToDisplay.add(
-            AchievesToDisplay(
-            name = achieve.name,
-            received = map.find {
-                                it[achieve.name]
-            } ,
-            group = achieve.section,
-            description = achieve.description,
-            image = achieve.image
-            )
-        )
-    }
+    val resultList = mutableListOf<Pair<String,Int>>()
+    resultList.addAll(this.data.userAchievesData.achievements.asMap().toList())
+    resultList.addAll(this.data.userAchievesData.frags.asMap().toList())
+    resultList.addAll(this.data.userAchievesData.maxSeries.asMap().toList())
+    return resultList.toMap()
 }

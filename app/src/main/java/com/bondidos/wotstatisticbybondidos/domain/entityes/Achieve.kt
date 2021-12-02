@@ -48,7 +48,9 @@ data class Achieve(
     val sectionOrder: Int?,
 
     @SerializedName("type")
-    val type: String?
+    val type: String?,
+
+    var received: Int
 )
 data class Option(
    // @SerializedName("description")
@@ -64,18 +66,6 @@ data class Option(
 )
 
 class OptionConverter{
-
-   /* @TypeConverter
-    fun toList(value: String): List<Option>{
-        val listType = object: TypeToken<List<Option>>() {}.type
-        return Gson().fromJson(value,listType)
-    }
-
-    @TypeConverter
-    fun toString(list: List<Option>): String{
-        val gson = Gson()
-        return gson.toJson(list)
-    }*/
 
     @TypeConverter
     fun toList(value: String?): List<Option>?{
