@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_loginFragment_to_achievesFragment"
             app:destination="@id/achievesFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/statisticFragment"
@@ -37,4 +40,8 @@
         android:id="@+id/achievesFragment"
         android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.AchievesFragment"
         android:label="AchievesFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>
