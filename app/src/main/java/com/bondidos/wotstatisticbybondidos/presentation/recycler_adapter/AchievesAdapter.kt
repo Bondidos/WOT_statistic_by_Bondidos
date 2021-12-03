@@ -33,9 +33,8 @@ class AchievesAdapter : ListAdapter<Achieve, AchievesAdapter.AchieveViewHolder>(
         val item = getItem(position)
         holder.apply {
             received.text = item.received.toString()
-            imageView.load(item.image)
+            imageView.load(item.imageBigfixe?.replace("http","https") ?: "")
         }
-        holder.onBind(item.image ?:"")
     }
 
     class AchieveDiffCallback : DiffUtil.ItemCallback<Achieve>() {
@@ -53,14 +52,5 @@ class AchievesAdapter : ListAdapter<Achieve, AchievesAdapter.AchieveViewHolder>(
 
         val received = binding.received
         val imageView = binding.imageView
-
-        fun onBind(picture: String) {
-            /*Coil.with(imageView)
-                .load("http://api.worldoftanks.eu/static/2.71.0/wot/encyclopedia/achievement/BattlePassCommonPr_1.png")
-                .into(imageView)*/
-            imageView.load(Uri.parse("http://api.worldoftanks.eu/static/2.71.0/wot/encyclopedia/achievement/big/crucialShotMedal.png")){
-                placeholder(R.drawable.ic_baseline_leaderboard_24)
-            }
-        }
     }
 }
