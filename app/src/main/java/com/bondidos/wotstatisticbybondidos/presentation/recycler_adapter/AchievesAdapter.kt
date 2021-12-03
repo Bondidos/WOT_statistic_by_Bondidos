@@ -33,7 +33,7 @@ class AchievesAdapter : ListAdapter<Achieve, AchievesAdapter.AchieveViewHolder>(
         val item = getItem(position)
         holder.apply {
             received.text = item.received.toString()
-            imageView.load(item.imageBigfixe?.replace("http","https") ?: "")
+            imageView.load(item.imageBig?.replace("http","https") ?: "")
         }
     }
 

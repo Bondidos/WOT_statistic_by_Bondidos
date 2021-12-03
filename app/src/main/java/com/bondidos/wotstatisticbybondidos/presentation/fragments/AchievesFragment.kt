@@ -52,7 +52,7 @@ class AchievesFragment : Fragment() {
 
     private fun setUpRecycler() = binding.achievesRecycler.apply {
         adapter = achievesAdapter
-        layoutManager = GridLayoutManager(requireContext(),6)
+        layoutManager = GridLayoutManager(requireContext(),5)
     }
 
     private fun setUpObservers() {
