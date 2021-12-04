@@ -23,22 +23,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
             if (preference.key == THEME_PREFERENCE &&
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
             ) {
-                preference.setOnPreferenceChangeListener { preference, newValue ->
-
-                    Log.d("Preferences", newValue.toString())
-                    true
-                }
-            }
-
-            /*if(preference.peekExtras().getBoolean(THEME_PREFERENCE)){
+                val pref =
+                    PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
+                        THEME_PREFERENCE, false
+                    )
+                if (pref) {
                     setDefaultNightMode(MODE_NIGHT_YES)
-                }
-                else setDefaultNightMode(MODE_NIGHT_NO)
+                } else setDefaultNightMode(MODE_NIGHT_NO)
             }
-        } ?: setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)*/
         }
-            return super.onPreferenceTreeClick(preference)
-        }
-
+        return super.onPreferenceTreeClick(preference)
+    }
 
 }
