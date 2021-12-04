@@ -9,8 +9,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.bondidos.wotstatisticbybondidos.R
-
-const val THEME_PREFERENCE = "switch_to_dark"
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.THEME_PREFERENCE
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
