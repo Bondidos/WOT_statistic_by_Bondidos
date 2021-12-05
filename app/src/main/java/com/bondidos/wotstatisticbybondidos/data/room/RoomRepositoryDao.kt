@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
+import com.bondidos.wotstatisticbybondidos.data.entityes.achieves.AchievesDBItem
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 
 @Dao
@@ -31,4 +32,11 @@ interface RoomRepositoryDao {
 
     @Query("select * from achieves where name in (:achievesList) order by name ASC")
     suspend fun getAchievesData(achievesList: List<String>): List<Achieve>*/
+
+    //is AchievesDataBaseExist
+    @Query("select count(name) from achievesdbitem")
+    suspend fun isAchievesDBExist(): Int
+
+    @Insert(onConflict = IGNORE)
+    suspend fun createAchievesDB(list: List<AchievesDBItem>)
 }

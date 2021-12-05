@@ -1,5 +1,7 @@
 package com.bondidos.wotstatisticbybondidos.domain
 
+import com.bondidos.wotstatisticbybondidos.data.entityes.achieves.AchievesDBItem
+
 
 interface Repository {
 
@@ -24,6 +26,8 @@ interface Repository {
 
     fun getAchieves(id: Int): Flow<AchievesResponse>*/
 
-    suspend fun getUserData()
+    suspend fun createAchievesDB(list: List<AchievesDBItem>)
+
+    suspend fun isAchievesDataBaseExist(): Int
 
 }

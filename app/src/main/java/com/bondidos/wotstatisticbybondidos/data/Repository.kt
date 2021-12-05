@@ -2,6 +2,7 @@ package com.bondidos.wotstatisticbybondidos.data
 
 import android.util.Log
 import com.bondidos.wotstatisticbybondidos.data.api.WotApi
+import com.bondidos.wotstatisticbybondidos.data.entityes.achieves.AchievesDBItem
 import com.bondidos.wotstatisticbybondidos.data.room.RoomRepositoryDao
 import com.bondidos.wotstatisticbybondidos.domain.Repository
 import javax.inject.Inject
@@ -16,11 +17,10 @@ class RepositoryImpl @Inject constructor (
     private val networkService: WotApi,
     private val roomStorage: RoomRepositoryDao
     ) : Repository {
-    override suspend fun getUserData() {
-        val epic = networkService.getUserData(/*APPLICATION_ID,ACCESS_TOKEN,ACCOUNT_ID,null,null*/)
 
-        Log.d("TEST",epic.toString())
-    }
+    override suspend fun createAchievesDB(list: List<AchievesDBItem>) = roomStorage.createAchievesDB(list)
+
+    override suspend fun isAchievesDataBaseExist(): Int = roomStorage.isAchievesDBExist()
 
 
     /*override suspend fun searchUser(search: String): List<User> {

@@ -7,13 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.databinding.LoginFragmentBinding
+import com.bondidos.wotstatisticbybondidos.domain.other.Status.*
 import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
 import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel
-import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel.*
-import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel.LoginUiState.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
@@ -58,24 +55,24 @@ class LoginFragment : Fragment() {
             // update UI State
             lifecycleScope.launchWhenCreated {
                 // isDataBaseCreated
-                /*viewModel.isDatabaseCreated.collect { uiState ->
-                    when (uiState) {
-                        is Loading -> {
+                viewModel.isDatabaseCreated.collect { resource ->
+                    when (resource.status) {
+                        LOADING -> {
                             loginProgressBar.isVisible = true
                         }
-                        is Success -> {
+                        SUCCESS -> {
                             loginProgressBar.isVisible = false
-                            makeToast(requireContext(), "Achieves database initialized")
+                            makeToast(requireContext(), resource.data ?: "")
                         }
-                        is Error -> {
+                        ERROR -> {
                             loginProgressBar.isVisible = false
-                            makeToast(requireContext(), uiState.message)
+                            makeToast(requireContext(), resource.message ?: "")
                             continueBtn.isClickable = false
                             loginBtn.isClickable = false
                         }
                         else -> Unit
                     }
-                }*/
+                }
 
             }
 
@@ -103,14 +100,14 @@ class LoginFragment : Fragment() {
 
             // Navigation
             lifecycleScope.launchWhenCreated {
-                viewModel.navigation.collect { event ->
+               /* viewModel.navigation.collect { event ->
 
                     when (event) {
                         NavigateEvent.ToWebView -> findNavController().navigate(R.id.webViewFragment)
                         NavigateEvent.ToUserAchieves -> findNavController().navigate(R.id.achievesFragment)
                         else -> Unit
                     }
-                }
+                }*/
             }
         }
     }

@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 class UseCaseLogin @Inject constructor(private val repository: Repository) {
 
-    suspend fun execute(): Unit = repository.getUserData()
+    suspend fun execute(): Unit = Unit
 
 }
