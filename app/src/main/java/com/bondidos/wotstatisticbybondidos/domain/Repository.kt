@@ -3,6 +3,7 @@ package com.bondidos.wotstatisticbybondidos.domain
 import android.content.Context
 import com.bondidos.wotstatisticbybondidos.data.entityes.achieves.AchievesDBItem
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
+import retrofit2.http.Url
 
 
 interface Repository {
@@ -32,7 +33,7 @@ interface Repository {
 
     suspend fun isAchievesDataBaseExist(): Boolean
 
-    suspend fun saveUser(user: User)
+    suspend fun saveUser(url: String): Boolean
 
     suspend fun getUser(): User?
 

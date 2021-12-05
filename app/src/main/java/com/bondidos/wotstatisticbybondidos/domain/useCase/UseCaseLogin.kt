@@ -7,10 +7,12 @@ import javax.inject.Inject
 
 class UseCaseLogin @Inject constructor(
     private val repository: Repository
-    ) {
+) {
 
     suspend fun execute(): Resource<User> {
         val user = repository.getUser()
-        return if( user != null) Resource.success(user) else Resource.error("Can't find valid user, please login",null)
+        return if (user != null)
+            Resource.success(user)
+        else Resource.error("Can't find valid user, please login", null)
     }
 }

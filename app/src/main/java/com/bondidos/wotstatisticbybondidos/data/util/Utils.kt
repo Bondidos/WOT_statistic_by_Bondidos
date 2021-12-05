@@ -1,6 +1,7 @@
 package com.bondidos.wotstatisticbybondidos.data.util
 
 import android.content.Context
+import android.net.UrlQuerySanitizer
 import com.bondidos.wotstatisticbybondidos.data.entityes.achieves.AchievesDBItem
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import com.squareup.moshi.JsonAdapter
@@ -28,5 +29,21 @@ class Utils @Inject constructor(private val context: Context) {
                 user.access_token != "" &&
                 isExpired(user.expires_at)
     }
-    private fun isExpired(expiresAt: Long): Boolean = System.currentTimeMillis() <= expiresAt
+    private fun isExpired(expiresAt: Long): Boolean =
+        System.currentTimeMillis() <= (expiresAt + System.currentTimeMillis())
+
+    fun getUserFromUrl(url: String): User? {
+        val sanitizer = UrlQuerySanitizer().apply {
+            allowUnregisteredParamaters = true
+            parseUrl(url)
+        }
+        return if(sanitizer.getValue("status") == "ok")
+            User(
+                nickname = sanitizer.getValue("nickname"),
+                account_id = sanitizer.getValue("account_id").toInt(),
+                access_token = sanitizer.getValue("access_token"),
+                expires_at = sanitizer.getValue("expires_at").toLong()
+            )
+        else null
+    }
 }

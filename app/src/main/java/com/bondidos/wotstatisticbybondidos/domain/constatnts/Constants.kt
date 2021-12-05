@@ -8,7 +8,7 @@ object Constants {
     // preferences
     const val THEME_PREFERENCE = "switch_to_dark"
 
-    // user
+    // user (Preferences)
     const val USER_NICKNAME = "nickname"
     const val USER_ACCOUNT_ID = "account_id"
     const val USER_TOKEN = "access_token"

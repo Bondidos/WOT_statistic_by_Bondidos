@@ -48,11 +48,11 @@ class WebViewFragment : Fragment() {
         lifecycleScope.launchWhenCreated {
             viewModel.isSaved.collect{ event ->
                 when(event.getContentIfNotHandled()){
-                    "false" -> {
+                    false -> {
                         makeToast(requireContext(),"Can't collect user data")
                         findNavController().navigate(R.id.loginFragment)
                     }
-                    "true" -> {
+                    true -> {
                         makeToast(requireContext(),"User saved")
                         findNavController().navigate(R.id.loginFragment)
                     }
