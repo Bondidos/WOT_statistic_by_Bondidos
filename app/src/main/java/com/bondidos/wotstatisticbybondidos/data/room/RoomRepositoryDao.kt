@@ -34,9 +34,10 @@ interface RoomRepositoryDao {
     suspend fun getAchievesData(achievesList: List<String>): List<Achieve>*/
 
     //is AchievesDataBaseExist
-    @Query("select count(name) from achievesdbitem")
+    @Query("select count(id) from achievesdbitem")
     suspend fun isAchievesDBExist(): Int
 
-    @Insert(onConflict = IGNORE)
+    @Insert(onConflict = REPLACE)
     suspend fun createAchievesDB(list: List<AchievesDBItem>)
+
 }

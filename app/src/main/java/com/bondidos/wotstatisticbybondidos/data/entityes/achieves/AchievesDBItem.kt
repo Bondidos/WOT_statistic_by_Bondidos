@@ -15,19 +15,19 @@ data class AchievesDBItem(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     @Json(name = "condition")
-    val condition: String,
+    val condition: String?,
     @Json(name = "description")
-    val description: String,
+    val description: String?,
     @Json(name = "hero_info")
-    val heroInfo: String,
+    val heroInfo: String?,
     @Json(name = "image")
-    val image: String,
+    val image: String?,
     @Json(name = "image_big")
-    val imageBig: String,
+    val imageBig: String?,
     @Json(name = "name")
     val name: String,
     @Json(name = "name_i18n")
-    val nameI18n: String,
+    val nameI18n: String?,
     @Json(name = "options")
     val options: List<Option>?,
     @Json(name = "order")
