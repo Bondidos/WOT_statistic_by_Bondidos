@@ -4,7 +4,7 @@ import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 
 interface PrefsStore {
 
-    fun saveUser(user: User)
+    suspend fun saveUser(user: User)
 
-    fun getUser(): User?
+    suspend fun getUser(): User?
 }

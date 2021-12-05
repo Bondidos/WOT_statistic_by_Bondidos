@@ -12,14 +12,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.databinding.WebViewBinding
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.LOGIN_URL
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.REDIRECT_URI
 import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
 import com.bondidos.wotstatisticbybondidos.presentation.viewModels.WebViewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
-
-const val REDIRECT_URI = "https://developers.wargaming.net/reference/all/wot/auth/login/"
-const val LOGIN_URL = "https://api.worldoftanks.eu/wot/auth/login/?application_id=5d489c586717c2b76ade8bea16607167&redirect_uri=https%3A%2F%2Fdevelopers.wargaming.net%2Freference%2Fall%2Fwot%2Fauth%2Flogin%2F"
 
 @AndroidEntryPoint
 class WebViewFragment : Fragment() {

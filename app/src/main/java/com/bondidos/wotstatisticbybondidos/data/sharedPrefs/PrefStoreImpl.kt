@@ -9,11 +9,11 @@ class PrefStoreImpl @Inject constructor(
     private val prefs: SharedPreferences
 ) : PrefsStore {
 
-    override fun saveUser(user: User) {
+    override suspend fun saveUser(user: User) {
         TODO("Not yet implemented")
     }
 
-    override fun getUser(): User {
+    override suspend fun getUser(): User {
         return User(
             nickname = prefs.getString(Constants.USER_NICKNAME, "") ?: "",
             account_id = prefs.getInt(Constants.USER_ACCOUNT_ID, -1),

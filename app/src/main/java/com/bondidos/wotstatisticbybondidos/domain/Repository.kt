@@ -32,8 +32,8 @@ interface Repository {
 
     suspend fun isAchievesDataBaseExist(): Boolean
 
-    fun saveUser(user: User)
+    suspend fun saveUser(user: User)
 
-    fun getUser(): User?
+    suspend fun getUser(): User?
 
 }

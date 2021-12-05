@@ -6,17 +6,11 @@ import com.bondidos.wotstatisticbybondidos.data.room.RoomRepositoryDao
 import com.bondidos.wotstatisticbybondidos.data.sharedPrefs.PrefStoreImpl
 import com.bondidos.wotstatisticbybondidos.data.util.Utils
 import com.bondidos.wotstatisticbybondidos.domain.Repository
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.ACHIEVES_COUNT
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
-const val APPLICATION_ID = "5d489c586717c2b76ade8bea16607167"
-const val ACCESS_TOKEN = "b98830431fc22d1565bfc3a84f59077f8baa0aff"
-const val ACCOUNT_ID = 560508396
-const val EXTRA = "statistics.epic, statistics.random"
-const val FIELDS = "-statistics.frags, -statistics.clan, -statistics.regular_team, -statistics.company, -statistics.historical, -statistics.team"
-const val ACHIEVES_COUNT = 365
 
 class RepositoryImpl @Inject constructor (
     private val networkService: WotApi,
@@ -35,13 +29,17 @@ class RepositoryImpl @Inject constructor (
     override suspend fun isAchievesDataBaseExist(): Boolean =
         withContext(Dispatchers.IO) { roomStorage.isAchievesDBExist() == ACHIEVES_COUNT }
 
-    override fun saveUser(user: User) {
+    override suspend fun saveUser(user: User) {
         TODO("Not yet implemented")
     }
 
-    override fun getUser(): User? {
-        val user = prefStore.getUser()
-        return if (utils.isUserValid(user)) user else null
+    override suspend fun getUser(): User? {
+
+        withContext(Dispatchers.IO) {
+            val user = prefStore.getUser()
+            return@withContext if (utils.isUserValid(user)) user else null
+        }
+        return null
     }
 
 

@@ -30,17 +30,3 @@ class WebViewViewModel@Inject constructor(private val saveUser: UseCaseSaveUser)
     }
 }
 
-/*
-class WebViewViewModelFactory (
-    private val saveUser: UseCaseSaveUser
-): ViewModelProvider.Factory{
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-
-        if(modelClass.isAssignableFrom(WebViewViewModel::class.java)){
-            @Suppress("UNCHECKED_CAST")
-            return WebViewViewModel(saveUser) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}*/
