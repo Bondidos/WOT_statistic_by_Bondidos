@@ -1,7 +1,11 @@
 package com.bondidos.wotstatisticbybondidos.presentation.viewModels
 
+import android.content.SharedPreferences
 import androidx.lifecycle.*
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.NAVIGATE_CONTINUE
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.NAVIGATE_TO_LOGIN
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
+import com.bondidos.wotstatisticbybondidos.domain.other.Event
 import com.bondidos.wotstatisticbybondidos.domain.other.Resource
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogin
 import com.bondidos.wotstatisticbybondidos.domain.useCase.CreateAchievesDBIfNotExist
@@ -19,13 +23,12 @@ class LoginViewModel @Inject constructor(
 
     private val _isDatabaseCreated = MutableStateFlow<Resource<String>>(Resource.initialized(null))
     val isDatabaseCreated: StateFlow<Resource<String>> = _isDatabaseCreated.asStateFlow()
-    /*
 
-    private val _isExistSavedUser = MutableStateFlow<LoginUiState>(LoginUiState.Empty)
-    val isExistSavedUser: StateFlow<LoginUiState> = _isExistSavedUser.asStateFlow()*/
+    private val _isExistSavedUser = MutableStateFlow<Resource<User>>(Resource.initialized(null))
+    val isExistSavedUser: StateFlow<Resource<User>> = _isExistSavedUser.asStateFlow()
 
-  /*  private val _navigation = MutableStateFlow<NavigateEvent>(NavigateEvent.Empty)
-    val navigation: StateFlow<NavigateEvent> = _navigation.asStateFlow()*/
+    private val _navigation = MutableStateFlow<Event<String>>(Event(""))
+    val navigation: StateFlow<Event<String>> = _navigation.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -33,6 +36,7 @@ class LoginViewModel @Inject constructor(
             _isDatabaseCreated.value = Resource.loading(null)
             _isDatabaseCreated.value =createAchievesDBIfNotExist.execute()
 
+            _isExistSavedUser.value = login.execute()
             /*_isDatabaseCreated.value = LoginUiState.Loading
             try {
                 //createAchievesDBIfNotExist.execute()
@@ -57,13 +61,11 @@ class LoginViewModel @Inject constructor(
 
 
     fun logInWithWgOpenId() {
-      //  _navigation.value = NavigateEvent.ToWebView
+        _navigation.value = Event(NAVIGATE_TO_LOGIN)
     }
 
     fun continueAsSavedUser() {
-       // viewModelScope.launch { login.execute() }
-
-        //_navigation.value = NavigateEvent.ToUserAchieves
+        _navigation.value = Event(NAVIGATE_CONTINUE)
     }
 
 /*    sealed class LoginUiState {

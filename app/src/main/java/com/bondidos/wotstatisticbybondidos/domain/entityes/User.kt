@@ -8,6 +8,6 @@ data class User(
 
     val nickname: String,
     val account_id: Int,
-    val access_token: String?,
-    val expires_at: Long?
+    val access_token: String,
+    val expires_at: Long
     )

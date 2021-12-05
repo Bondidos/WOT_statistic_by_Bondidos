@@ -1,6 +1,8 @@
 package com.bondidos.wotstatisticbybondidos.presentation.di
 
 import android.content.Context
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.bondidos.wotstatisticbybondidos.data.RepositoryImpl
 import dagger.Module
@@ -14,6 +16,7 @@ import com.bondidos.wotstatisticbybondidos.data.api.WotApi
 import com.bondidos.wotstatisticbybondidos.data.room.AppDatabase
 import com.bondidos.wotstatisticbybondidos.data.room.RoomRepositoryDao
 import com.bondidos.wotstatisticbybondidos.domain.Repository
+import com.bondidos.wotstatisticbybondidos.domain.other.IsValidUser
 import com.bondidos.wotstatisticbybondidos.domain.useCase.*
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -57,4 +60,12 @@ object PresentationModule {
     @Provides
     fun provideAppContext(@ApplicationContext context: Context): Context = context
 
+    @ActivityScoped
+    @Provides
+    fun provideSharedPreferences(context: Context): SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
+
+    @ActivityScoped
+    @Provides
+    fun provideValidateClass(): IsValidUser = IsValidUser()
 }

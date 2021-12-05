@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.databinding.LoginFragmentBinding
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants
 import com.bondidos.wotstatisticbybondidos.domain.other.Status.*
 import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
 import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel
@@ -77,37 +80,37 @@ class LoginFragment : Fragment() {
             }
 
             lifecycleScope.launchWhenCreated {
-                /*viewModel.isExistSavedUser.collect { uiStatae ->
-                    when (uiStatae) {
-                        is Loading -> {
-                            *//*loginBtn.text = "Searching user"*//*
-                            continueBtn.isClickable = false
+                viewModel.isExistSavedUser.collect { resource  ->
+                    when (resource.status) {
+                        INITIALIZED ->{
+                            continueBtn.isVisible = false
                         }
-                        is Success -> uiStatae.data?.let {
-                            *//*loginBtn.text = "Continue as ${it}"*//*
-                            continueBtn.isClickable = true
-                            continueBtn.text = it.nickname
+                        SUCCESS -> {
+                            continueBtn.apply {
+                                isVisible = true
+                                text = resource.data?.nickname
+                            }
+
                         }
-                        is Error -> {
-                            makeToast(requireContext(), uiStatae.message)
-                            loginBtn.setText(R.string.login_with_wg_openid)
-                            continueBtn.isClickable = false
+                        ERROR -> resource.data?.let {
+                            makeToast(requireContext(),resource.message!!)
                         }
+
                         else -> Unit
                     }
-                }*/
+                }
             }
 
             // Navigation
             lifecycleScope.launchWhenCreated {
-               /* viewModel.navigation.collect { event ->
+                viewModel.navigation.collect { event ->
 
-                    when (event) {
-                        NavigateEvent.ToWebView -> findNavController().navigate(R.id.webViewFragment)
-                        NavigateEvent.ToUserAchieves -> findNavController().navigate(R.id.achievesFragment)
+                    when (event.getContentIfNotHandled()) {
+                        Constants.NAVIGATE_TO_LOGIN -> findNavController().navigate(R.id.webViewFragment)
+                        Constants.NAVIGATE_CONTINUE -> findNavController().navigate(R.id.achievesFragment)
                         else -> Unit
                     }
-                }*/
+                }
             }
         }
     }
