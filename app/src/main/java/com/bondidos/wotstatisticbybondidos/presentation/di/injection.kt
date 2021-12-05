@@ -12,17 +12,17 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Singleton
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.BASE_URL
-import com.bondidos.wotstatisticbybondidos.data.api.WotApi
-import com.bondidos.wotstatisticbybondidos.data.room.AppDatabase
-import com.bondidos.wotstatisticbybondidos.data.room.RoomRepositoryDao
-import com.bondidos.wotstatisticbybondidos.data.sharedPrefs.PrefStoreImpl
+import com.bondidos.wotstatisticbybondidos.data.sources.api.WotApi
+import com.bondidos.wotstatisticbybondidos.data.sources.room.AppDatabase
+import com.bondidos.wotstatisticbybondidos.data.sources.room.RoomRepositoryDao
+import com.bondidos.wotstatisticbybondidos.data.sources.sharedPrefs.PrefStoreImpl
 import com.bondidos.wotstatisticbybondidos.data.util.Utils
 import com.bondidos.wotstatisticbybondidos.domain.Repository
+import com.google.gson.Gson
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityScoped
-import retrofit2.converter.moshi.MoshiConverterFactory
-
+import retrofit2.converter.gson.GsonConverterFactory
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
@@ -41,8 +41,9 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideApi(): WotApi = Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create())
+    fun provideApi(): WotApi = Retrofit.Builder()/*
+        .addConverterFactory(ScalarsConverterFactory.create())*/
+        .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(BASE_URL)
         .build()
         .create(WotApi::class.java)

@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/achievesFragment"
-        android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.AchievesFragment"
+        android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.UserDataFragment"
         android:label="AchievesFragment" />
     <fragment
         android:id="@+id/settingsFragment"

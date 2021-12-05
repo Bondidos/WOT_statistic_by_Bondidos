@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.data.sharedPrefs
+package com.bondidos.wotstatisticbybondidos.data.sources.sharedPrefs
 
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 

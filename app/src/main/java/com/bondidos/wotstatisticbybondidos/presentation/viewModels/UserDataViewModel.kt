@@ -2,18 +2,16 @@ package com.bondidos.wotstatisticbybondidos.presentation.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseGetAchieves
+import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseGetData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
-class AchievesViewModel @Inject constructor(
-    private val getAchieves: UseCaseGetAchieves
+class UserDataViewModel @Inject constructor(
+    private val fetchData: UseCaseGetData
 ) : ViewModel() {
 
     private val _listOfAchieves = MutableStateFlow<AchievesUiState>(AchievesUiState.Empty)
@@ -21,8 +19,8 @@ class AchievesViewModel @Inject constructor(
 
     init {
 
-        viewModelScope.launch(Dispatchers.IO) {
-
+        viewModelScope.launch {
+             fetchData.execute()
             /*_listOfAchieves.value = AchievesUiState.Loading
             try {
                 getAchieves.execute().collect {

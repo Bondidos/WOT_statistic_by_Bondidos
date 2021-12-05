@@ -37,4 +37,6 @@ interface Repository {
 
     suspend fun getUser(): User?
 
+    suspend fun fetchData()
+
 }

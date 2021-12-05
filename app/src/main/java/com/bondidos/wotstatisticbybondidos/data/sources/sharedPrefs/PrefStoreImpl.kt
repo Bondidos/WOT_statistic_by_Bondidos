@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.data.sharedPrefs
+package com.bondidos.wotstatisticbybondidos.data.sources.sharedPrefs
 
 import android.content.SharedPreferences
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.TOKEN_EXPIRES

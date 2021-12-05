@@ -1,71 +1,71 @@
 package com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi
 
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class StrongholdSkirmish(
-    @Json(name = "battle_avg_xp")
-    val battleAvgXp: Int,
-    @Json(name = "battles")
-    val battles: Int,
-    @Json(name = "battles_on_stunning_vehicles")
-    val battlesOnStunningVehicles: Int,
-    @Json(name = "capture_points")
-    val capturePoints: Int,
-    @Json(name = "damage_dealt")
-    val damageDealt: Int,
-    @Json(name = "damage_received")
-    val damageReceived: Int,
-    @Json(name = "direct_hits_received")
-    val directHitsReceived: Int,
-    @Json(name = "draws")
-    val draws: Int,
-    @Json(name = "dropped_capture_points")
-    val droppedCapturePoints: Int,
-    @Json(name = "explosion_hits")
-    val explosionHits: Int,
-    @Json(name = "explosion_hits_received")
-    val explosionHitsReceived: Int,
-    @Json(name = "frags")
-    val frags: Int,
-    @Json(name = "hits")
-    val hits: Int,
-    @Json(name = "hits_percents")
-    val hitsPercents: Int,
-    @Json(name = "losses")
-    val losses: Int,
-    @Json(name = "max_damage")
-    val maxDamage: Int,
-    @Json(name = "max_damage_tank_id")
-    val maxDamageTankId: Int,
-    @Json(name = "max_frags")
-    val maxFrags: Int,
-    @Json(name = "max_frags_tank_id")
-    val maxFragsTankId: Int,
-    @Json(name = "max_xp")
-    val maxXp: Int,
-    @Json(name = "max_xp_tank_id")
-    val maxXpTankId: Int,
-    @Json(name = "no_damage_direct_hits_received")
-    val noDamageDirectHitsReceived: Int,
-    @Json(name = "piercings")
-    val piercings: Int,
-    @Json(name = "piercings_received")
-    val piercingsReceived: Int,
-    @Json(name = "shots")
-    val shots: Int,
-    @Json(name = "spotted")
-    val spotted: Int,
-    @Json(name = "stun_assisted_damage")
-    val stunAssistedDamage: Int,
-    @Json(name = "stun_number")
-    val stunNumber: Int,
-    @Json(name = "survived_battles")
-    val survivedBattles: Int,
-    @Json(name = "tanking_factor")
-    val tankingFactor: Double,
-    @Json(name = "wins")
-    val wins: Int,
-    @Json(name = "xp")
-    val xp: Int
+    @SerializedName("battle_avg_xp")
+    val battleAvgXp: Int?,
+    @SerializedName("battles")
+    val battles: Int?,
+    @SerializedName("battles_on_stunning_vehicles")
+    val battlesOnStunningVehicles: Int?,
+    @SerializedName("capture_points")
+    val capturePoints: Int?,
+    @SerializedName("damage_dealt")
+    val damageDealt: Int?,
+    @SerializedName("damage_received")
+    val damageReceived: Int?,
+    @SerializedName("direct_hits_received")
+    val directHitsReceived: Int?,
+    @SerializedName("draws")
+    val draws: Int?,
+    @SerializedName("dropped_capture_points")
+    val droppedCapturePoints: Int?,
+    @SerializedName("explosion_hits")
+    val explosionHits: Int?,
+    @SerializedName("explosion_hits_received")
+    val explosionHitsReceived: Int?,
+    @SerializedName("frags")
+    val frags: Int?,
+    @SerializedName("hits")
+    val hits: Int?,
+    @SerializedName("hits_percents")
+    val hitsPercents: Int?,
+    @SerializedName("losses")
+    val losses: Int?,
+    @SerializedName("max_damage")
+    val maxDamage: Int?,
+    @SerializedName("max_damage_tank_id")
+    val maxDamageTankId: Int?,
+    @SerializedName("max_frags")
+    val maxFrags: Int?,
+    @SerializedName("max_frags_tank_id")
+    val maxFragsTankId: Int?,
+    @SerializedName("max_xp")
+    val maxXp: Int?,
+    @SerializedName("max_xp_tank_id")
+    val maxXpTankId: Int?,
+    @SerializedName("no_damage_direct_hits_received")
+    val noDamageDirectHitsReceived: Int?,
+    @SerializedName("piercings")
+    val piercings: Int?,
+    @SerializedName("piercings_received")
+    val piercingsReceived: Int?,
+    @SerializedName("shots")
+    val shots: Int?,
+    @SerializedName("spotted")
+    val spotted: Int?,
+    @SerializedName("stun_assisted_damage")
+    val stunAssistedDamage: Int?,
+    @SerializedName("stun_number")
+    val stunNumber: Int?,
+    @SerializedName("survived_battles")
+    val survivedBattles: Int?,
+    @SerializedName("tanking_factor")
+    val tankingFactor: Double?,
+    @SerializedName("wins")
+    val wins: Int?,
+    @SerializedName("xp")
+    val xp: Int?
 )

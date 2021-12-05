@@ -1,9 +1,9 @@
 package com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi
 
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class Meta(
-    @Json(name = "count")
-    val count: Int
+    @SerializedName("count")
+    val count: Int?
 )

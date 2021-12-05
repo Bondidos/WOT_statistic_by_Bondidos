@@ -1,16 +1,24 @@
 package com.bondidos.wotstatisticbybondidos.data
 
-import android.content.Context
 import android.util.Log
-import com.bondidos.wotstatisticbybondidos.data.api.WotApi
-import com.bondidos.wotstatisticbybondidos.data.room.RoomRepositoryDao
-import com.bondidos.wotstatisticbybondidos.data.sharedPrefs.PrefStoreImpl
+import com.bondidos.wotstatisticbybondidos.data.sources.api.WotApi
+import com.bondidos.wotstatisticbybondidos.data.sources.room.RoomRepositoryDao
+import com.bondidos.wotstatisticbybondidos.data.sources.sharedPrefs.PrefStoreImpl
 import com.bondidos.wotstatisticbybondidos.data.util.Utils
 import com.bondidos.wotstatisticbybondidos.domain.Repository
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.ACHIEVES_COUNT
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.APPLICATION_ID
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.EXTRA
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.FIELDS
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Response
+import okhttp3.ResponseBody
+import java.io.IOException
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -20,6 +28,7 @@ class RepositoryImpl @Inject constructor(
     private val utils: Utils
 ) : Repository {
 
+    //todo delete dispatcher. room has yours IO functionality
     override suspend fun createAchievesDB() {
         withContext(Dispatchers.IO) {
             val list = utils.jsonToAchievesList()
@@ -45,6 +54,34 @@ class RepositoryImpl @Inject constructor(
             val user = withContext(Dispatchers.IO) { prefStore.getUser()}
             return if (utils.isUserValid(user)) user else null
     }
+
+    override suspend fun fetchData() {
+        val user = withContext(Dispatchers.IO){prefStore.getUser()}
+        /*val apiData = withContext(Dispatchers.IO) { networkService.getUserData(
+            APPLICATION_ID,
+            user.account_id,
+            EXTRA,
+            user.access_token,
+            FIELDS
+        ) }*/
+        val apiData =networkService.getUserData(
+            APPLICATION_ID,
+            user.account_id,
+            EXTRA,
+            user.access_token,
+            FIELDS
+        )
+        apiData.body().use {
+            print(it)
+        }
+
+        Log.d("Repository",user.toString())
+        Log.d("Repository",apiData.toString())
+
+    }//nickname=LegitimateKiller,
+// account_id=560508396,
+// access_token=9172617952f3348333b2cef4641a923e6b74ab42,
+// expires_at=1639935775
 
 
 /*override suspend fun searchUser(search: String): List<User> {

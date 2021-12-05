@@ -1,39 +1,25 @@
 package com.bondidos.wotstatisticbybondidos.presentation.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.GridLayout
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
-import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bondidos.wotstatisticbybondidos.R
-import com.bondidos.wotstatisticbybondidos.databinding.AchievesFragmentBinding
-import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
+import com.bondidos.wotstatisticbybondidos.databinding.UserDataFragmentBinding
 import com.bondidos.wotstatisticbybondidos.presentation.recycler_adapter.AchievesAdapter
-import com.bondidos.wotstatisticbybondidos.presentation.viewModels.AchievesViewModel
-import com.bondidos.wotstatisticbybondidos.presentation.viewModels.AchievesViewModel.AchievesUiState
-import com.bondidos.wotstatisticbybondidos.presentation.viewModels.AchievesViewModel.AchievesUiState.Error
-import com.bondidos.wotstatisticbybondidos.presentation.viewModels.AchievesViewModel.AchievesUiState.Loading
-import com.bondidos.wotstatisticbybondidos.presentation.viewModels.AchievesViewModel.AchievesUiState.Success
+import com.bondidos.wotstatisticbybondidos.presentation.viewModels.UserDataViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AchievesFragment : Fragment() {
+class UserDataFragment : Fragment() {
 
-    private var _binding: AchievesFragmentBinding? = null
-    private val binding: AchievesFragmentBinding get() = requireNotNull(_binding)
+    private var _binding: UserDataFragmentBinding? = null
+    private val binding: UserDataFragmentBinding get() = requireNotNull(_binding)
 
     @Inject
-    lateinit var viewModel: AchievesViewModel
+    lateinit var viewModel: UserDataViewModel
 
     private val achievesAdapter: AchievesAdapter = AchievesAdapter()
 
@@ -41,7 +27,7 @@ class AchievesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = AchievesFragmentBinding.inflate(inflater,container,false)
+        _binding = UserDataFragmentBinding.inflate(inflater,container,false)
         return binding.root
 
     }

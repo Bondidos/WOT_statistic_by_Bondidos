@@ -29,6 +29,7 @@ class Utils @Inject constructor(private val context: Context) {
                 user.access_token != "" &&
                 isExpired(user.expires_at)
     }
+
     private fun isExpired(expiresAt: Long): Boolean =
         System.currentTimeMillis() <= (expiresAt + System.currentTimeMillis())
 

@@ -4,8 +4,12 @@ import android.util.Log
 import com.bondidos.wotstatisticbybondidos.domain.Repository
 import javax.inject.Inject
 
-class UseCaseGetAchieves @Inject constructor(private val repository: Repository) {
+class UseCaseGetData @Inject constructor(private val repository: Repository) {
 
+
+    suspend fun execute(){
+        repository.fetchData()
+    }
 
     /*suspend fun execute(): Flow<List<Achieve>> {
         return flow {

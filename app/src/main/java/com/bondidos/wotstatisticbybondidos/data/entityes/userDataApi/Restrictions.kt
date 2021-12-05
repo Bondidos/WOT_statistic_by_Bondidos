@@ -1,9 +1,9 @@
 package com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi
 
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class Restrictions(
-    @Json(name = "chat_ban_time")
-    val chatBanTime: Any
+    @SerializedName("chat_ban_time")
+    val chatBanTime: Any?
 )
