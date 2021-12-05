@@ -14,42 +14,22 @@ import org.json.JSONObject
 import java.lang.Exception
 import javax.inject.Inject
 
-const val ACHIEVES_COUNT = 365
+
 
 class CreateAchievesDBIfNotExist @Inject constructor(
-    private val context: Context,
     private val repository: Repository
 ) {
 
     suspend fun execute(): Resource<String> {
-        if (repository.isAchievesDataBaseExist() != ACHIEVES_COUNT) {
-            return try {
-                withContext(Dispatchers.IO) { createAchievesDataBase() }
-                Resource.success("DataBase Created")
-            } catch (e: Exception) {
-                Resource.error(e.toString(), null)
-            }
+
+        return if (repository.isAchievesDataBaseExist()) {
+            return Resource.success("Database exist")
         }
-        return Resource.success("Database exist")
-    }
-
-    private suspend fun createAchievesDataBase() {
-        val list = createAchievesFromJson()
-        repository.createAchievesDB(list)
-        Log.d("Recorded", list.size.toString())
-    }
-
-
-    private fun createAchievesFromJson(): List<AchievesDBItem> {
-
-        val moshi = Moshi.Builder()
-            .build()
-        val arrayType = Types.newParameterizedType(List::class.java, AchievesDBItem::class.java)
-        val adapter: JsonAdapter<List<AchievesDBItem>> = moshi.adapter(arrayType)
-
-        val file = "achieves.json"
-        val myJson = context.assets.open(file).bufferedReader().use { it.readText() }
-
-        return adapter.fromJson(myJson) ?: emptyList()
+        else try {
+            repository.createAchievesDB()
+            Resource.success("DataBase Created")
+        } catch (e: Exception) {
+            Resource.error(e.toString(), null)
+        }
     }
 }

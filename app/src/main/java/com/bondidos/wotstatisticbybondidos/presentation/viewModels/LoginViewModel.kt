@@ -37,6 +37,8 @@ class LoginViewModel @Inject constructor(
             _isDatabaseCreated.value =createAchievesDBIfNotExist.execute()
 
             _isExistSavedUser.value = login.execute()
+
+
             /*_isDatabaseCreated.value = LoginUiState.Loading
             try {
                 //createAchievesDBIfNotExist.execute()

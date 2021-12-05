@@ -15,9 +15,9 @@ import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.BASE_URL
 import com.bondidos.wotstatisticbybondidos.data.api.WotApi
 import com.bondidos.wotstatisticbybondidos.data.room.AppDatabase
 import com.bondidos.wotstatisticbybondidos.data.room.RoomRepositoryDao
+import com.bondidos.wotstatisticbybondidos.data.sharedPrefs.PrefStoreImpl
+import com.bondidos.wotstatisticbybondidos.data.util.Utils
 import com.bondidos.wotstatisticbybondidos.domain.Repository
-import com.bondidos.wotstatisticbybondidos.domain.other.IsValidUser
-import com.bondidos.wotstatisticbybondidos.domain.useCase.*
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityScoped
@@ -27,6 +27,18 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 @InstallIn(SingletonComponent::class)
 object DataModule {
 
+
+    @Provides
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
+
+    @Provides
+    fun provideUtilsClass(@ApplicationContext context: Context): Utils = Utils(context)
+
+    @Provides
+    fun providePrefStore(preferences: SharedPreferences): PrefStoreImpl =
+        PrefStoreImpl(preferences)
+
     @Singleton
     @Provides
     fun provideApi(): WotApi = Retrofit.Builder()
@@ -35,6 +47,7 @@ object DataModule {
         .build()
         .create(WotApi::class.java)
 
+    @Singleton
     @Provides
     fun provideRoomDatabaseDao(@ApplicationContext context: Context): RoomRepositoryDao =
         Room.databaseBuilder(
@@ -43,11 +56,14 @@ object DataModule {
             "database"
         ).build().userDataBase()
 
+    @Singleton
     @Provides
     fun provideRepository(
         wotApi: WotApi,
-        room: RoomRepositoryDao
-    ): Repository = RepositoryImpl(wotApi, room)
+        room: RoomRepositoryDao,
+        prefStore: PrefStoreImpl,
+        utils: Utils
+    ): Repository = RepositoryImpl(wotApi, room,prefStore,utils)
 
 }
 
@@ -60,12 +76,7 @@ object PresentationModule {
     @Provides
     fun provideAppContext(@ApplicationContext context: Context): Context = context
 
-    @ActivityScoped
-    @Provides
-    fun provideSharedPreferences(context: Context): SharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(context)
 
-    @ActivityScoped
-    @Provides
-    fun provideValidateClass(): IsValidUser = IsValidUser()
+
+
 }
