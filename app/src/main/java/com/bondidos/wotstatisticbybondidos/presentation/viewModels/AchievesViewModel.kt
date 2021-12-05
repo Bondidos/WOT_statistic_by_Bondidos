@@ -2,7 +2,6 @@ package com.bondidos.wotstatisticbybondidos.presentation.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bondidos.wotstatisticbybondidos.domain.entityes.Achieve
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseGetAchieves
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,19 +23,19 @@ class AchievesViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
 
-            _listOfAchieves.value = AchievesUiState.Loading
+            /*_listOfAchieves.value = AchievesUiState.Loading
             try {
                 getAchieves.execute().collect {
                     _listOfAchieves.value = AchievesUiState.Success(it)
                 }
             } catch (e: Exception) {
                 _listOfAchieves.value = AchievesUiState.Error("Can't retrieve list")
-            }
+            }*/
         }
     }
 
     sealed class AchievesUiState {
-        data class Success(val data: List<Achieve>) : AchievesUiState()
+        data class Success(val data: String?/*List<Achieve>*/) : AchievesUiState()
         data class Error(val message: String) : AchievesUiState()
         object Loading : AchievesUiState()
         object Empty : AchievesUiState()

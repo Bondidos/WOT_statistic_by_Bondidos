@@ -22,8 +22,8 @@ class WebViewViewModel@Inject constructor(private val saveUser: UseCaseSaveUser)
     fun saveUser (url: String){
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val isSuccess = saveUser.execute(url)
-                _isSaved.value = Event(isSuccess.toString())
+                /*val isSuccess = saveUser.execute(url)
+                _isSaved.value = Event(isSuccess.toString())*/
             }
         }
 

@@ -58,7 +58,7 @@ class LoginFragment : Fragment() {
             // update UI State
             lifecycleScope.launchWhenCreated {
                 // isDataBaseCreated
-                viewModel.isDatabaseCreated.collect { uiState ->
+                /*viewModel.isDatabaseCreated.collect { uiState ->
                     when (uiState) {
                         is Loading -> {
                             loginProgressBar.isVisible = true
@@ -75,19 +75,19 @@ class LoginFragment : Fragment() {
                         }
                         else -> Unit
                     }
-                }
+                }*/
 
             }
 
             lifecycleScope.launchWhenCreated {
-                viewModel.isExistSavedUser.collect { uiStatae ->
+                /*viewModel.isExistSavedUser.collect { uiStatae ->
                     when (uiStatae) {
                         is Loading -> {
-                            /*loginBtn.text = "Searching user"*/
+                            *//*loginBtn.text = "Searching user"*//*
                             continueBtn.isClickable = false
                         }
                         is Success -> uiStatae.data?.let {
-                            /*loginBtn.text = "Continue as ${it}"*/
+                            *//*loginBtn.text = "Continue as ${it}"*//*
                             continueBtn.isClickable = true
                             continueBtn.text = it.nickname
                         }
@@ -98,7 +98,7 @@ class LoginFragment : Fragment() {
                         }
                         else -> Unit
                     }
-                }
+                }*/
             }
 
             // Navigation

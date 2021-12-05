@@ -11,14 +11,16 @@ import coil.ImageLoaderFactory
 import coil.load
 import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.databinding.AchieveItemBinding
-import com.bondidos.wotstatisticbybondidos.domain.entityes.Achieve
 import okhttp3.OkHttpClient
 import java.net.URI
 
 import javax.inject.Inject
 
-class AchievesAdapter : ListAdapter<Achieve, AchievesAdapter.AchieveViewHolder>(AchieveDiffCallback()) {
+class AchievesAdapter : ListAdapter<Any, AchievesAdapter.AchieveViewHolder>(AchieveDiffCallback()) {
 
+
+
+    //todo DO REFACTOR
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AchieveViewHolder {
         return AchieveViewHolder(
             AchieveItemBinding.inflate(
@@ -32,18 +34,18 @@ class AchievesAdapter : ListAdapter<Achieve, AchievesAdapter.AchieveViewHolder>(
     override fun onBindViewHolder(holder: AchieveViewHolder, position: Int) {
         val item = getItem(position)
         holder.apply {
-            received.text = item.received.toString()
-            imageView.load(item.imageBig?.replace("http","https") ?: "")
+           /* received.text = item.received.toString()
+            imageView.load(item.imageBig?.replace("http","https") ?: "")*/
         }
     }
 
-    class AchieveDiffCallback : DiffUtil.ItemCallback<Achieve>() {
-        override fun areItemsTheSame(oldItem: Achieve, newItem: Achieve): Boolean {
-            return oldItem.name == newItem.name
+    class AchieveDiffCallback : DiffUtil.ItemCallback<Any>() {
+        override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
+            return true
         }
 
-        override fun areContentsTheSame(oldItem: Achieve, newItem: Achieve): Boolean {
-            return oldItem == newItem
+        override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
+            return true
         }
 
     }

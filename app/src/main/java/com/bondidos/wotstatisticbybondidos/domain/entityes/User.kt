@@ -3,11 +3,11 @@ package com.bondidos.wotstatisticbybondidos.domain.entityes
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "User")
+@Entity
 data class User(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+
     val nickname: String,
+    @PrimaryKey(autoGenerate = false)
     val account_id: Int,
     val access_token: String?,
     val expires_at: Long?

@@ -12,24 +12,24 @@ import java.lang.Exception
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
-    private val login: UseCaseLogin,
-    private val createAchievesDBIfNotExist: CreateAchievesDBIfNotExist
+    private val login: UseCaseLogin/*,
+    private val createAchievesDBIfNotExist: CreateAchievesDBIfNotExist*/
 ) : ViewModel() {
 
-    private val _isDatabaseCreated = MutableStateFlow<LoginUiState>(LoginUiState.Empty)
+    /*private val _isDatabaseCreated = MutableStateFlow<LoginUiState>(LoginUiState.Empty)
     val isDatabaseCreated: StateFlow<LoginUiState> = _isDatabaseCreated.asStateFlow()
 
     private val _isExistSavedUser = MutableStateFlow<LoginUiState>(LoginUiState.Empty)
-    val isExistSavedUser: StateFlow<LoginUiState> = _isExistSavedUser.asStateFlow()
+    val isExistSavedUser: StateFlow<LoginUiState> = _isExistSavedUser.asStateFlow()*/
 
     private val _navigation = MutableStateFlow<NavigateEvent>(NavigateEvent.Empty)
     val navigation: StateFlow<NavigateEvent> = _navigation.asStateFlow()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            _isDatabaseCreated.value = LoginUiState.Loading
+            /*_isDatabaseCreated.value = LoginUiState.Loading
             try {
-                createAchievesDBIfNotExist.execute()
+                //createAchievesDBIfNotExist.execute()
                 _isDatabaseCreated.value = LoginUiState.Success(null)
             }
             catch (e: Exception) {
@@ -45,7 +45,7 @@ class LoginViewModel @Inject constructor(
                 }
             }   catch (e: Exception){
                 _isExistSavedUser.value = LoginUiState.Error("Can't find user's data")
-            }
+            }*/
         }
     }
 
@@ -55,7 +55,9 @@ class LoginViewModel @Inject constructor(
     }
 
     fun continueAsSavedUser() {
-        _navigation.value = NavigateEvent.ToUserAchieves
+        viewModelScope.launch { login.execute() }
+
+        //_navigation.value = NavigateEvent.ToUserAchieves
     }
 
     sealed class LoginUiState {

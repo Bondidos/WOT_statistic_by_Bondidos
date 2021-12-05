@@ -3,9 +3,6 @@ package com.bondidos.wotstatisticbybondidos.domain.useCase
 import android.content.Context
 import android.util.Log
 import com.bondidos.wotstatisticbybondidos.domain.Repository
-import com.bondidos.wotstatisticbybondidos.domain.entityes.Achieve
-import com.bondidos.wotstatisticbybondidos.domain.other.extensions.toAchievesList
-import com.google.gson.Gson
 import org.json.JSONObject
 import javax.inject.Inject
 
@@ -16,7 +13,7 @@ class CreateAchievesDBIfNotExist @Inject constructor(
     private val repository: Repository
     ) {
 
-    suspend fun execute(): Boolean {
+   /* suspend fun execute(): Boolean {
         if (repository.isAchievesDataBaseExist() != ACHIEVES_COUNT)
             return createAchievesDataBase()
         return true
@@ -36,5 +33,5 @@ class CreateAchievesDBIfNotExist @Inject constructor(
 
         val jsonObj = JSONObject(myJson)
         return jsonObj.toAchievesList()
-    }
+    }*/
 }

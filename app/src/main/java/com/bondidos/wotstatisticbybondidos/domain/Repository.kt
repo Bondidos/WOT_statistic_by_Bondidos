@@ -1,15 +1,10 @@
 package com.bondidos.wotstatisticbybondidos.domain
 
-import com.bondidos.wotstatisticbybondidos.data.response_entiyes.achievments.AchievesResponse
-import com.bondidos.wotstatisticbybondidos.data.response_entiyes.achievments.UserAchievesData
-import com.bondidos.wotstatisticbybondidos.domain.entityes.Achieve
-import com.bondidos.wotstatisticbybondidos.domain.entityes.User
-import kotlinx.coroutines.flow.Flow
 
 interface Repository {
 
     // REMOTE API
-
+/*
     suspend fun searchUser(search: String): List<User>
 
     // LocalCash
@@ -27,5 +22,8 @@ interface Repository {
 
     suspend fun getAchievesData(achievesList: List<String>): List<Achieve>
 
-    fun getAchieves(id: Int): Flow<AchievesResponse>
+    fun getAchieves(id: Int): Flow<AchievesResponse>*/
+
+    suspend fun getUserData()
+
 }

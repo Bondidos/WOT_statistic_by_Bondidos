@@ -49,8 +49,8 @@ class AchievesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpRecycler()
-        setUpObservers()
+        /*setUpRecycler()
+        setUpObservers()*/
     }
 
     private fun setUpRecycler() = binding.achievesRecycler.apply {
@@ -58,7 +58,7 @@ class AchievesFragment : Fragment() {
         layoutManager = GridLayoutManager(requireContext(),5)
     }
 
-    private fun setUpObservers() {
+   /* private fun setUpObservers() {
         lifecycleScope.launchWhenCreated {
             viewModel.listOfAchieves.collect { uiState ->
 
@@ -76,6 +76,6 @@ class AchievesFragment : Fragment() {
                 }
             }
         }
-    }
+    }*/
 
 }

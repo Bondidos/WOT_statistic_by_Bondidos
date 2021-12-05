@@ -8,14 +8,14 @@ import javax.inject.Inject
 
 class UseCaseSaveUser @Inject constructor(private val repository: Repository) {
 
-    suspend fun execute(url: String): Boolean{
+    /*suspend fun execute(url: String): Boolean{
 
         val user = getUserFromUrl(url)
         if (user != null) {
                 return repository.saveUserToCash(user) == user.account_id.toLong()
             }
         return false
-    }
+    }*/
 
     private fun getUserFromUrl(url: String): User? {
         val sanitizer = UrlQuerySanitizer().apply {
