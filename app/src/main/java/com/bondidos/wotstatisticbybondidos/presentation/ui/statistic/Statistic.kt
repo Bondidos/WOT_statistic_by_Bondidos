@@ -1,18 +1,26 @@
 package com.bondidos.wotstatisticbybondidos.presentation.ui.statistic
 
+import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.preference.PreferenceManager
 import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.databinding.ActivityStatisticBinding
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants
 
 class Statistic : AppCompatActivity() {
 
     private lateinit var binding: ActivityStatisticBinding
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +28,9 @@ class Statistic : AppCompatActivity() {
         binding = ActivityStatisticBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        applyTheme()
         val navView: BottomNavigationView = binding.navView
-
-        val navController = findNavController(R.id.nav_host_fragment_activity_statistic)
+        navController = findNavController(R.id.nav_host_fragment_activity_statistic)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
@@ -32,5 +40,36 @@ class Statistic : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    private fun applyTheme(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+            val themePref = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
+                Constants.THEME_PREFERENCE, false
+            )
+            when(themePref){
+                true -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                false -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        navController.navigate(R.id.settingsFragment2)
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        navController.navigate(R.id.navigation_home)
+        return  super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+
     }
 }

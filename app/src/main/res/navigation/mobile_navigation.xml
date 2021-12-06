@@ -22,4 +22,8 @@
         android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.achieves.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/settingsFragment2"
+        android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>
