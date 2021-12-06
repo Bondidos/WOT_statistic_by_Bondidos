@@ -1,8 +1,6 @@
 package com.bondidos.wotstatisticbybondidos.data
 
 import android.util.Log
-import com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi.Statistics
-import com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi.X560508396
 import com.bondidos.wotstatisticbybondidos.data.sources.api.WotApi
 import com.bondidos.wotstatisticbybondidos.data.sources.room.RoomRepositoryDao
 import com.bondidos.wotstatisticbybondidos.data.sources.sharedPrefs.PrefStoreImpl
@@ -10,17 +8,9 @@ import com.bondidos.wotstatisticbybondidos.data.util.Utils
 import com.bondidos.wotstatisticbybondidos.domain.Repository
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.ACHIEVES_COUNT
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.APPLICATION_ID
-import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.EXTRA
-import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.FIELDS
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.Response
-import okhttp3.ResponseBody
-import java.io.IOException
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -63,13 +53,12 @@ class RepositoryImpl @Inject constructor(
             networkService.getUserData(
                 APPLICATION_ID,
                 user.account_id,
-                EXTRA,
                 user.access_token,
-                FIELDS
+                "-statistics"
             )
         }
-
-        Log.d("Repository", apiData.data?.get("560508396")?.statistics.toString())
+        Log.d("Repository", user.toString())
+        Log.d("Repository", apiData.data.toString())
 
     }//nickname=LegitimateKiller,
 // account_id=560508396,

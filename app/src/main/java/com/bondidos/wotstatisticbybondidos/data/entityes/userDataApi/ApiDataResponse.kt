@@ -3,11 +3,11 @@ package com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi
 
 import com.google.gson.annotations.SerializedName
 
-data class ApiResponse(
+data class ApiDataResponse(
     @SerializedName("data")
-    val `data`: Map<String,X560508396>?,
+    val `data`: Map<String,X560508396>,
     @SerializedName("meta")
-    val meta: Meta?,
+    val meta: Meta,
     @SerializedName("status")
-    val status: String?
+    val status: String
 )

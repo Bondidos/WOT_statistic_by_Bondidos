@@ -3,6 +3,7 @@ package com.bondidos.wotstatisticbybondidos.data.util
 import android.content.Context
 import android.net.UrlQuerySanitizer
 import com.bondidos.wotstatisticbybondidos.data.entityes.achieves.AchievesDBItem
+import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
@@ -46,6 +47,10 @@ class Utils @Inject constructor(private val context: Context) {
                 expires_at = sanitizer.getValue("expires_at").toLong()
             )
         else null
+    }
+    
+    fun convertToMultiViewModelList(): List<MultiViewModel>{
+        return emptyList()
     }
 
 }

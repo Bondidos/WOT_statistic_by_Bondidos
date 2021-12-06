@@ -5,25 +5,23 @@ import com.google.gson.annotations.SerializedName
 
 data class X560508396(
     @SerializedName("account_id")
-    val accountId: Int?,
+    val accountId: Int,
     @SerializedName("clan_id")
-    val clanId: Int?,
+    val clanId: Int,
     @SerializedName("client_language")
-    val clientLanguage: String?,
+    val clientLanguage: String,
     @SerializedName("created_at")
-    val createdAt: Int?,
+    val createdAt: Int,
     @SerializedName("global_rating")
-    val globalRating: Int?,
+    val globalRating: Int,
     @SerializedName("last_battle_time")
-    val lastBattleTime: Int?,
+    val lastBattleTime: Int,
     @SerializedName("logout_at")
-    val logoutAt: Int?,
+    val logoutAt: Int,
     @SerializedName("nickname")
-    val nickname: String?,
+    val nickname: String,
     @SerializedName("private")
-    val `private`: Private?,
-    @SerializedName("statistics")
-    val statistics: Statistics?,
+    val `private`: Map<String,Any?>,
     @SerializedName("updated_at")
-    val updatedAt: Int?
+    val updatedAt: Int
 )
