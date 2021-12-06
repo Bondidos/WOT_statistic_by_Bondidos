@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi
+package com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi.delete
 
 
 import com.google.gson.annotations.SerializedName

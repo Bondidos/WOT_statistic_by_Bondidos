@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bondidos.wotstatisticbybondidos.databinding.UserDataFragmentBinding
-import com.bondidos.wotstatisticbybondidos.presentation.recycler_adapter.AchievesAdapter
+import com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.personal_data.recycler_adapter.UserDataAdapterAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class UserDataFragment : Fragment() {
     @Inject
     lateinit var viewModel: UserDataViewModel
 
-    private val achievesAdapter: AchievesAdapter = AchievesAdapter()
+    private val achievesAdapter: UserDataAdapterAdapter = UserDataAdapterAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
