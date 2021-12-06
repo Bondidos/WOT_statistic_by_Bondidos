@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.presentation.ui.statistic
+package com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.personal_data
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

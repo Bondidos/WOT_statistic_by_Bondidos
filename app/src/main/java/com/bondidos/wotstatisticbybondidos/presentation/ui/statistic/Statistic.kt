@@ -16,7 +16,9 @@ import androidx.preference.PreferenceManager
 import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.databinding.ActivityStatisticBinding
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class Statistic : AppCompatActivity() {
 
     private lateinit var binding: ActivityStatisticBinding
@@ -35,7 +37,7 @@ class Statistic : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.userDataFragment, R.id.achievesFragment
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -65,7 +67,7 @@ class Statistic : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        navController.navigate(R.id.navigation_home)
+        navController.navigate(R.id.userDataFragment)
         return  super.onSupportNavigateUp()
     }
 

@@ -1,10 +1,10 @@
-package com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.personal_data
+package com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.achieves
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HomeViewModel : ViewModel() {
+class AchievesViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"

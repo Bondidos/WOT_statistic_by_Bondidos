@@ -11,35 +11,16 @@
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" >
         <action
-            android:id="@+id/action_loginFragment_to_statisticFragment"
-            app:destination="@id/statisticFragment" />
-        <action
             android:id="@+id/action_loginFragment_to_webViewFragment"
             app:destination="@id/webViewFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_achievesFragment"
-            app:destination="@id/achievesFragment" />
         <action
             android:id="@+id/action_loginFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/statisticFragment"
-        android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.login.fragments.StatisticFragment"
-        android:label="statistic_fragment"
-        tools:layout="@layout/statistic_fragment" />
-    <fragment
         android:id="@+id/webViewFragment"
         android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.login.webview_fragment.WebViewFragment"
-        android:label="WebViewFragment" >
-        <action
-            android:id="@+id/action_webViewFragment_to_statisticFragment2"
-            app:destination="@id/statisticFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/achievesFragment"
-        android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.UserDataFragment"
-        android:label="AchievesFragment" />
+        android:label="WebViewFragment" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.settings.SettingsFragment"

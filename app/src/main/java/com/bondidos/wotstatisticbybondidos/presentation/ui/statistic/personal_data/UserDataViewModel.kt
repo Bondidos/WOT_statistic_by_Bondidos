@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.presentation.ui.statistic
+package com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.personal_data
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
