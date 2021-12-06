@@ -57,23 +57,13 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun fetchData() {
         val user = withContext(Dispatchers.IO){prefStore.getUser()}
-        /*val apiData = withContext(Dispatchers.IO) { networkService.getUserData(
+        val apiData = withContext(Dispatchers.IO) { networkService.getUserData(
             APPLICATION_ID,
             user.account_id,
             EXTRA,
             user.access_token,
             FIELDS
-        ) }*/
-        val apiData =networkService.getUserData(
-            APPLICATION_ID,
-            user.account_id,
-            EXTRA,
-            user.access_token,
-            FIELDS
-        )
-        apiData.body().use {
-            print(it)
-        }
+        ) }
 
         Log.d("Repository",user.toString())
         Log.d("Repository",apiData.toString())

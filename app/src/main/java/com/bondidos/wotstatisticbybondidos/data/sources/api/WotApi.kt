@@ -31,7 +31,7 @@ interface WotApi {
         @Query("extra") extra: String?,
         @Query("access_token") access_token: String,
         @Query("fields") fields: String?
-    ): Response<ResponseBody>
+    ): ApiResponse
 
 
 
