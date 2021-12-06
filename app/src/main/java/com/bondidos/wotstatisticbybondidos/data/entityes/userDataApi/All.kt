@@ -4,7 +4,8 @@ package com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi
 import com.google.gson.annotations.SerializedName
 
 data class All(
-    @SerializedName("avg_damage_assisted")
+    val value: Pair<String,Any?>
+    /*@SerializedName("avg_damage_assisted")
     val avgDamageAssisted: Double?,
     @SerializedName("avg_damage_assisted_radio")
     val avgDamageAssistedRadio: Double?,
@@ -75,5 +76,5 @@ data class All(
     @SerializedName("wins")
     val wins: Int?,
     @SerializedName("xp")
-    val xp: Int?
+    val xp: Int?*/
 )

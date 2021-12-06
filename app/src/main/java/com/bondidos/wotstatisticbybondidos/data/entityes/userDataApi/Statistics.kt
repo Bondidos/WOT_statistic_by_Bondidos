@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName
 
 data class Statistics(
     @SerializedName("all")
-    val all: All?,
+    val all: Map<String,Number?>,
     @SerializedName("epic")
-    val epic: Epic?,
+    val epic: Map<String,Number>?,
     @SerializedName("random")
-    val random: Random?,
+    val random: Map<String,Number>?,
     @SerializedName("stronghold_defense")
-    val strongholdDefense: StrongholdDefense?,
+    val strongholdDefense: Map<String,Number>?,
     @SerializedName("stronghold_skirmish")
-    val strongholdSkirmish: StrongholdSkirmish?,
+    val strongholdSkirmish: Map<String,Number>?,
     @SerializedName("trees_cut")
     val treesCut: Int?
 )

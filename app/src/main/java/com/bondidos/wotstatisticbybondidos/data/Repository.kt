@@ -1,6 +1,8 @@
 package com.bondidos.wotstatisticbybondidos.data
 
 import android.util.Log
+import com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi.Statistics
+import com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi.X560508396
 import com.bondidos.wotstatisticbybondidos.data.sources.api.WotApi
 import com.bondidos.wotstatisticbybondidos.data.sources.room.RoomRepositoryDao
 import com.bondidos.wotstatisticbybondidos.data.sources.sharedPrefs.PrefStoreImpl
@@ -51,22 +53,23 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun getUser(): User? {
 
-            val user = withContext(Dispatchers.IO) { prefStore.getUser()}
-            return if (utils.isUserValid(user)) user else null
+        val user = withContext(Dispatchers.IO) { prefStore.getUser() }
+        return if (utils.isUserValid(user)) user else null
     }
 
     override suspend fun fetchData() {
-        val user = withContext(Dispatchers.IO){prefStore.getUser()}
-        val apiData = withContext(Dispatchers.IO) { networkService.getUserData(
-            APPLICATION_ID,
-            user.account_id,
-            EXTRA,
-            user.access_token,
-            FIELDS
-        ) }
+        val user = withContext(Dispatchers.IO) { prefStore.getUser() }
+        val apiData = withContext(Dispatchers.IO) {
+            networkService.getUserData(
+                APPLICATION_ID,
+                user.account_id,
+                EXTRA,
+                user.access_token,
+                FIELDS
+            )
+        }
 
-        Log.d("Repository",user.toString())
-        Log.d("Repository",apiData.toString())
+        Log.d("Repository", apiData.data?.get("560508396")?.statistics.toString())
 
     }//nickname=LegitimateKiller,
 // account_id=560508396,
