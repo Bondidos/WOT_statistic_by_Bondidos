@@ -12,18 +12,6 @@ private const val FUNCTION_SEARCH = "/wot/account/list/?application_id=5d489c586
 
 interface WotApi {
 
-   /* @GET("/wot/account/list/?application_id=5d489c586717c2b76ade8bea16607167&search=LegitimateKiller")
-    suspend fun searchUser() : SearchResponse
-
-    @GET("/wot/account/list/?application_id=5d489c586717c2b76ade8bea16607167&search=legitim")
-    fun getStatus():Response<String>
-
-    @GET("/wot/account/achievements/")
-    suspend fun getUserAchieves(
-        @Query("application_id") application_id: String,
-        @Query("account_id") account_id: Int
-        ): AchievesResponse*/
-
     @GET("/wot/account/info/")
     suspend fun getUserData(
         @Query("application_id") application_id: String,
@@ -33,8 +21,4 @@ interface WotApi {
         @Query("fields") fields: String?
     ): ApiResponse
 
-
-
-    /*@GET("/wot/account/achievements/?application_id=5d489c586717c2b76ade8bea16607167&account_id=560508396")
-    suspend fun getUserAchieves(): AchievesResponse*/
 }

@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.presentation.fragments
+package com.bondidos.wotstatisticbybondidos.presentation.ui.login.webview_fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,6 @@ import com.bondidos.wotstatisticbybondidos.databinding.WebViewBinding
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.LOGIN_URL
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.REDIRECT_URI
 import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
-import com.bondidos.wotstatisticbybondidos.presentation.viewModels.WebViewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject

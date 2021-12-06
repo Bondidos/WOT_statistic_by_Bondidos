@@ -1,7 +1,6 @@
-package com.bondidos.wotstatisticbybondidos.presentation.viewModels
+package com.bondidos.wotstatisticbybondidos.presentation.ui.login.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import org.junit.Assert.*
 
 import org.junit.After
 import org.junit.Before

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.LoginFragment"
+        android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.login.login_fragment.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" >
         <action
@@ -25,12 +25,12 @@
     </fragment>
     <fragment
         android:id="@+id/statisticFragment"
-        android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.StatisticFragment"
+        android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.login.fragments.StatisticFragment"
         android:label="statistic_fragment"
         tools:layout="@layout/statistic_fragment" />
     <fragment
         android:id="@+id/webViewFragment"
-        android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.WebViewFragment"
+        android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.login.webview_fragment.WebViewFragment"
         android:label="WebViewFragment" >
         <action
             android:id="@+id/action_webViewFragment_to_statisticFragment2"
@@ -38,10 +38,10 @@
     </fragment>
     <fragment
         android:id="@+id/achievesFragment"
-        android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.UserDataFragment"
+        android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.UserDataFragment"
         android:label="AchievesFragment" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.bondidos.wotstatisticbybondidos.presentation.fragments.SettingsFragment"
+        android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.settings.SettingsFragment"
         android:label="SettingsFragment" />
 </navigation>

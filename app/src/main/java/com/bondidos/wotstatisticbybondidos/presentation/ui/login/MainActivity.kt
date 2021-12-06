@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.presentation
+package com.bondidos.wotstatisticbybondidos.presentation.ui.login
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity

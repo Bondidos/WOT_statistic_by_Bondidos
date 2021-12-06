@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.presentation.viewModels
+package com.bondidos.wotstatisticbybondidos.presentation.ui.login.webview_fragment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.presentation.viewModels
+package com.bondidos.wotstatisticbybondidos.presentation.ui.login.login_fragment
 
 import androidx.lifecycle.*
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.NAVIGATE_CONTINUE

@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.presentation.fragments
+package com.bondidos.wotstatisticbybondidos.presentation.ui.statistic
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bondidos.wotstatisticbybondidos.databinding.UserDataFragmentBinding
 import com.bondidos.wotstatisticbybondidos.presentation.recycler_adapter.AchievesAdapter
-import com.bondidos.wotstatisticbybondidos.presentation.viewModels.UserDataViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

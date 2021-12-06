@@ -1,5 +1,6 @@
-package com.bondidos.wotstatisticbybondidos.presentation.fragments
+package com.bondidos.wotstatisticbybondidos.presentation.ui.login.login_fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +14,7 @@ import com.bondidos.wotstatisticbybondidos.databinding.LoginFragmentBinding
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants
 import com.bondidos.wotstatisticbybondidos.domain.other.Status.*
 import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
-import com.bondidos.wotstatisticbybondidos.presentation.viewModels.LoginViewModel
+import com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.Statistic
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
@@ -24,7 +25,7 @@ class LoginFragment : Fragment() {
     @Inject
     lateinit var viewModel: LoginViewModel
 
-    private var _binding : LoginFragmentBinding? = null
+    private var _binding: LoginFragmentBinding? = null
     private val binding get() = requireNotNull(_binding)
 
     override fun onCreateView(
@@ -42,7 +43,7 @@ class LoginFragment : Fragment() {
         setObservers()
     }
 
-    private fun setListeners(){
+    private fun setListeners() {
         with(binding) {
             loginBtn.setOnClickListener {
                 viewModel.logInWithWgOpenId()
@@ -76,13 +77,12 @@ class LoginFragment : Fragment() {
                         else -> Unit
                     }
                 }
-
             }
 
             lifecycleScope.launchWhenCreated {
-                viewModel.isExistSavedUser.collect { resource  ->
+                viewModel.isExistSavedUser.collect { resource ->
                     when (resource.status) {
-                        INITIALIZED ->{
+                        INITIALIZED -> {
                             continueBtn.isVisible = false
                         }
                         SUCCESS -> {
@@ -93,7 +93,7 @@ class LoginFragment : Fragment() {
 
                         }
                         ERROR -> resource.data?.let {
-                            makeToast(requireContext(),resource.message!!)
+                            makeToast(requireContext(), resource.message!!)
                         }
 
                         else -> Unit
@@ -107,7 +107,13 @@ class LoginFragment : Fragment() {
 
                     when (event.getContentIfNotHandled()) {
                         Constants.NAVIGATE_TO_LOGIN -> findNavController().navigate(R.id.webViewFragment)
-                        Constants.NAVIGATE_CONTINUE -> findNavController().navigate(R.id.achievesFragment)
+                        Constants.NAVIGATE_CONTINUE -> startActivity(
+                            Intent(
+                                requireContext(),
+                                Statistic::class.java
+                            )
+                        )
+                        /*findNavController().navigate(R.id.achievesFragment)*/
                         else -> Unit
                     }
                 }
