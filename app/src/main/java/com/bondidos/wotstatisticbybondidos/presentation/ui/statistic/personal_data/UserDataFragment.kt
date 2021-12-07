@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bondidos.wotstatisticbybondidos.databinding.UserDataFragmentBinding
 import com.bondidos.wotstatisticbybondidos.domain.other.Status.*
 import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
@@ -45,7 +47,8 @@ class UserDataFragment : Fragment() {
     }
 
     private fun setUpRecycler() = binding.userDataRecycler.apply {
-        layoutManager = GridLayoutManager(requireContext(),2)
+        layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+        itemAnimator =(DefaultItemAnimator())
         adapter = userDataAdapter
     }
 

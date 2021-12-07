@@ -12,7 +12,9 @@ import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class Utils @Inject constructor(private val context: Context) {
@@ -73,12 +75,13 @@ class Utils @Inject constructor(private val context: Context) {
 
         result.add(MultiViewModel.CardWithText(
             "Created at:",
-            commonData?.createdAt?.toDataFormat() ?: ""
+            commonData?.createdAt?.toLong()?.toDataFormat() ?: ""
+
         ))
 
         result.add(MultiViewModel.CardWithText(
             "Last Battle:",
-            commonData?.lastBattleTime?.toDataFormat() ?: ""
+            commonData?.lastBattleTime?.toLong()?.toDataFormat() ?: ""
         ))
 
         result.add(MultiViewModel.Banner(
@@ -95,7 +98,7 @@ class Utils @Inject constructor(private val context: Context) {
             R.drawable.premium
         ))
         result.add(MultiViewModel.CardWithImage(
-            "Gold: ${(privateData["gold"] as Double).toLong().toDataFormat()}",
+            "Gold: ${(privateData["gold"] as Double).toLong()}",
             R.drawable.gold
         ))
         result.add(MultiViewModel.CardWithImage(
@@ -115,13 +118,9 @@ class Utils @Inject constructor(private val context: Context) {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun Int.toDataFormat(): String{
-        val format = SimpleDateFormat("dd/MM/yyyy")
-        return format.format(this)
-    }
-    @SuppressLint("SimpleDateFormat")
     private fun Long.toDataFormat(): String{
         val format = SimpleDateFormat("dd/MM/yyyy")
-        return format.format(this)
+        return format.format(Timestamp(this*1000))
     }
+
 }

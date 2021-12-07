@@ -44,8 +44,8 @@ class UserDataAdapterAdapter: RecyclerView.Adapter<DataAdapterViewHolder>() {
 
         // full width if banner
         binding.root.layoutParams.apply {
-            if (viewType == TYPE_BANNER && this is GridLayoutManager.LayoutParams) {
-                this as LinearLayoutManager.qw1 2   SAszzzzwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwss$#
+            if (viewType == TYPE_BANNER && this is StaggeredGridLayoutManager .LayoutParams) {
+                this.isFullSpan = true
             }
         }
         return DataAdapterViewHolder(binding)
