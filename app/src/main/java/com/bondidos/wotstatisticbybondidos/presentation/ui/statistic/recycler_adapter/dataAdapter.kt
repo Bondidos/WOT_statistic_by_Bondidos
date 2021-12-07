@@ -12,6 +12,7 @@ import com.bondidos.wotstatisticbybondidos.databinding.BannerItemBinding
 import com.bondidos.wotstatisticbybondidos.databinding.CardWithImageBinding
 import com.bondidos.wotstatisticbybondidos.databinding.CardWithTextBinding
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.TYPE_BANNER
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.TYPE_CARD_ACHIEVE
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.TYPE_CARD_WITH_TEXT
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.TYPE_CARD_WITH_IMAGE
 import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
@@ -63,6 +64,7 @@ class dataAdapter: RecyclerView.Adapter<DataAdapterViewHolder>() {
             is MultiViewModel.Banner -> TYPE_BANNER
             is MultiViewModel.CardWithText -> TYPE_CARD_WITH_TEXT
             is MultiViewModel.CardWithImage -> TYPE_CARD_WITH_IMAGE
+            is MultiViewModel.AchieveCard -> TYPE_CARD_ACHIEVE
         }
     }
 

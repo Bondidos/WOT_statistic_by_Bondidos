@@ -67,59 +67,131 @@ class Utils @Inject constructor(private val context: Context) {
         val commonData = apiData.data["${user.account_id}"]
         val clanId = apiData.data["${user.account_id}"]?.clanId.toString()
 
-        result.add(MultiViewModel.Banner(
-            commonData?.nickname ?: "",
-            apiClan.data[clanId]?.emblems?.x256?.wowp ?: ""
-        ))
+        result.add(
+            MultiViewModel.Banner(
+                commonData?.nickname ?: "",
+                apiClan.data[clanId]?.emblems?.x256?.wowp ?: ""
+            )
+        )
 
-        result.add(MultiViewModel.CardWithText(
-            "Created at:",
-            commonData?.createdAt?.toLong()?.toDataFormat() ?: ""
+        result.add(
+            MultiViewModel.CardWithText(
+                "Created at:",
+                commonData?.createdAt?.toLong()?.toDataFormat() ?: ""
 
-        ))
+            )
+        )
 
-        result.add(MultiViewModel.CardWithText(
-            "Last Battle:",
-            commonData?.lastBattleTime?.toLong()?.toDataFormat() ?: ""
-        ))
+        result.add(
+            MultiViewModel.CardWithText(
+                "Last Battle:",
+                commonData?.lastBattleTime?.toLong()?.toDataFormat() ?: ""
+            )
+        )
 
-        result.add(MultiViewModel.Banner(
-            "Global Rating /n${commonData?.globalRating}",
-            R.drawable.wot_logo
-        ))
+        result.add(
+            MultiViewModel.Banner(
+                "Global Rating /n${commonData?.globalRating}",
+                R.drawable.wot_logo
+            )
+        )
 
-        result.add(MultiViewModel.Banner(
-            "Wealth",
-            R.drawable.wealth
-        ))
-        result.add(MultiViewModel.Banner(
-            "Expire at: ${(privateData?.get("premium_expires_at")as Double).toLong().toDataFormat()}",
-            R.drawable.premium
-        ))
-        result.add(MultiViewModel.CardWithImage(
-            "Gold: ${(privateData["gold"] as Double).toLong()}",
-            R.drawable.gold
-        ))
-        result.add(MultiViewModel.CardWithImage(
-            "Credits: ${(privateData["credits"] as Double).toInt()}",
-            R.drawable.credits
-        ))
-        result.add(MultiViewModel.CardWithImage(
-            "Free exp.: ${(privateData["free_xp"] as Double).toInt()}",
-            R.drawable.free_exp
-        ))
-        result.add(MultiViewModel.CardWithImage(
-            "Bonds: ${(privateData["bonds"] as Double).toInt()}",
-            R.drawable.bonds
-        ))
+        result.add(
+            MultiViewModel.Banner(
+                "Wealth",
+                R.drawable.wealth
+            )
+        )
+        result.add(
+            MultiViewModel.Banner(
+                "Expire at: ${
+                    (privateData?.get("premium_expires_at") as Double).toLong().toDataFormat()
+                }",
+                R.drawable.premium
+            )
+        )
+        result.add(
+            MultiViewModel.CardWithImage(
+                "Gold: ${(privateData["gold"] as Double).toLong()}",
+                R.drawable.gold
+            )
+        )
+        result.add(
+            MultiViewModel.CardWithImage(
+                "Credits: ${(privateData["credits"] as Double).toInt()}",
+                R.drawable.credits
+            )
+        )
+        result.add(
+            MultiViewModel.CardWithImage(
+                "Free exp.: ${(privateData["free_xp"] as Double).toInt()}",
+                R.drawable.free_exp
+            )
+        )
+        result.add(
+            MultiViewModel.CardWithImage(
+                "Bonds: ${(privateData["bonds"] as Double).toInt()}",
+                R.drawable.bonds
+            )
+        )
 
         return result.toList()
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun Long.toDataFormat(): String{
+    private fun Long.toDataFormat(): String {
         val format = SimpleDateFormat("dd/MM/yyyy")
-        return format.format(Timestamp(this*1000))
+        return format.format(Timestamp(this * 1000)) // need ms, but have sec
     }
 
+    fun getAchievesNamesFromResponse(achievesMap: Map<String, Int>): List<String> {
+        val result = mutableListOf<String>()
+        achievesMap.forEach {
+            result.add(it.key)
+        }
+        return result
+    }
+
+    fun generateSortedMultiViewModelList(
+        db: List<AchievesDBItem>,
+        api: Map<String, Int>
+    ): List<MultiViewModel> {
+
+        val resultSet = mutableListOf<MultiViewModel>()
+        /*val epic = db.filter { it.section == "epic" }
+        val action = db.filter { it.section == "action" }
+        val special = db.filter { it.section == "special" }
+        val memorial = db.filter { it.section == "memorial" }
+        val group = db.filter { it.section == "group" }*/
+
+        val listOfSortedAchievesDB = listOf(
+            db.filter { it.section == "epic" },
+            db.filter { it.section == "action" },
+            db.filter { it.section == "special" },
+            db.filter { it.section == "memorial" },
+            db.filter { it.section == "group" },
+            db.filter { it.section == "class" }
+        )
+
+        listOfSortedAchievesDB.forEach { list ->
+            when (listOfSortedAchievesDB.indexOf(list)) {
+                0 -> resultSet.add(MultiViewModel.Banner("Epic", null))
+                1 -> resultSet.add(MultiViewModel.Banner("Action", null))
+                2 -> resultSet.add(MultiViewModel.Banner("Special", null))
+                3 -> resultSet.add(MultiViewModel.Banner("Memorial", null))
+                4 -> resultSet.add(MultiViewModel.Banner("Group", null))
+                5 -> resultSet.add(MultiViewModel.Banner("Class", null))
+
+            }
+            list.forEach {
+                resultSet.add(
+                    MultiViewModel.AchieveCard(
+                        scored = api[it.name].toString(),
+                        image = it.imageBig ?: it.image ?: ""
+                    )
+                )
+            }
+        }
+        return resultSet
+    }
 }

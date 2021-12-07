@@ -16,4 +16,9 @@ sealed class MultiViewModel{
         val header: String,
         val image: Int?
     ): MultiViewModel()
+
+    data class AchieveCard (
+        val scored: String,
+        val image: String
+    ): MultiViewModel()
 }

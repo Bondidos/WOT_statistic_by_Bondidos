@@ -17,7 +17,7 @@ interface RoomRepositoryDao {
     @Insert(onConflict = REPLACE)
     suspend fun createAchievesDB(list: List<AchievesDBItem>)
 
-    /*@Query("select * from achievesdbitem where name in (:list)")
-    suspend fun getAchieves(list: List<String>): List<AchievesDB>*/
+    @Query("select * from achievesdbitem where AchievesDBItem.name in (:list) order by section")
+    suspend fun getAchieves(list: List<String>): List<AchievesDBItem>
 
 }

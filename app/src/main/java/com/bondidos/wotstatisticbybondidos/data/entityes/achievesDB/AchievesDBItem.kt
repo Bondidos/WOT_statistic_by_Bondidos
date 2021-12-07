@@ -5,9 +5,11 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
+import com.google.gson.reflect.TypeToken
+
+import com.google.gson.Gson
+import java.lang.reflect.Type
+
 
 @Entity
 @TypeConverters(OptionsConverter::class)
@@ -45,18 +47,22 @@ data class AchievesDBItem(
 class OptionsConverter{
 
     @TypeConverter
-    fun fromOption(list: List<Option>?): String? = list?.toString()
+    fun fromCountryLangList(optionString: List<Option?>?): String? {
+        if (optionString == null) {
+            return null
+        }
+        val gson = Gson()
+        val type: Type = object : TypeToken<List<Option?>?>() {}.type
+        return gson.toJson(optionString, type)
+    }
 
     @TypeConverter
-    fun fromString(data: String?): List<Option>? {
-        data?.let {
-            val moshi = Moshi.Builder()
-                .build()
-            val arrayType = Types.newParameterizedType(List::class.java, Option::class.java)
-            val adapter: JsonAdapter<List<Option>> = moshi.adapter(arrayType)
-            return adapter.fromJson(data)
+    fun toCountryLangList(optionList: String?): List<Option>? {
+        if (optionList == null) {
+            return null
         }
-
-        return null
+        val gson = Gson()
+        val type: Type = object : TypeToken<List<Option?>?>() {}.type
+        return gson.fromJson<List<Option>>(optionList, type)
     }
 }

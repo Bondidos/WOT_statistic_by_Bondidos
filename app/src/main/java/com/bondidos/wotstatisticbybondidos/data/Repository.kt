@@ -61,7 +61,7 @@ class RepositoryImpl @Inject constructor(
         }
         val apiClan = withContext(Dispatchers.IO){networkService.getUserClanImage(
             APPLICATION_ID,
-            apiData.data.get("${user.account_id}")?.clanId ?: 0
+            apiData.data["${user.account_id}"]?.clanId ?: 0
         )}
 
         /*Log.d("Repository", user.toString())
@@ -84,42 +84,32 @@ class RepositoryImpl @Inject constructor(
             user.account_id,
             FIELDS_ACHIEVES
         )
-        Log.d("Repository",apiAchievesResponse.toString())
+        val achievesNamesList =
+            utils.getAchievesNamesFromResponse(
+                apiAchievesResponse.data["${user.account_id}"]?.achievements ?: emptyMap()
+            )
+
+        val achievesByNameFromDB = roomStorage.getAchieves(achievesNamesList)
+
+        val result = utils.generateSortedMultiViewModelList(
+            achievesByNameFromDB,
+            apiAchievesResponse.data["${user.account_id}"]?.achievements ?: emptyMap()
+        )
+
+        Log.d("Repository",result.size.toString())
+        Log.d("Repository",result.toString())
+        //Log.d("Repository",achievesByNameFromDB.size.toString())
+        //Log.d("Repository",achievesNamesList.toString())
+        /*Log.d("Repository","achievesNamesList.size = ${achievesNamesList.size}," +
+                "apiAchievesResponse.data.size= " +
+                "${apiAchievesResponse.data["${user.account_id}"]?.achievements?.size}")*/
+        //Log.d("Repository",apiAchievesResponse.toString())
         return emptyList()
     }
 //nickname=LegitimateKiller,
 // account_id=560508396,
 // access_token=9172617952f3348333b2cef4641a923e6b74ab42,
 // expires_at=1639935775
-
-
-/*override suspend fun searchUser(search: String): List<User> {
-        val apiData = networkService.searchUser()
-        return if(apiData.status == "ok") apiData.data.mapToUserList() else emptyList()
-}
-
-override suspend fun saveUserToCash(user: User): Long = roomStorage.saveUserToCache(user)
-
-override suspend fun getUserFromCache(): User = roomStorage.getUserFromCache()
-
-override suspend fun deleteUserFromCache(user: User): Int = roomStorage.deleteUserFromCache(user)
-
-override suspend fun isAchievesDataBaseExist(): Int = roomStorage.isAchievesDataBaseExist()
-
-override suspend fun createAchieveDataBase(achieves: List<Achieve>): List<Long> =
-    roomStorage.createAchieveDataBase(achieves)
-
-override suspend fun getAchievesData(achievesList: List<String>): List<Achieve> =
-    roomStorage.getAchievesData(achievesList)
-
-override fun getAchieves(id: Int): Flow<AchievesResponse> {
-    return flow{
-        val i =networkService.getUserAchieves(APPLICATION_ID,id)
-        emit(i)
-    }.flowOn(Dispatchers.IO)
-}*/
-
-
 }
 
 
