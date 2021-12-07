@@ -25,11 +25,4 @@ class UserDataViewModel @Inject constructor(
              _listUserData.value = fetchData.execute()
         }
     }
-
-  /*  sealed class AchievesUiState {
-        data class Success(val data: String?*//*List<Achieve>*//*) : AchievesUiState()
-        data class Error(val message: String) : AchievesUiState()
-        object Loading : AchievesUiState()
-        object Empty : AchievesUiState()
-    }*/
 }

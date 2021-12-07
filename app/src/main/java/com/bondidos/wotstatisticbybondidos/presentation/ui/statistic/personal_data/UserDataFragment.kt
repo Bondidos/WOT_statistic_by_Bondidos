@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bondidos.wotstatisticbybondidos.databinding.UserDataFragmentBinding
 import com.bondidos.wotstatisticbybondidos.domain.other.Status.*
 import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
-import com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.personal_data.recycler_adapter.UserDataAdapterAdapter
+import com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.recycler_adapter.UserDataAdapterAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import java.lang.IllegalArgumentException

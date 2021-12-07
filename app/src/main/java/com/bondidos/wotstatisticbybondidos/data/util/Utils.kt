@@ -1,5 +1,6 @@
 package com.bondidos.wotstatisticbybondidos.data.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.UrlQuerySanitizer
 import com.bondidos.wotstatisticbybondidos.R
@@ -113,10 +114,12 @@ class Utils @Inject constructor(private val context: Context) {
         return result.toList()
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun Int.toDataFormat(): String{
         val format = SimpleDateFormat("dd/MM/yyyy")
         return format.format(this)
     }
+    @SuppressLint("SimpleDateFormat")
     private fun Long.toDataFormat(): String{
         val format = SimpleDateFormat("dd/MM/yyyy")
         return format.format(this)

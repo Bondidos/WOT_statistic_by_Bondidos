@@ -16,9 +16,7 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/achieve_item">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        tools:listitem="@layout/achieve_item"/>
 
     <ProgressBar
         android:id="@+id/userDataProgressBar"

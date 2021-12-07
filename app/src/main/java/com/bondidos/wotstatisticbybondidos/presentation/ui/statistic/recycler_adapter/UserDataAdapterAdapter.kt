@@ -1,7 +1,9 @@
-package com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.personal_data.recycler_adapter
+package com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.recycler_adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.viewbinding.ViewBinding
@@ -42,8 +44,8 @@ class UserDataAdapterAdapter: RecyclerView.Adapter<DataAdapterViewHolder>() {
 
         // full width if banner
         binding.root.layoutParams.apply {
-            if (viewType == TYPE_BANNER && this is StaggeredGridLayoutManager.LayoutParams) {
-                this.isFullSpan = true
+            if (viewType == TYPE_BANNER && this is GridLayoutManager.LayoutParams) {
+                this as LinearLayoutManager.qw1 2   SAszzzzwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwss$#
             }
         }
         return DataAdapterViewHolder(binding)
