@@ -2,6 +2,8 @@ package com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.personal_d
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
+import com.bondidos.wotstatisticbybondidos.domain.other.Resource
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseGetData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,28 +15,21 @@ class UserDataViewModel @Inject constructor(
     private val fetchData: UseCaseGetData
 ) : ViewModel() {
 
-    private val _listOfAchieves = MutableStateFlow<AchievesUiState>(AchievesUiState.Empty)
-    val listOfAchieves: StateFlow<AchievesUiState> = _listOfAchieves.asStateFlow()
+    private val _listUserData = MutableStateFlow<Resource<List<MultiViewModel>>>(Resource.initialized(null))
+    val listUserData: StateFlow<Resource<List<MultiViewModel>>> = _listUserData.asStateFlow()
 
     init {
 
         viewModelScope.launch {
-             fetchData.execute()
-            /*_listOfAchieves.value = AchievesUiState.Loading
-            try {
-                getAchieves.execute().collect {
-                    _listOfAchieves.value = AchievesUiState.Success(it)
-                }
-            } catch (e: Exception) {
-                _listOfAchieves.value = AchievesUiState.Error("Can't retrieve list")
-            }*/
+            _listUserData.value = Resource.loading(null)
+             _listUserData.value = fetchData.execute()
         }
     }
 
-    sealed class AchievesUiState {
-        data class Success(val data: String?/*List<Achieve>*/) : AchievesUiState()
+  /*  sealed class AchievesUiState {
+        data class Success(val data: String?*//*List<Achieve>*//*) : AchievesUiState()
         data class Error(val message: String) : AchievesUiState()
         object Loading : AchievesUiState()
         object Empty : AchievesUiState()
-    }
+    }*/
 }

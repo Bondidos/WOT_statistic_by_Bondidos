@@ -27,7 +27,7 @@ object Constants {
     const val ACCESS_TOKEN = "b98830431fc22d1565bfc3a84f59077f8baa0aff"
     const val ACCOUNT_ID = 560508396
     const val EXTRA = "statistics.epic, statistics.random"
-    const val FIELDS = "-statistics.frags, -statistics.clan, -statistics.regular_team, -statistics.company, -statistics.historical, -statistics.team"
+    const val FIELDS = "-statistics"
     const val ACHIEVES_COUNT = 365
 
     //recycler

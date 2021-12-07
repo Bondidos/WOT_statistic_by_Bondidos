@@ -78,7 +78,12 @@ class DataAdapterViewHolder(private val binding: ViewBinding) : RecyclerView.Vie
     private fun bindBanner(item: MultiViewModel.Banner) {
         (binding as BannerItemBinding).apply {
             header.text = item.header
-            imgBanner.load(item.image)
+            item.image?.let {
+                when(it){
+                    is Int -> imgBanner.setImageResource(it)
+                    is String -> imgBanner.load(it.toString())
+                }
+            }
         }
     }
 
@@ -92,7 +97,7 @@ class DataAdapterViewHolder(private val binding: ViewBinding) : RecyclerView.Vie
     private fun bindCardWithImage(item: MultiViewModel.CardWithImage) {
         (binding as CardWithImageBinding).apply {
             header.text = item.header
-            imgBanner.load(item.image)
+            item.image?.let { imgBanner.setImageResource(it) }
         }
     }
 

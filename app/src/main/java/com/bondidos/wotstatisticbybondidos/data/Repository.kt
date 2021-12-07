@@ -8,6 +8,8 @@ import com.bondidos.wotstatisticbybondidos.data.util.Utils
 import com.bondidos.wotstatisticbybondidos.domain.Repository
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.ACHIEVES_COUNT
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.APPLICATION_ID
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.FIELDS
+import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -47,20 +49,35 @@ class RepositoryImpl @Inject constructor(
         return if (utils.isUserValid(user)) user else null
     }
 
-    override suspend fun fetchData() {
+    override suspend fun fetchData(): List<MultiViewModel> {
         val user = withContext(Dispatchers.IO) { prefStore.getUser() }
         val apiData = withContext(Dispatchers.IO) {
             networkService.getUserData(
                 APPLICATION_ID,
                 user.account_id,
                 user.access_token,
-                "-statistics"
+                FIELDS
             )
         }
+        val apiClan = withContext(Dispatchers.IO){networkService.getUserClanImage(
+            APPLICATION_ID,
+            apiData.data.get("${user.account_id}")?.clanId ?: 0
+        )}
+
         Log.d("Repository", user.toString())
+        Log.d("Repository", apiClan.toString())
         Log.d("Repository", apiData.data.toString())
 
-    }//nickname=LegitimateKiller,
+        return withContext(Dispatchers.IO) {
+            utils.createMultiViewModelList(
+                apiData,
+                apiClan,
+                user
+            )
+        }
+
+    }
+//nickname=LegitimateKiller,
 // account_id=560508396,
 // access_token=9172617952f3348333b2cef4641a923e6b74ab42,
 // expires_at=1639935775

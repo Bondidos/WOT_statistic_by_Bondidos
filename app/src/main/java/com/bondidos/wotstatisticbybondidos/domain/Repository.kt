@@ -2,6 +2,7 @@ package com.bondidos.wotstatisticbybondidos.domain
 
 import android.content.Context
 import com.bondidos.wotstatisticbybondidos.data.entityes.achieves.AchievesDBItem
+import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import retrofit2.http.Url
 
@@ -37,6 +38,6 @@ interface Repository {
 
     suspend fun getUser(): User?
 
-    suspend fun fetchData()
+    suspend fun fetchData(): List<MultiViewModel>
 
 }

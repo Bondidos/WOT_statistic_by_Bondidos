@@ -4,7 +4,7 @@ sealed class MultiViewModel{
 
     data class Banner (
         val header: String,
-        val image: String
+        val image: Any?
     ): MultiViewModel()
 
     data class CardWithText (
@@ -14,6 +14,6 @@ sealed class MultiViewModel{
 
     data class CardWithImage (
         val header: String,
-        val image: String
+        val image: Int?
     ): MultiViewModel()
 }

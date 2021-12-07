@@ -5,10 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bondidos.wotstatisticbybondidos.databinding.UserDataFragmentBinding
+import com.bondidos.wotstatisticbybondidos.domain.other.Status.*
+import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
 import com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.personal_data.recycler_adapter.UserDataAdapterAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -20,7 +26,7 @@ class UserDataFragment : Fragment() {
     @Inject
     lateinit var viewModel: UserDataViewModel
 
-    private val achievesAdapter: UserDataAdapterAdapter = UserDataAdapterAdapter()
+    private val userDataAdapter: UserDataAdapterAdapter by lazy { UserDataAdapterAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,33 +40,37 @@ class UserDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*setUpRecycler()
-        setUpObservers()*/
+        setUpObservers()
+
     }
 
-    private fun setUpRecycler() = binding.achievesRecycler.apply {
-        adapter = achievesAdapter
-        layoutManager = GridLayoutManager(requireContext(),5)
+    private fun setUpRecycler() = binding.userDataRecycler.apply {
+        layoutManager = GridLayoutManager(requireContext(),2)
+        adapter = userDataAdapter
     }
 
-   /* private fun setUpObservers() {
+    private fun setUpObservers() {
         lifecycleScope.launchWhenCreated {
-            viewModel.listOfAchieves.collect { uiState ->
+            viewModel.listUserData.collect { resources ->
 
-                when(uiState){
-                    is Loading -> binding.achieveProgressBar.isVisible = true
-                    is Success -> {
-                        achievesAdapter.submitList(uiState.data)
-                        binding.achieveProgressBar.isVisible = false
+                when(resources.status){
+                    INITIALIZED -> Unit
+                    LOADING -> binding.userDataProgressBar.isVisible = true
+                    SUCCESS -> {
+                        try {
+                            userDataAdapter.setData(resources.data ?: emptyList())
+                        } catch (e: IllegalArgumentException){
+                            makeToast(requireContext(),e.toString())
+                        }
+                        setUpRecycler()
+                        binding.userDataProgressBar.isVisible = false
                     }
-                    is Error -> {
-                        makeToast(requireContext(), uiState.message)
-                        binding.achieveProgressBar.isVisible = false
+                    ERROR -> {
+                        binding.userDataProgressBar.isVisible = false
+                        makeToast(requireContext(), resources.message ?: "Unknown error")
                     }
-                    else -> Unit
                 }
             }
         }
-    }*/
-
+    }
 }
