@@ -31,6 +31,7 @@ class Statistic : AppCompatActivity() {
         setContentView(binding.root)
 
         applyTheme()
+
         val navView: BottomNavigationView = binding.navView
         navController = findNavController(R.id.nav_host_fragment_activity_statistic)
         // Passing each menu ID as a set of Ids because each
