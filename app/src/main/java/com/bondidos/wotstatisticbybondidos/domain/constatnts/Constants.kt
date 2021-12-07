@@ -24,14 +24,21 @@ object Constants {
 
     // repository
     const val APPLICATION_ID = "5d489c586717c2b76ade8bea16607167"
-    const val ACCESS_TOKEN = "b98830431fc22d1565bfc3a84f59077f8baa0aff"
-    const val ACCOUNT_ID = 560508396
-    const val EXTRA = "statistics.epic, statistics.random"
-    const val FIELDS = "-statistics"
+    const val FIELDS_DATA = "-statistics"
+    const val FIELDS_ACHIEVES = "-frags, -max_series"
     const val ACHIEVES_COUNT = 365
 
     //recycler
     const val TYPE_BANNER = 0
     const val TYPE_CARD_WITH_IMAGE = 1
     const val TYPE_CARD_WITH_TEXT = 2
+
+    //second account
+    /*{
+        "status": "ok",
+        "access_token": "5395a3b4e15b97bce7d6bdac442f3e60a75652d9",
+        "nickname": "vladimir_khodarenok",
+        "account_id": "560508080",
+        "expires_at": "1640110681"
+    }*/
 }

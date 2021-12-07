@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.data.entityes.achieves
+package com.bondidos.wotstatisticbybondidos.data.entityes.achievesDB
 
 
 import com.squareup.moshi.Json

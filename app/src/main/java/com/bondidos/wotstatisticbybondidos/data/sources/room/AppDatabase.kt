@@ -2,7 +2,7 @@ package com.bondidos.wotstatisticbybondidos.data.sources.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.bondidos.wotstatisticbybondidos.data.entityes.achieves.AchievesDBItem
+import com.bondidos.wotstatisticbybondidos.data.entityes.achievesDB.AchievesDBItem
 
 
 @Database(entities = [AchievesDBItem::class], version = 1)

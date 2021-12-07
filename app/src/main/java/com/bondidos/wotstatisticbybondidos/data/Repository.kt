@@ -8,7 +8,8 @@ import com.bondidos.wotstatisticbybondidos.data.util.Utils
 import com.bondidos.wotstatisticbybondidos.domain.Repository
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.ACHIEVES_COUNT
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.APPLICATION_ID
-import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.FIELDS
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.FIELDS_ACHIEVES
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.FIELDS_DATA
 import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +23,7 @@ class RepositoryImpl @Inject constructor(
     private val utils: Utils
 ) : Repository {
 
-    //todo delete dispatcher. room has yours IO functionality
+    //todo delete dispatcher. room and retrofit has yours IO functionality
     override suspend fun createAchievesDB() {
         withContext(Dispatchers.IO) {
             val list = utils.jsonToAchievesList()
@@ -44,7 +45,6 @@ class RepositoryImpl @Inject constructor(
 
 
     override suspend fun getUser(): User? {
-
         val user = withContext(Dispatchers.IO) { prefStore.getUser() }
         return if (utils.isUserValid(user)) user else null
     }
@@ -56,7 +56,7 @@ class RepositoryImpl @Inject constructor(
                 APPLICATION_ID,
                 user.account_id,
                 user.access_token,
-                FIELDS
+                FIELDS_DATA
             )
         }
         val apiClan = withContext(Dispatchers.IO){networkService.getUserClanImage(
@@ -64,9 +64,9 @@ class RepositoryImpl @Inject constructor(
             apiData.data.get("${user.account_id}")?.clanId ?: 0
         )}
 
-        Log.d("Repository", user.toString())
+        /*Log.d("Repository", user.toString())
         Log.d("Repository", apiClan.toString())
-        Log.d("Repository", apiData.data.toString())
+        Log.d("Repository", apiData.data.toString())*/
 
         return withContext(Dispatchers.IO) {
             utils.createMultiViewModelList(
@@ -75,7 +75,17 @@ class RepositoryImpl @Inject constructor(
                 user
             )
         }
+    }
 
+    override suspend fun fetchAchieves(): List<MultiViewModel> {
+        val user = withContext(Dispatchers.IO) { prefStore.getUser() }
+        val apiAchievesResponse = networkService.getUserAchieves(
+            APPLICATION_ID,
+            user.account_id,
+            FIELDS_ACHIEVES
+        )
+        Log.d("Repository",apiAchievesResponse.toString())
+        return emptyList()
     }
 //nickname=LegitimateKiller,
 // account_id=560508396,

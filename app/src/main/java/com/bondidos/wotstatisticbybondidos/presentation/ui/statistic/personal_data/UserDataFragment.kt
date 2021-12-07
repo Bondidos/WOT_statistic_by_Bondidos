@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bondidos.wotstatisticbybondidos.databinding.UserDataFragmentBinding
 import com.bondidos.wotstatisticbybondidos.domain.other.Status.*
 import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
-import com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.recycler_adapter.UserDataAdapterAdapter
+import com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.recycler_adapter.dataAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import java.lang.IllegalArgumentException
@@ -22,19 +21,17 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class UserDataFragment : Fragment() {
 
-    private var _binding: UserDataFragmentBinding? = null
-    private val binding: UserDataFragmentBinding get() = requireNotNull(_binding)
-
     @Inject
     lateinit var viewModel: UserDataViewModel
-
-    private val userDataAdapter: UserDataAdapterAdapter by lazy { UserDataAdapterAdapter() }
+    private var _binding: UserDataFragmentBinding? = null
+    private val binding: UserDataFragmentBinding get() = requireNotNull(_binding)
+    private val userDataAdapter: dataAdapter by lazy { dataAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = UserDataFragmentBinding.inflate(inflater,container,false)
+        _binding = UserDataFragmentBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -42,28 +39,28 @@ class UserDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpObservers()
+        setUpFragment()
 
     }
 
     private fun setUpRecycler() = binding.userDataRecycler.apply {
-        layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-        itemAnimator =(DefaultItemAnimator())
+        layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        itemAnimator = (DefaultItemAnimator())
         adapter = userDataAdapter
     }
 
-    private fun setUpObservers() {
+    private fun setUpFragment() {
         lifecycleScope.launchWhenCreated {
             viewModel.listUserData.collect { resources ->
 
-                when(resources.status){
+                when (resources.status) {
                     INITIALIZED -> Unit
                     LOADING -> binding.userDataProgressBar.isVisible = true
                     SUCCESS -> {
                         try {
                             userDataAdapter.setData(resources.data ?: emptyList())
-                        } catch (e: IllegalArgumentException){
-                            makeToast(requireContext(),e.toString())
+                        } catch (e: IllegalArgumentException) {
+                            makeToast(requireContext(), e.toString())
                         }
                         setUpRecycler()
                         binding.userDataProgressBar.isVisible = false

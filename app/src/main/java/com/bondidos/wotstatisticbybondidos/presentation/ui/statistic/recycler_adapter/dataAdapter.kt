@@ -17,7 +17,7 @@ import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.TYPE_CARD
 import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
 import java.lang.IllegalArgumentException
 
-class UserDataAdapterAdapter: RecyclerView.Adapter<DataAdapterViewHolder>() {
+class dataAdapter: RecyclerView.Adapter<DataAdapterViewHolder>() {
 
     private val adapterData = mutableListOf<MultiViewModel>()
 

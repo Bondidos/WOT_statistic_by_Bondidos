@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.UrlQuerySanitizer
 import com.bondidos.wotstatisticbybondidos.R
-import com.bondidos.wotstatisticbybondidos.data.entityes.achieves.AchievesDBItem
+import com.bondidos.wotstatisticbybondidos.data.entityes.achievesDB.AchievesDBItem
 import com.bondidos.wotstatisticbybondidos.data.entityes.userClanApi.ApiClanResponse
 import com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi.ApiDataResponse
 import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
@@ -14,7 +14,6 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 class Utils @Inject constructor(private val context: Context) {
