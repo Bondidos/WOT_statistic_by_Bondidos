@@ -182,12 +182,26 @@ class Utils @Inject constructor(private val context: Context) {
                 resultSet.add(
                     MultiViewModel.AchieveCard(
                         scored = api[it.name].toString(),
-                        image = it.imageBig?.replace("http","https") ?: // http do not work
-                        it.image?.replace("http","https")  ?: ""        // replaced with https
+                        image = findImage(it,api[it.name])
                     )
                 )
             }
         }
         return resultSet.toList()
+    }
+
+    private fun findImage(it: AchievesDBItem, i: Int?): String {
+        return when {
+            it.options != null -> {
+                if (it.options[i!!-1].imageBig != null) {
+                    it.options[i-1].imageBig?.replace("http","https") ?: ""
+                } else it.options[i-1].image?.replace("http","https") ?: ""
+            }
+            it.imageBig != null -> it.imageBig.replace("http","https")
+
+            it.image != null -> it.image.replace("http","https")
+
+            else -> ""
+        }
     }
 }
