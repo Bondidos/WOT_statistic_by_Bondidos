@@ -17,4 +17,6 @@ interface Repository {
     suspend fun fetchData(): List<MultiViewModel>
 
     suspend fun fetchAchieves(): List<MultiViewModel>
+
+    suspend fun logout(): Boolean
 }

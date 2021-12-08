@@ -7,4 +7,6 @@ interface PrefsStore {
     suspend fun saveUser(user: User): Boolean
 
     suspend fun getUser(): User?
+
+    suspend fun logout()
 }

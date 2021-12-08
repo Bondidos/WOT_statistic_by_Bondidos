@@ -39,7 +39,7 @@ class Utils @Inject constructor(private val context: Context) {
     }
 
     private fun isExpired(expiresAt: Long): Boolean =
-        System.currentTimeMillis() <= (expiresAt + System.currentTimeMillis())
+        System.currentTimeMillis() <= expiresAt*1000
 
     fun getUserFromUrl(url: String): User? {
         val sanitizer = UrlQuerySanitizer().apply {
@@ -91,7 +91,7 @@ class Utils @Inject constructor(private val context: Context) {
 
         result.add(
             MultiViewModel.Banner(
-                "Global Rating /n${commonData?.globalRating}",
+                "Global Rating \n${commonData?.globalRating}",
                 R.drawable.wot_logo
             )
         )
@@ -141,7 +141,7 @@ class Utils @Inject constructor(private val context: Context) {
     @SuppressLint("SimpleDateFormat")
     private fun Long.toDataFormat(): String {
         val format = SimpleDateFormat("dd/MM/yyyy")
-        return format.format(Timestamp(this * 1000)) // need ms, but have sec
+        return format.format(Timestamp(this * 1000))                // need ms, but have sec
     }
 
     fun getAchievesNamesFromResponse(achievesMap: Map<String, Int>): List<String> {
@@ -190,7 +190,7 @@ class Utils @Inject constructor(private val context: Context) {
         return resultSet.toList()
     }
 
-    private fun findImage(it: AchievesDBItem, i: Int?): String {
+    private fun findImage(it: AchievesDBItem, i: Int?): String {            // http do not work. no time to find out
         return when {
             it.options != null -> {
                 if (it.options[i!!-1].imageBig != null) {

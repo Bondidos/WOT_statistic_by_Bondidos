@@ -51,6 +51,9 @@ class LoginFragment : Fragment() {
             continueBtn.setOnClickListener {
                 viewModel.continueAsSavedUser()
             }
+            logOut.setOnClickListener {
+                viewModel.logout()
+            }
         }
     }
 
@@ -95,8 +98,10 @@ class LoginFragment : Fragment() {
                                 makeToast(requireContext(),"Please Login")
                             }
                         }
-                        ERROR -> resource.data?.let {
+                        ERROR -> {
                             makeToast(requireContext(), resource.message!!)
+                            continueBtn.isVisible = false
+                            binding.logOut.isVisible = false
                         }
 
                         else -> Unit

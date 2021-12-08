@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.login.login_fragment.LoginFragment"
-        android:label="login_fragment"
+        android:label="Login"
         tools:layout="@layout/login_fragment" >
         <action
             android:id="@+id/action_loginFragment_to_webViewFragment"
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/webViewFragment"
         android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.login.webview_fragment.WebViewFragment"
-        android:label="WebViewFragment" />
+        android:label="Internet" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.settings.SettingsFragment"

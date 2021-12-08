@@ -5,9 +5,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/mainBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/mainBackground"
     android:orientation="vertical"
     tools:context=".presentation.ui.login.login_fragment.LoginFragment">
 
@@ -38,18 +38,30 @@
         android:id="@+id/continueBtn"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:text="@string/continue_as"
+        android:layout_marginBottom="112dp"
         android:background="@color/colorPrimary"
+        android:text="@string/continue_as"
         app:layout_constraintBottom_toTopOf="@+id/loginBtn"
         app:layout_constraintEnd_toEndOf="@+id/loginBtn"
-        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/loginBtn" />
+
+    <Button
+        android:id="@+id/logOut"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/logout"
+        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/loginBtn" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="350dp"
-        android:layout_height="447dp"
+        android:layout_width="354dp"
+        android:layout_height="405dp"
         android:src="@drawable/login_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,12 +73,13 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="112dp"
         android:text="@string/please_login_to_continue"
-        android:textSize="28sp"
         android:textColor="@color/textPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/continueBtn"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@+id/logOut"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.64"
         app:layout_constraintStart_toStartOf="parent" />
 
 

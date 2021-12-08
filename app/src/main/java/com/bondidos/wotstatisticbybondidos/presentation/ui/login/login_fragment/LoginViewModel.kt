@@ -8,13 +8,15 @@ import com.bondidos.wotstatisticbybondidos.domain.other.Event
 import com.bondidos.wotstatisticbybondidos.domain.other.Resource
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogin
 import com.bondidos.wotstatisticbybondidos.domain.useCase.CreateAchievesDBIfNotExist
+import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogout
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
     private val login: UseCaseLogin,
-    private val createAchievesDBIfNotExist: CreateAchievesDBIfNotExist
+    private val createAchievesDBIfNotExist: CreateAchievesDBIfNotExist,
+    private val logout: UseCaseLogout
 ) : ViewModel() {
 
     private val _isDatabaseCreated = MutableStateFlow<Resource<String>>(Resource.initialized(null))
@@ -43,5 +45,12 @@ class LoginViewModel @Inject constructor(
 
     fun continueAsSavedUser() {
         _navigation.value = Event(NAVIGATE_CONTINUE)
+    }
+    fun logout(){
+        viewModelScope.launch {
+            if(logout.execute())
+                _isExistSavedUser.value = Resource.loading(null)
+            _isExistSavedUser.value = Resource.error("logged out",null)
+        }
     }
 }

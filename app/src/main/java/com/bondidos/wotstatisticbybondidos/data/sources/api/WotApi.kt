@@ -28,4 +28,10 @@ interface WotApi {
         @Query("account_id") account_id: Int,
         @Query("fields") fields: String?
     ): ApiAchievesResponse
+
+    @GET("/wot/auth/logout/")
+    suspend fun logout(
+        @Query("application_id") application_id: String,
+        @Query("access_token") access_token: String
+    )
 }

@@ -62,8 +62,8 @@ class RepositoryImpl @Inject constructor(
             apiData.data["${user.account_id}"]?.clanId ?: 0
         )
 
-        /*Log.d("Repository", user.toString())
-        Log.d("Repository", apiClan.toString())
+        Log.d("Repository", user.toString())
+        /*Log.d("Repository", apiClan.toString())
         Log.d("Repository", apiData.data.toString())*/
 
         return utils.createMultiViewModelList(
@@ -101,6 +101,13 @@ class RepositoryImpl @Inject constructor(
                 "${apiAchievesResponse.data["${user.account_id}"]?.achievements?.size}")*/
         //Log.d("Repository",apiAchievesResponse.toString())
 
+    }
+
+    override suspend fun logout(): Boolean {
+        val user = prefStore.getUser()
+        networkService.logout(APPLICATION_ID,user.access_token)
+        prefStore.logout()
+        return true
     }
 //nickname=LegitimateKiller,
 // account_id=560508396,

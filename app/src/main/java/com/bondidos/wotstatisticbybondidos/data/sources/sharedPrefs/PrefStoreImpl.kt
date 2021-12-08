@@ -30,4 +30,13 @@ class PrefStoreImpl @Inject constructor(
             expires_at = prefs.getLong(TOKEN_EXPIRES, -1L)
         )
     }
+
+    override suspend fun logout() {
+        prefs.edit()
+            .putString(USER_NICKNAME,"")
+            .putInt(USER_ACCOUNT_ID,-1)
+            .putString(USER_TOKEN,"")
+            .putLong(TOKEN_EXPIRES,-1L)
+            .apply()
+    }
 }
