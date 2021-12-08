@@ -8,17 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.viewbinding.ViewBinding
 import coil.load
-import com.bondidos.wotstatisticbybondidos.databinding.BannerItemBinding
-import com.bondidos.wotstatisticbybondidos.databinding.CardWithImageBinding
-import com.bondidos.wotstatisticbybondidos.databinding.CardWithTextBinding
+import com.bondidos.wotstatisticbybondidos.databinding.*
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.TYPE_BANNER
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.TYPE_BANNER_WITHOUT_IMAGE
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.TYPE_CARD_ACHIEVE
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.TYPE_CARD_WITH_TEXT
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.TYPE_CARD_WITH_IMAGE
 import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
 import java.lang.IllegalArgumentException
 
-class dataAdapter: RecyclerView.Adapter<DataAdapterViewHolder>() {
+class DataAdapter: RecyclerView.Adapter<DataAdapterViewHolder>() {
 
     private val adapterData = mutableListOf<MultiViewModel>()
 
@@ -40,12 +39,23 @@ class dataAdapter: RecyclerView.Adapter<DataAdapterViewHolder>() {
                 parent,
                 false
             )
+            TYPE_CARD_ACHIEVE -> AchieveItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            TYPE_BANNER_WITHOUT_IMAGE -> BannerWithoutImageBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
             else -> throw IllegalArgumentException("Invalid type")
         }
 
         // full width if banner
         binding.root.layoutParams.apply {
-            if (viewType == TYPE_BANNER && this is StaggeredGridLayoutManager .LayoutParams) {
+            if ((viewType == TYPE_BANNER || viewType == TYPE_BANNER_WITHOUT_IMAGE) &&
+                this is StaggeredGridLayoutManager .LayoutParams) {
                 this.isFullSpan = true
             }
         }
@@ -65,6 +75,7 @@ class dataAdapter: RecyclerView.Adapter<DataAdapterViewHolder>() {
             is MultiViewModel.CardWithText -> TYPE_CARD_WITH_TEXT
             is MultiViewModel.CardWithImage -> TYPE_CARD_WITH_IMAGE
             is MultiViewModel.AchieveCard -> TYPE_CARD_ACHIEVE
+            is MultiViewModel.BannerWithoutImage -> TYPE_BANNER_WITHOUT_IMAGE
         }
     }
 
@@ -75,7 +86,6 @@ class dataAdapter: RecyclerView.Adapter<DataAdapterViewHolder>() {
         }
     }
 }
-
 
 class DataAdapterViewHolder(private val binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -104,12 +114,26 @@ class DataAdapterViewHolder(private val binding: ViewBinding) : RecyclerView.Vie
             item.image?.let { imgBanner.setImageResource(it) }
         }
     }
+    private fun bindCardWithAchieve(item: MultiViewModel.AchieveCard){
+        (binding as AchieveItemBinding).apply {
+            imageView.load(item.image)
+            received.text = item.scored
+        }
+    }
+
+    private fun bindBannerWithoutImage(item: MultiViewModel.BannerWithoutImage){
+        (binding as BannerWithoutImageBinding).apply {
+            header.text = item.header
+        }
+    }
 
     fun bind(dataModel: MultiViewModel) {
         when (dataModel) {
             is MultiViewModel.Banner -> bindBanner(dataModel)
+            is MultiViewModel.BannerWithoutImage -> bindBannerWithoutImage(dataModel)
             is MultiViewModel.CardWithImage -> bindCardWithImage(dataModel)
             is MultiViewModel.CardWithText -> bindCardWithText(dataModel)
+            is MultiViewModel.AchieveCard -> bindCardWithAchieve(dataModel)
         }
     }
 }

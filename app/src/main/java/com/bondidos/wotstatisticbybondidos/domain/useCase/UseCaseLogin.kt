@@ -3,6 +3,9 @@ package com.bondidos.wotstatisticbybondidos.domain.useCase
 import com.bondidos.wotstatisticbybondidos.domain.Repository
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import com.bondidos.wotstatisticbybondidos.domain.other.Resource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.lang.Exception
 import javax.inject.Inject
 
 class UseCaseLogin @Inject constructor(
@@ -10,9 +13,16 @@ class UseCaseLogin @Inject constructor(
 ) {
 
     suspend fun execute(): Resource<User> {
-        val user = repository.getUser()
+        return withContext(Dispatchers.IO) {
+            try {
+                Resource.success(repository.getUser())
+            } catch (e: Exception) {
+                Resource.error("Can't find valid user, please login", null)
+            }
+        }
+        /*val user = repository.getUser()
         return if (user != null)
             Resource.success(user)
-        else Resource.error("Can't find valid user, please login", null)
+        else Resource.error("Can't find valid user, please login", null)*/
     }
 }

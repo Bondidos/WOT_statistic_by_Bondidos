@@ -36,49 +36,45 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun saveUser(url: String): Boolean {
 
-        val user = withContext(Dispatchers.IO) { utils.getUserFromUrl(url) }
+        val user =  utils.getUserFromUrl(url)
         user?.let {
-            return withContext(Dispatchers.IO) { prefStore.saveUser(user) }
+            return prefStore.saveUser(user)
         }
         return false
     }
 
-
     override suspend fun getUser(): User? {
-        val user = withContext(Dispatchers.IO) { prefStore.getUser() }
+        val user = prefStore.getUser()
         return if (utils.isUserValid(user)) user else null
     }
 
     override suspend fun fetchData(): List<MultiViewModel> {
-        val user = withContext(Dispatchers.IO) { prefStore.getUser() }
-        val apiData = withContext(Dispatchers.IO) {
-            networkService.getUserData(
+        val user = prefStore.getUser()
+        val apiData = networkService.getUserData(
                 APPLICATION_ID,
                 user.account_id,
                 user.access_token,
                 FIELDS_DATA
             )
-        }
-        val apiClan = withContext(Dispatchers.IO){networkService.getUserClanImage(
+
+        val apiClan = networkService.getUserClanImage(
             APPLICATION_ID,
             apiData.data["${user.account_id}"]?.clanId ?: 0
-        )}
+        )
 
         /*Log.d("Repository", user.toString())
         Log.d("Repository", apiClan.toString())
         Log.d("Repository", apiData.data.toString())*/
 
-        return withContext(Dispatchers.IO) {
-            utils.createMultiViewModelList(
+        return utils.createMultiViewModelList(
                 apiData,
                 apiClan,
                 user
             )
-        }
     }
 
     override suspend fun fetchAchieves(): List<MultiViewModel> {
-        val user = withContext(Dispatchers.IO) { prefStore.getUser() }
+        val user = prefStore.getUser()
         val apiAchievesResponse = networkService.getUserAchieves(
             APPLICATION_ID,
             user.account_id,
@@ -91,20 +87,20 @@ class RepositoryImpl @Inject constructor(
 
         val achievesByNameFromDB = roomStorage.getAchieves(achievesNamesList)
 
-        val result = utils.generateSortedMultiViewModelList(
+        return utils.generateSortedMultiViewModelList(
             achievesByNameFromDB,
             apiAchievesResponse.data["${user.account_id}"]?.achievements ?: emptyMap()
         )
 
-        Log.d("Repository",result.size.toString())
-        Log.d("Repository",result.toString())
+        //Log.d("Repository",result.size.toString())
+        //Log.d("Repository",result.toString())
         //Log.d("Repository",achievesByNameFromDB.size.toString())
         //Log.d("Repository",achievesNamesList.toString())
         /*Log.d("Repository","achievesNamesList.size = ${achievesNamesList.size}," +
                 "apiAchievesResponse.data.size= " +
                 "${apiAchievesResponse.data["${user.account_id}"]?.achievements?.size}")*/
         //Log.d("Repository",apiAchievesResponse.toString())
-        return emptyList()
+
     }
 //nickname=LegitimateKiller,
 // account_id=560508396,

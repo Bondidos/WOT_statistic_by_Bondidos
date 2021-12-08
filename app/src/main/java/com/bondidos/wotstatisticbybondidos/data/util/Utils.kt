@@ -158,11 +158,6 @@ class Utils @Inject constructor(private val context: Context) {
     ): List<MultiViewModel> {
 
         val resultSet = mutableListOf<MultiViewModel>()
-        /*val epic = db.filter { it.section == "epic" }
-        val action = db.filter { it.section == "action" }
-        val special = db.filter { it.section == "special" }
-        val memorial = db.filter { it.section == "memorial" }
-        val group = db.filter { it.section == "group" }*/
 
         val listOfSortedAchievesDB = listOf(
             db.filter { it.section == "epic" },
@@ -175,23 +170,24 @@ class Utils @Inject constructor(private val context: Context) {
 
         listOfSortedAchievesDB.forEach { list ->
             when (listOfSortedAchievesDB.indexOf(list)) {
-                0 -> resultSet.add(MultiViewModel.Banner("Epic", null))
-                1 -> resultSet.add(MultiViewModel.Banner("Action", null))
-                2 -> resultSet.add(MultiViewModel.Banner("Special", null))
-                3 -> resultSet.add(MultiViewModel.Banner("Memorial", null))
-                4 -> resultSet.add(MultiViewModel.Banner("Group", null))
-                5 -> resultSet.add(MultiViewModel.Banner("Class", null))
+                0 -> resultSet.add(MultiViewModel.BannerWithoutImage("Epic"))
+                1 -> resultSet.add(MultiViewModel.BannerWithoutImage("Action"))
+                2 -> resultSet.add(MultiViewModel.BannerWithoutImage("Special"))
+                3 -> resultSet.add(MultiViewModel.BannerWithoutImage("Memorial"))
+                4 -> resultSet.add(MultiViewModel.BannerWithoutImage("Group"))
+                5 -> resultSet.add(MultiViewModel.BannerWithoutImage("Class"))
 
             }
             list.forEach {
                 resultSet.add(
                     MultiViewModel.AchieveCard(
                         scored = api[it.name].toString(),
-                        image = it.imageBig ?: it.image ?: ""
+                        image = it.imageBig?.replace("http","https") ?: // http do not work
+                        it.image?.replace("http","https")  ?: ""        // replaced with https
                     )
                 )
             }
         }
-        return resultSet
+        return resultSet.toList()
     }
 }

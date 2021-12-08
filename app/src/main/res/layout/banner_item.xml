@@ -32,7 +32,7 @@
         android:id="@+id/imgBanner"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:src="@drawable/wot_logo"
+        android:src="@drawable/ic_baseline_leaderboard_24"
         card_view:layout_constraintBottom_toBottomOf="parent"
         card_view:layout_constraintEnd_toEndOf="parent"
         card_view:layout_constraintStart_toStartOf="parent"

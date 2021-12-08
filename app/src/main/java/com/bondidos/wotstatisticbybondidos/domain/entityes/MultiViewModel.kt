@@ -7,6 +7,10 @@ sealed class MultiViewModel{
         val image: Any?
     ): MultiViewModel()
 
+    data class BannerWithoutImage (
+        val header: String
+    ): MultiViewModel()
+
     data class CardWithText (
         val header: String,
         val text: String

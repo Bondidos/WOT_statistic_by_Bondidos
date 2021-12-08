@@ -33,6 +33,7 @@ object Constants {
     const val TYPE_CARD_WITH_IMAGE = 1
     const val TYPE_CARD_WITH_TEXT = 2
     const val TYPE_CARD_ACHIEVE = 3
+    const val TYPE_BANNER_WITHOUT_IMAGE = 4
 
     //second account
     /*{

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bondidos.wotstatisticbybondidos.databinding.AchieveFragmentBinding
 import com.bondidos.wotstatisticbybondidos.domain.other.Status
 import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
-import com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.recycler_adapter.dataAdapter
+import com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.recycler_adapter.DataAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import java.lang.IllegalArgumentException
@@ -25,7 +25,7 @@ class AchievesFragment : Fragment() {
     lateinit var viewModel: AchievesViewModel
     private var _binding: AchieveFragmentBinding? = null
     private val binding get() = requireNotNull(_binding)
-    private val userAchievesAdapter: dataAdapter by lazy { dataAdapter() }
+    private val userAchievesAdapter: DataAdapter by lazy { DataAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,

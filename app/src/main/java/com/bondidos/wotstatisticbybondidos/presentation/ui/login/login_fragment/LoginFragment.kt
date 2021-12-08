@@ -86,11 +86,14 @@ class LoginFragment : Fragment() {
                             continueBtn.isVisible = false
                         }
                         SUCCESS -> {
-                            continueBtn.apply {
-                                isVisible = true
-                                text = resource.data?.nickname
+                            if (resource.data != null) {
+                                continueBtn.apply {
+                                    isVisible = true
+                                    text = resource.data.nickname
+                                }
+                            } else {
+                                makeToast(requireContext(),"Please Login")
                             }
-
                         }
                         ERROR -> resource.data?.let {
                             makeToast(requireContext(), resource.message!!)
@@ -113,7 +116,6 @@ class LoginFragment : Fragment() {
                                 Statistic::class.java
                             )
                         )
-                        /*findNavController().navigate(R.id.achievesFragment)*/
                         else -> Unit
                     }
                 }

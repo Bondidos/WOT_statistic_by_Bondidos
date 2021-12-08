@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bondidos.wotstatisticbybondidos.databinding.UserDataFragmentBinding
 import com.bondidos.wotstatisticbybondidos.domain.other.Status.*
 import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
-import com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.recycler_adapter.dataAdapter
+import com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.recycler_adapter.DataAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import java.lang.IllegalArgumentException
@@ -25,7 +25,7 @@ class UserDataFragment : Fragment() {
     lateinit var viewModel: UserDataViewModel
     private var _binding: UserDataFragmentBinding? = null
     private val binding: UserDataFragmentBinding get() = requireNotNull(_binding)
-    private val userDataAdapter: dataAdapter by lazy { dataAdapter() }
+    private val userDataAdapter: DataAdapter by lazy { DataAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
