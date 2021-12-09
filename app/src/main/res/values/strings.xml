@@ -9,6 +9,9 @@
     <string name="title_notifications">Notifications</string>
     <string name="text_value">text value</string>
     <string name="logout">Logout</string>
+    <string name="wot_logo">WOT logo</string>
+    <string name="login_information">Login information</string>
+    <string name="image">Image</string>
     <!-- TODO: Remove or change this placeholder text -->
     <!-- Preference Titles -->
 
