@@ -1,5 +1,6 @@
 package com.bondidos.wotstatisticbybondidos.data
 
+import android.util.Log
 import com.bondidos.wotstatisticbybondidos.data.sources.api.WotApi
 import com.bondidos.wotstatisticbybondidos.data.sources.room.RoomRepositoryDao
 import com.bondidos.wotstatisticbybondidos.data.sources.sharedPrefs.PrefStoreImpl
@@ -9,6 +10,7 @@ import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.ACHIEVES_
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.APPLICATION_ID
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.FIELDS_ACHIEVES
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.FIELDS_DATA
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.FIELDS_TANKS
 import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import javax.inject.Inject
@@ -51,7 +53,17 @@ class RepositoryImpl @Inject constructor(
             user.access_token,
             FIELDS_DATA
         )
-
+        // make shorter this method
+        val bestTanks = listOf(
+            apiData.data["${user.account_id}"]?.statistics?.all?.get("max_damage_tank_id"),
+            apiData.data["${user.account_id}"]?.statistics?.all?.get("max_frags_tank_id")
+        )
+        val bestTanksImages = networkService.getBestTanksImage(
+            APPLICATION_ID,
+            "${bestTanks[0]},${bestTanks[1]}",
+            FIELDS_TANKS
+        )
+        Log.d("Repository",bestTanksImages.toString())
         val apiClan = networkService.getUserClanImage(
             APPLICATION_ID,
             apiData.data["${user.account_id}"]?.clanId ?: 0
@@ -60,7 +72,8 @@ class RepositoryImpl @Inject constructor(
         return utils.createMultiViewModelList(
             apiData,
             apiClan,
-            user
+            user,
+            bestTanksImages
         )
     }
 

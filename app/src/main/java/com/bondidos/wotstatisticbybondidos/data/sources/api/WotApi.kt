@@ -1,6 +1,7 @@
 package com.bondidos.wotstatisticbybondidos.data.sources.api
 
 import com.bondidos.wotstatisticbybondidos.data.entityes.achievesApi.ApiAchievesResponse
+import com.bondidos.wotstatisticbybondidos.data.entityes.tankImageApi.TankImage
 import com.bondidos.wotstatisticbybondidos.data.entityes.userClanApi.ApiClanResponse
 import com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi.ApiDataResponse
 import retrofit2.http.GET
@@ -19,7 +20,7 @@ interface WotApi {
     @GET("/wot/clans/info/")
     suspend fun getUserClanImage(
         @Query("application_id") application_id: String,
-        @Query("clan_id") clan_id: Int,
+        @Query("clan_id") clan_id: Int
     ): ApiClanResponse
 
     @GET("/wot/account/achievements/")
@@ -34,4 +35,11 @@ interface WotApi {
         @Query("application_id") application_id: String,
         @Query("access_token") access_token: String
     )
+
+    @GET("/wot/encyclopedia/vehicles/")
+    suspend fun getBestTanksImage(
+        @Query("application_id") application_id: String,
+        @Query("tank_id") tank_id: String,
+        @Query("fields") fields: String,
+    ): TankImage
 }

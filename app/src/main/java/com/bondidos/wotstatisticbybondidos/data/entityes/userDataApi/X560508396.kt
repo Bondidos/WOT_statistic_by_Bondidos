@@ -1,6 +1,7 @@
 package com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi
 
 
+import com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.Statistic
 import com.google.gson.annotations.SerializedName
 
 data class X560508396(
@@ -21,7 +22,10 @@ data class X560508396(
     @SerializedName("nickname")
     val nickname: String,
     @SerializedName("private")
-    val `private`: Map<String,Any?>,
+    val `private`: Map<String, Any?>,
     @SerializedName("updated_at")
-    val updatedAt: Int
+    val updatedAt: Int,
+    @SerializedName("statistics")
+    val statistics: All
 )
+

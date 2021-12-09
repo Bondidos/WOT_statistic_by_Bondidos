@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.UrlQuerySanitizer
 import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.data.entityes.achievesDB.AchievesDBItem
+import com.bondidos.wotstatisticbybondidos.data.entityes.tankImageApi.TankImage
 import com.bondidos.wotstatisticbybondidos.data.entityes.userClanApi.ApiClanResponse
 import com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi.ApiDataResponse
 import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
@@ -59,7 +60,8 @@ class Utils @Inject constructor(private val context: Context) {
     fun createMultiViewModelList(
         apiData: ApiDataResponse,
         apiClan: ApiClanResponse,
-        user: User
+        user: User,
+        bestTanksImages: TankImage
     ): List<MultiViewModel> {
 
         val result = mutableListOf<MultiViewModel>()
@@ -71,6 +73,126 @@ class Utils @Inject constructor(private val context: Context) {
             MultiViewModel.Banner(
                 commonData?.nickname ?: "",
                 apiClan.data[clanId]?.emblems?.x256?.wowp ?: ""
+            )
+        )
+
+        result.add(
+            MultiViewModel.Banner(
+                "Global Rating \n${commonData?.globalRating}",
+                R.drawable.wot_logo
+            )
+        )
+
+        result.add(
+            MultiViewModel.CardWithText(
+                "Battles played:",
+                apiData.data["${user.account_id}"]?.statistics?.all?.get("battles").toString()
+            )
+        )
+
+        result.add(
+            MultiViewModel.CardWithText(
+                "Frags:",
+                apiData.data["${user.account_id}"]?.statistics?.all?.get("frags")
+                    .toString()
+            )
+        )
+
+        result.add(
+            MultiViewModel.CardWithText(
+                "Wins:",
+                apiData.data["${user.account_id}"]?.statistics?.all?.get("wins")
+                    .toString()
+            )
+        )
+
+        result.add(
+            MultiViewModel.CardWithText(
+                "Losses:",
+                apiData.data["${user.account_id}"]?.statistics?.all?.get("losses")
+                    .toString()
+            )
+        )
+
+        result.add(
+            MultiViewModel.CardWithText(
+                "Max_damage:",
+                apiData.data["${user.account_id}"]?.statistics?.all?.get("max_damage")
+                    .toString()
+            )
+        )
+
+        result.add(
+            MultiViewModel.CardWithText(
+                "Max. frags:",
+                apiData.data["${user.account_id}"]?.statistics?.all?.get("max_frags")
+                    .toString()
+            )
+        )
+
+        result.add(
+            MultiViewModel.CardWithText(
+                "Explosion hits:",
+                apiData.data["${user.account_id}"]?.statistics?.all?.get("explosion_hits")
+                    .toString()
+            )
+        )
+
+        result.add(
+            MultiViewModel.CardWithText(
+                "Survived:",
+                apiData.data["${user.account_id}"]?.statistics?.all?.get("survived_battles")
+                    .toString()
+            )
+        )
+
+        result.add(
+            MultiViewModel.CardWithText(
+                "Avg. dmg blocked:",
+                apiData.data["${user.account_id}"]?.statistics?.all?.get("avg_damage_blocked")
+                    .toString()
+            )
+        )
+
+
+
+        /*result.add(
+            MultiViewModel.CardWithText(
+                "Capture points:",
+                apiData.data["${user.account_id}"]?.statistics?.all?.get("capture_points")
+                    .toString()
+            )
+        )*/
+
+        /*result.add(
+            MultiViewModel.CardWithText(
+                "Dropped capture points:",
+                apiData.data["${user.account_id}"]?.statistics?.all?.get("dropped_capture_points")
+                    .toString()
+            )
+        )*/
+
+
+
+        result.add(
+            MultiViewModel.CardWithText(
+                "Avg. Exp:",
+                apiData.data["${user.account_id}"]?.statistics?.all?.get("battle_avg_xp")
+                    .toString()
+            )
+        )
+
+
+
+
+        //todo
+        // max_damage_tank_id=19969
+        //max_frags_tank_id=58113
+
+        result.add(
+            MultiViewModel.CardWithText(
+                "Hits percents:",
+                apiData.data["${user.account_id}"]?.statistics?.all?.get("hits_percents").toString()
             )
         )
 
@@ -89,12 +211,7 @@ class Utils @Inject constructor(private val context: Context) {
             )
         )
 
-        result.add(
-            MultiViewModel.Banner(
-                "Global Rating \n${commonData?.globalRating}",
-                R.drawable.wot_logo
-            )
-        )
+
 
         result.add(
             MultiViewModel.Banner(
@@ -102,17 +219,10 @@ class Utils @Inject constructor(private val context: Context) {
                 R.drawable.wealth
             )
         )
-        result.add(
-            MultiViewModel.Banner(
-                "Expire at: ${
-                    (privateData?.get("premium_expires_at") as Double).toLong().toDataFormat()
-                }",
-                R.drawable.premium
-            )
-        )
+
         result.add(
             MultiViewModel.CardWithImage(
-                "Gold: ${(privateData["gold"] as Double).toLong()}",
+                "Gold: ${(privateData?.get("gold") as Double).toLong()}",
                 R.drawable.gold
             )
         )
@@ -193,10 +303,10 @@ class Utils @Inject constructor(private val context: Context) {
     private fun findImage(
         it: AchievesDBItem,
         i: Int?
-    ): String {
+    ): String {            // http do not work. no time to find out
         return when {
             it.options != null -> {
-                if (it.options[i!! - 1].imageBig != null) { // http do not work. no time to find out
+                if (it.options[i!! - 1].imageBig != null) {
                     it.options[i - 1].imageBig?.replace("http", "https") ?: ""
                 } else it.options[i - 1].image?.replace("http", "https") ?: ""
             }

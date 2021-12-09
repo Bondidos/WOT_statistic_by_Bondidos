@@ -24,8 +24,9 @@ object Constants {
 
     // repository
     const val APPLICATION_ID = "5d489c586717c2b76ade8bea16607167"
-    const val FIELDS_DATA = "-statistics"
+    const val FIELDS_DATA = "-statistics.trees_cut,-statistics.stronghold_skirmish,-statistics.stronghold_defense,-statistics.clan,-statistics.regular_team,-statistics.company,-statistics.historical,-statistics.team,-statistics.frags"
     const val FIELDS_ACHIEVES = "-frags, -max_series"
+    const val FIELDS_TANKS = "images"
     const val ACHIEVES_COUNT = 365
 
     //recycler
