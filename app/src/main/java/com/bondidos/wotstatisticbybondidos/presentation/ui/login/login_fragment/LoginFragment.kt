@@ -67,7 +67,6 @@ class LoginFragment : Fragment() {
                         }
                         SUCCESS -> {
                             loginProgressBar.isVisible = false
-                            makeToast(requireContext(), resource.data ?: "")
                         }
                         ERROR -> {
                             loginProgressBar.isVisible = false
