@@ -1,31 +1,23 @@
 package com.bondidos.wotstatisticbybondidos.domain
 
-import com.bondidos.wotstatisticbybondidos.data.response_entiyes.achievments.AchievesResponse
-import com.bondidos.wotstatisticbybondidos.data.response_entiyes.achievments.UserAchievesData
-import com.bondidos.wotstatisticbybondidos.domain.entityes.Achieve
+import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
-import kotlinx.coroutines.flow.Flow
+
 
 interface Repository {
 
-    // REMOTE API
+    suspend fun createAchievesDB()
 
-    suspend fun searchUser(search: String): List<User>
+    suspend fun isAchievesDataBaseExist(): Boolean
 
-    // LocalCash
-    // User table
-    suspend fun saveUserToCash(user: User): Long
+    suspend fun saveUser(url: String): Boolean
 
-    suspend fun getUserFromCache(): User
+    suspend fun getUser(): User?
 
-    suspend fun deleteUserFromCache(user: User): Int
+    suspend fun fetchData(): List<MultiViewModel>
 
-    // Achieves table
-    suspend fun isAchievesDataBaseExist(): Int
+    suspend fun fetchAchieves(): List<MultiViewModel>
 
-    suspend fun createAchieveDataBase(achieves: List<Achieve>):List<Long>
+    suspend fun logout(): Boolean
 
-    suspend fun getAchievesData(achievesList: List<String>): List<Achieve>
-
-    fun getAchieves(id: Int): Flow<AchievesResponse>
 }

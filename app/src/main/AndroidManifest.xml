@@ -13,7 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WOTStatisticByBondidos">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.Statistic"
+            android:exported="false"
+            android:label="@string/title_activity_statistic" />
+        <activity
+            android:name="com.bondidos.wotstatisticbybondidos.presentation.ui.login.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

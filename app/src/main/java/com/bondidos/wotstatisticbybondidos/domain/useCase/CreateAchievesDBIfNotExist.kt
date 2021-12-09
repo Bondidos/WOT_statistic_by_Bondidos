@@ -1,40 +1,28 @@
 package com.bondidos.wotstatisticbybondidos.domain.useCase
 
-import android.content.Context
-import android.util.Log
 import com.bondidos.wotstatisticbybondidos.domain.Repository
-import com.bondidos.wotstatisticbybondidos.domain.entityes.Achieve
-import com.bondidos.wotstatisticbybondidos.domain.other.extensions.toAchievesList
-import com.google.gson.Gson
-import org.json.JSONObject
+import com.bondidos.wotstatisticbybondidos.domain.other.Resource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.lang.Exception
 import javax.inject.Inject
 
-const val ACHIEVES_COUNT = 365
 
 class CreateAchievesDBIfNotExist @Inject constructor(
-    private val context: Context,
     private val repository: Repository
-    ) {
+) {
 
-    suspend fun execute(): Boolean {
-        if (repository.isAchievesDataBaseExist() != ACHIEVES_COUNT)
-            return createAchievesDataBase()
-        return true
-    }
+    suspend fun execute(): Resource<String> {
 
-    private suspend fun createAchievesDataBase(): Boolean {
-        val list = createAchievesFromJson()
-        return list.size == repository.createAchieveDataBase(list).size
-       //Log.d("Recorded",recorded.size.toString())
-    }
-
-
-    private fun createAchievesFromJson(): List<Achieve> {
-
-        val file = "achieves.json"
-        val myJson = context.assets.open(file).bufferedReader().use { it.readText() }
-
-        val jsonObj = JSONObject(myJson)
-        return jsonObj.toAchievesList()
+        return withContext(Dispatchers.IO) {
+            if (repository.isAchievesDataBaseExist()) {
+                Resource.success("Database exist")
+            } else try {
+                repository.createAchievesDB()
+                Resource.success("DataBase Created")
+            } catch (e: Exception) {
+                Resource.error(e.toString(), null)
+            }
+        }
     }
 }
