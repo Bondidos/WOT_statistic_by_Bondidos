@@ -33,7 +33,6 @@ class LoginViewModel @Inject constructor(
 
             _isDatabaseCreated.value = Resource.loading(null)
             _isDatabaseCreated.value =createAchievesDBIfNotExist.execute()
-
             _isExistSavedUser.value = login.execute()
         }
     }
@@ -48,9 +47,8 @@ class LoginViewModel @Inject constructor(
     }
     fun logout(){
         viewModelScope.launch {
-            if(logout.execute())
-                _isExistSavedUser.value = Resource.loading(null)
-            _isExistSavedUser.value = Resource.error("logged out",null)
+            _isExistSavedUser.value = Resource.loading(null)
+            _isExistSavedUser.value = logout.execute()
         }
     }
 }

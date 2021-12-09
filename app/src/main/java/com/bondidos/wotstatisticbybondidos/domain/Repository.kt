@@ -19,4 +19,6 @@ interface Repository {
     suspend fun fetchAchieves(): List<MultiViewModel>
 
     suspend fun logout(): Boolean
+/*
+    suspend fun clearDatabase()*/
 }

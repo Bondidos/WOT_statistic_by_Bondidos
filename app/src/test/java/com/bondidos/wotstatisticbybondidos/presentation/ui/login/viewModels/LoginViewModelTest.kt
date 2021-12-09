@@ -1,77 +1,137 @@
 package com.bondidos.wotstatisticbybondidos.presentation.ui.login.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.bondidos.wotstatisticbybondidos.TestCoroutineRule
+import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants
+import com.bondidos.wotstatisticbybondidos.domain.entityes.User
+import com.bondidos.wotstatisticbybondidos.domain.other.Event
+import com.bondidos.wotstatisticbybondidos.domain.other.Resource
 import com.bondidos.wotstatisticbybondidos.domain.useCase.CreateAchievesDBIfNotExist
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogin
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogout
 import com.bondidos.wotstatisticbybondidos.presentation.ui.login.login_fragment.LoginViewModel
-import kotlinx.coroutines.Dispatchers
+import io.mockk.coEvery
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import javax.inject.Inject
+import org.junit.rules.TestRule
 
+@ExperimentalCoroutinesApi
 class LoginViewModelTest {
 
+    //  needed to test code with LiveData
     @get:Rule
-    val rule = InstantTaskExecutorRule()
+    val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
 
-    @ExperimentalCoroutinesApi
-    private val coroutineDispatcher = TestCoroutineDispatcher()
+    @get:Rule
+    val testCoroutineRule = TestCoroutineRule()
 
-    @ExperimentalCoroutinesApi
-    private val testCoroutineScope = TestCoroutineScope(coroutineDispatcher)
+    private lateinit var login: UseCaseLogin
+    private lateinit var createAchievesDBIfNotExist: CreateAchievesDBIfNotExist
+    private lateinit var logout: UseCaseLogout
+    private lateinit var user: User
 
-    @Inject
-    lateinit var viewModel: LoginViewModel
-
-
-
-    @ExperimentalCoroutinesApi
     @Before
     fun setUp() {
-
-        Dispatchers.setMain(coroutineDispatcher)
+        login = mockk()
+        createAchievesDBIfNotExist = mockk()
+        logout = mockk()
+        user = mockk(relaxed = true)
 
     }
 
-    @ExperimentalCoroutinesApi
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-    }
-
-    @ExperimentalCoroutinesApi
     @Test
-    fun databaseCreated() {
-        testCoroutineScope.launch {
-            viewModel.isDatabaseCreated
-        }
+    fun isDatabaseExist() {
+        coEvery { createAchievesDBIfNotExist.execute() } returns Resource.success("created")
+        coEvery { login.execute() } returns Resource.success(user)
+        val viewModel = LoginViewModel(
+            login,
+            createAchievesDBIfNotExist,
+            logout
+        )
+        testCoroutineRule.runBlockingTest {
+            val job = launch {
 
+                viewModel.isDatabaseCreated.collect {
+                    assert(it.data == "created")
+                }
+            }
+            job.cancel()
+        }
     }
 
     @Test
     fun isExistSavedUser() {
+        coEvery { createAchievesDBIfNotExist.execute() } returns Resource.success("created")
+        coEvery { login.execute() } returns Resource.success(user)
+        val viewModel = LoginViewModel(
+            login,
+            createAchievesDBIfNotExist,
+            logout
+        )
+        testCoroutineRule.runBlockingTest {
+            val job = launch {
+                viewModel.isExistSavedUser.collect { resource ->
+                    assert(resource.data == user)
+                }
+            }
+            job.cancel()
+        }
     }
 
     @Test
-    fun getNavigation() {
+    fun isNavigationTriggers() {
+        coEvery { createAchievesDBIfNotExist.execute() } returns Resource.success("created")
+        coEvery { login.execute() } returns Resource.success(user)
+        val viewModel = LoginViewModel(
+            login,
+            createAchievesDBIfNotExist,
+            logout
+        )
+        viewModel.logInWithWgOpenId()
+        testCoroutineRule.runBlockingTest {
+            val job = launch {
+                viewModel.navigation.collect { event ->
+                    assert(event.peekContent() == Constants.NAVIGATE_TO_LOGIN)
+                }
+            }
+            job.cancel()
+        }
+        viewModel.continueAsSavedUser()
+        testCoroutineRule.runBlockingTest {
+            val job = launch {
+                viewModel.navigation.collect { event ->
+                    assert(event.peekContent() == Constants.NAVIGATE_CONTINUE)
+                }
+            }
+            job.cancel()
+        }
     }
 
     @Test
-    fun logInWithWgOpenId() {
-    }
-
-    @Test
-    fun continueAsSavedUser() {
+    fun logOut(){
+        coEvery { createAchievesDBIfNotExist.execute() } returns Resource.success("created")
+        coEvery { logout.execute() } returns Resource.success(null)
+        val viewModel = LoginViewModel(
+            login,
+            createAchievesDBIfNotExist,
+            logout
+        )
+        viewModel.logout()
+        testCoroutineRule.runBlockingTest {
+            val job = launch {
+                viewModel.isExistSavedUser.collect { resource ->
+                    assert(resource == Resource.success(null))
+                }
+            }
+            job.cancel()
+        }
     }
 }
