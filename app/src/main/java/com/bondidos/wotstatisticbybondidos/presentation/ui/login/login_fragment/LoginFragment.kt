@@ -90,11 +90,15 @@ class LoginFragment : Fragment() {
                         }
                         SUCCESS -> {
                             if (resource.data != null) {
+                                loginBtn.isVisible = false
                                 continueBtn.apply {
                                     isVisible = true
                                     text = resource.data.nickname
                                 }
                             } else {
+                                logOut.isVisible = false
+                                continueBtn.isVisible = false
+                                loginBtn.isVisible = true
                                 makeToast(requireContext(),"Please Login")
                             }
                         }

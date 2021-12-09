@@ -26,22 +26,21 @@
         android:id="@+id/loginBtn"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="50dp"
         android:background="@color/colorPrimary"
         android:text="@string/login_with_wg_openid"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.596"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/continueBtn"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="112dp"
+        android:layout_marginBottom="200dp"
         android:background="@color/colorPrimary"
         android:text="@string/continue_as"
-        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/loginBtn"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/loginBtn" />
@@ -50,10 +49,10 @@
         android:id="@+id/logOut"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="125dp"
         android:background="@color/colorPrimary"
         android:text="@string/logout"
-        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/loginBtn"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/loginBtn" />
@@ -73,13 +72,13 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="112dp"
+        android:layout_marginBottom="280dp"
         android:text="@string/please_login_to_continue"
         android:textColor="@color/textPrimary"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/logOut"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.64"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent" />
 
 

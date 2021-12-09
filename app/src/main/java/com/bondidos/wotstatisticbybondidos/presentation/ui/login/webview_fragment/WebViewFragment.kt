@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -67,6 +65,7 @@ class WebViewFragment : Fragment() {
                 true.also { javaScriptEnabled = it }
                 cacheMode = WebSettings.LOAD_NO_CACHE
             }
+            CookieManager.getInstance().removeAllCookies(null)
             webView.loadUrl(LOGIN_URL)
         }
     }
