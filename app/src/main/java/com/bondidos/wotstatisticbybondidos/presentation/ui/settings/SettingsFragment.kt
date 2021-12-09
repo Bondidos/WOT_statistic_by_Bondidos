@@ -16,20 +16,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
-        preference?.let { preference ->
-            if (preference.key == THEME_PREFERENCE &&
+        preference?.let { clickedPref ->
+            if (clickedPref.key == THEME_PREFERENCE &&
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
             ) {
-                val pref =
+                val preferenceValue =
                     PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
                         THEME_PREFERENCE, false
                     )
-                if (pref) {
+                if (preferenceValue) {
                     setDefaultNightMode(MODE_NIGHT_YES)
                 } else setDefaultNightMode(MODE_NIGHT_NO)
             }
         }
         return super.onPreferenceTreeClick(preference)
     }
-
 }

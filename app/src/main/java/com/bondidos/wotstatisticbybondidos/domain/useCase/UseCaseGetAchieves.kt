@@ -12,7 +12,7 @@ import javax.inject.Inject
 class UseCaseGetAchieves @Inject constructor(private val repository: Repository) {
 
     suspend fun execute(): Resource<List<MultiViewModel>> {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             try {
                 Resource.success(repository.fetchAchieves())
             } catch (e: Exception) {

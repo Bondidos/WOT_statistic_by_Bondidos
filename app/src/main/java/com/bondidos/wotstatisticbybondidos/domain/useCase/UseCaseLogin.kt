@@ -20,9 +20,5 @@ class UseCaseLogin @Inject constructor(
                 Resource.error("Can't find valid user, please login", null)
             }
         }
-        /*val user = repository.getUser()
-        return if (user != null)
-            Resource.success(user)
-        else Resource.error("Can't find valid user, please login", null)*/
     }
 }

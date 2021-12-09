@@ -18,15 +18,15 @@ class ExitFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCustomDialogBinding.inflate(inflater,container,false)
+        _binding = FragmentCustomDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(binding){
+        with(binding) {
             btnYes.setOnClickListener { (activity as MainActivity).finish() }
-            btnNo.setOnClickListener { dismiss()}
+            btnNo.setOnClickListener { dismiss() }
         }
     }
 

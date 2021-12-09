@@ -39,7 +39,7 @@ class Utils @Inject constructor(private val context: Context) {
     }
 
     private fun isExpired(expiresAt: Long): Boolean =
-        System.currentTimeMillis() <= expiresAt*1000
+        System.currentTimeMillis() <= expiresAt * 1000
 
     fun getUserFromUrl(url: String): User? {
         val sanitizer = UrlQuerySanitizer().apply {
@@ -182,7 +182,7 @@ class Utils @Inject constructor(private val context: Context) {
                 resultSet.add(
                     MultiViewModel.AchieveCard(
                         scored = api[it.name].toString(),
-                        image = findImage(it,api[it.name])
+                        image = findImage(it, api[it.name])
                     )
                 )
             }
@@ -190,16 +190,19 @@ class Utils @Inject constructor(private val context: Context) {
         return resultSet.toList()
     }
 
-    private fun findImage(it: AchievesDBItem, i: Int?): String {            // http do not work. no time to find out
+    private fun findImage(
+        it: AchievesDBItem,
+        i: Int?
+    ): String {
         return when {
             it.options != null -> {
-                if (it.options[i!!-1].imageBig != null) {
-                    it.options[i-1].imageBig?.replace("http","https") ?: ""
-                } else it.options[i-1].image?.replace("http","https") ?: ""
+                if (it.options[i!! - 1].imageBig != null) { // http do not work. no time to find out
+                    it.options[i - 1].imageBig?.replace("http", "https") ?: ""
+                } else it.options[i - 1].image?.replace("http", "https") ?: ""
             }
-            it.imageBig != null -> it.imageBig.replace("http","https")
+            it.imageBig != null -> it.imageBig.replace("http", "https")
 
-            it.image != null -> it.image.replace("http","https")
+            it.image != null -> it.image.replace("http", "https")
 
             else -> ""
         }

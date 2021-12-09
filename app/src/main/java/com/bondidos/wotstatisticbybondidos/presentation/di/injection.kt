@@ -18,11 +18,11 @@ import com.bondidos.wotstatisticbybondidos.data.sources.room.RoomRepositoryDao
 import com.bondidos.wotstatisticbybondidos.data.sources.sharedPrefs.PrefStoreImpl
 import com.bondidos.wotstatisticbybondidos.data.util.Utils
 import com.bondidos.wotstatisticbybondidos.domain.Repository
-import com.google.gson.Gson
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityScoped
 import retrofit2.converter.gson.GsonConverterFactory
+
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
@@ -41,8 +41,7 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideApi(): WotApi = Retrofit.Builder()/*
-        .addConverterFactory(ScalarsConverterFactory.create())*/
+    fun provideApi(): WotApi = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(BASE_URL)
         .build()
@@ -64,20 +63,14 @@ object DataModule {
         room: RoomRepositoryDao,
         prefStore: PrefStoreImpl,
         utils: Utils
-    ): Repository = RepositoryImpl(wotApi, room,prefStore,utils)
-
+    ): Repository = RepositoryImpl(wotApi, room, prefStore, utils)
 }
 
 @Module
 @InstallIn(ActivityComponent::class)
 object PresentationModule {
 
-
     @ActivityScoped
     @Provides
     fun provideAppContext(@ApplicationContext context: Context): Context = context
-
-
-
-
 }

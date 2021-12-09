@@ -8,5 +8,5 @@ import com.bondidos.wotstatisticbybondidos.data.entityes.achievesDB.AchievesDBIt
 @Database(entities = [AchievesDBItem::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun userDataBase() : RoomRepositoryDao
+    abstract fun userDataBase(): RoomRepositoryDao
 }

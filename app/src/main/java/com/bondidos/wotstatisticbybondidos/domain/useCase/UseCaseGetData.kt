@@ -10,7 +10,7 @@ import javax.inject.Inject
 class UseCaseGetData @Inject constructor(private val repository: Repository) {
 
     suspend fun execute(): Resource<List<MultiViewModel>> {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             try {
                 Resource.success(repository.fetchData())
             } catch (e: Exception) {

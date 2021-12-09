@@ -20,7 +20,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class WebViewFragment : Fragment() {
 
-    private var _binding : WebViewBinding? = null
+    private var _binding: WebViewBinding? = null
     private val binding get() = requireNotNull(_binding)
 
     @Inject
@@ -36,30 +36,30 @@ class WebViewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setObservers()
         logIn()
     }
 
-    private fun setObservers(){
+    private fun setObservers() {
         lifecycleScope.launchWhenCreated {
-            viewModel.isSaved.collect{ event ->
-                when(event.getContentIfNotHandled()){
+            viewModel.isSaved.collect { event ->
+                when (event.getContentIfNotHandled()) {
                     false -> {
-                        makeToast(requireContext(),"Can't collect user data")
+                        makeToast(requireContext(), "Can't collect user data")
                         findNavController().navigate(R.id.loginFragment)
                     }
                     true -> {
-                        makeToast(requireContext(),"User saved")
+                        makeToast(requireContext(), "User saved")
                         findNavController().navigate(R.id.loginFragment)
                     }
+                    else -> Unit
                 }
             }
         }
     }
 
     private fun logIn() {
-        with(binding){
+        with(binding) {
             webView.webViewClient = AuthWebViewClient()
             webView.settings.apply {
                 true.also { javaScriptEnabled = it }
@@ -75,12 +75,10 @@ class WebViewFragment : Fragment() {
         _binding = null
     }
 
-    inner class AuthWebViewClient : WebViewClient(){
+    inner class AuthWebViewClient : WebViewClient() {
 
         override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-
             if (url?.contains(REDIRECT_URI, true) == true) {
-                //Log.d(javaClass.name, url)
                 viewModel.saveUser(url)
                 return true
             }

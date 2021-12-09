@@ -19,15 +19,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private var _navController: NavController? = null
-    private val navController: NavController get() = requireNotNull(_navController)
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         applyTheme()
-        _navController = findNavController(R.id.nav_host_fragment_container)
+        navController = findNavController(R.id.nav_host_fragment_container)
         setupActionBarWithNavController(navController)
     }
 

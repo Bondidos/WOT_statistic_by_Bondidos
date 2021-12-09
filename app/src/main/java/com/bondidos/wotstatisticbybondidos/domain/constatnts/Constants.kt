@@ -34,13 +34,4 @@ object Constants {
     const val TYPE_CARD_WITH_TEXT = 2
     const val TYPE_CARD_ACHIEVE = 3
     const val TYPE_BANNER_WITHOUT_IMAGE = 4
-
-    //second account
-    /*{
-        "status": "ok",
-        "access_token": "5395a3b4e15b97bce7d6bdac442f3e60a75652d9",
-        "nickname": "vladimir_khodarenok",
-        "account_id": "560508080",
-        "expires_at": "1640110681"
-    }*/
 }

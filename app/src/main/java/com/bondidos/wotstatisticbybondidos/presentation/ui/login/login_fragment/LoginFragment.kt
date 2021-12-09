@@ -59,9 +59,7 @@ class LoginFragment : Fragment() {
 
     private fun setObservers() {
         with(binding) {
-            // update UI State
             lifecycleScope.launchWhenCreated {
-                // isDataBaseCreated
                 viewModel.isDatabaseCreated.collect { resource ->
                     when (resource.status) {
                         LOADING -> {
@@ -99,7 +97,7 @@ class LoginFragment : Fragment() {
                                 logOut.isVisible = false
                                 continueBtn.isVisible = false
                                 loginBtn.isVisible = true
-                                makeToast(requireContext(),"Please Login")
+                                makeToast(requireContext(), "Please Login")
                             }
                         }
                         ERROR -> {

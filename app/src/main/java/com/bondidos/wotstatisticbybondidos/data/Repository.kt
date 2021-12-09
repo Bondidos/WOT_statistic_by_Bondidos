@@ -21,16 +21,17 @@ class RepositoryImpl @Inject constructor(
 ) : Repository {
 
     override suspend fun createAchievesDB() {
-            val list = utils.jsonToAchievesList()
-            roomStorage.createAchievesDB(list)
+        val list = utils.jsonToAchievesList()
+        roomStorage.createAchievesDB(list)
     }
 
-    override suspend fun isAchievesDataBaseExist(): Boolean =
-        roomStorage.isAchievesDBExist() == ACHIEVES_COUNT
+    override suspend fun isAchievesDataBaseExist(): Boolean {
+        return roomStorage.isAchievesDBExist() == ACHIEVES_COUNT
+    }
 
     override suspend fun saveUser(url: String): Boolean {
 
-        val user =  utils.getUserFromUrl(url)
+        val user = utils.getUserFromUrl(url)
         user?.let {
             return prefStore.saveUser(user)
         }
@@ -45,11 +46,11 @@ class RepositoryImpl @Inject constructor(
     override suspend fun fetchData(): List<MultiViewModel> {
         val user = prefStore.getUser()
         val apiData = networkService.getUserData(
-                APPLICATION_ID,
-                user.account_id,
-                user.access_token,
-                FIELDS_DATA
-            )
+            APPLICATION_ID,
+            user.account_id,
+            user.access_token,
+            FIELDS_DATA
+        )
 
         val apiClan = networkService.getUserClanImage(
             APPLICATION_ID,
@@ -57,10 +58,10 @@ class RepositoryImpl @Inject constructor(
         )
 
         return utils.createMultiViewModelList(
-                apiData,
-                apiClan,
-                user
-            )
+            apiData,
+            apiClan,
+            user
+        )
     }
 
     override suspend fun fetchAchieves(): List<MultiViewModel> {
@@ -85,7 +86,7 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun logout(): Boolean {
         val user = prefStore.getUser()
-        networkService.logout(APPLICATION_ID,user.access_token)
+        networkService.logout(APPLICATION_ID, user.access_token)
         prefStore.logout()
         return true
     }

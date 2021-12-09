@@ -7,7 +7,6 @@ import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
 
-
 class CreateAchievesDBIfNotExist @Inject constructor(
     private val repository: Repository
 ) {

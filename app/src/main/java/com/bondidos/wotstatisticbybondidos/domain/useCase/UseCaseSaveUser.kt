@@ -9,8 +9,6 @@ import javax.inject.Inject
 class UseCaseSaveUser @Inject constructor(private val repository: Repository) {
 
     suspend fun execute(url: String): Event<Boolean> = withContext(Dispatchers.IO) {
-        Event(
-            repository.saveUser(url)
-        )
+        Event(repository.saveUser(url))
     }
 }
