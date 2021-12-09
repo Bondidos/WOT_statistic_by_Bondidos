@@ -1,10 +1,8 @@
 package com.bondidos.wotstatisticbybondidos.presentation.ui.login.viewModels
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.bondidos.wotstatisticbybondidos.TestCoroutineRule
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
-import com.bondidos.wotstatisticbybondidos.domain.other.Event
 import com.bondidos.wotstatisticbybondidos.domain.other.Resource
 import com.bondidos.wotstatisticbybondidos.domain.useCase.CreateAchievesDBIfNotExist
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogin
@@ -12,23 +10,15 @@ import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogout
 import com.bondidos.wotstatisticbybondidos.presentation.ui.login.login_fragment.LoginViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestRule
 
 @ExperimentalCoroutinesApi
 class LoginViewModelTest {
-
-    //  needed to test code with LiveData
-    @get:Rule
-    val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
 
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
@@ -118,6 +108,7 @@ class LoginViewModelTest {
     @Test
     fun logOut(){
         coEvery { createAchievesDBIfNotExist.execute() } returns Resource.success("created")
+        coEvery { login.execute() } returns Resource.success(user)
         coEvery { logout.execute() } returns Resource.success(null)
         val viewModel = LoginViewModel(
             login,
