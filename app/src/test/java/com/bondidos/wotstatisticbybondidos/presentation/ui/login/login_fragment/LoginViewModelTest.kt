@@ -1,4 +1,4 @@
-package com.bondidos.wotstatisticbybondidos.presentation.ui.login.viewModels
+package com.bondidos.wotstatisticbybondidos.presentation.ui.login.login_fragment
 
 import com.bondidos.wotstatisticbybondidos.TestCoroutineRule
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants
@@ -7,7 +7,6 @@ import com.bondidos.wotstatisticbybondidos.domain.other.Resource
 import com.bondidos.wotstatisticbybondidos.domain.useCase.CreateAchievesDBIfNotExist
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogin
 import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseLogout
-import com.bondidos.wotstatisticbybondidos.presentation.ui.login.login_fragment.LoginViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -48,7 +47,6 @@ class LoginViewModelTest {
         )
         testCoroutineRule.runBlockingTest {
             val job = launch {
-
                 viewModel.isDatabaseCreated.collect {
                     assert(it.data == "created")
                 }

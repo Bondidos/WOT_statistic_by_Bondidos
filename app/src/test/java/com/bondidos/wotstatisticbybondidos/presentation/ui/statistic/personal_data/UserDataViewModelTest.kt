@@ -1,9 +1,9 @@
-package com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.achieves
+package com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.personal_data
 
 import com.bondidos.wotstatisticbybondidos.TestCoroutineRule
 import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
 import com.bondidos.wotstatisticbybondidos.domain.other.Resource
-import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseGetAchieves
+import com.bondidos.wotstatisticbybondidos.domain.useCase.UseCaseGetData
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,30 +14,30 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class AchievesViewModelTest {
+class UserDataViewModelTest {
 
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    lateinit var fetchAchieves: UseCaseGetAchieves
-    lateinit var achieves: List<MultiViewModel>
+    private lateinit var fetchData: UseCaseGetData
+    private lateinit var userData: List<MultiViewModel>
 
     @Before
     fun setUp() {
-        fetchAchieves = mockk()
-        achieves = mockk()
+        fetchData = mockk()
+        userData = mockk()
     }
 
     @Test
-    fun fetchUserAchieves(){
-        coEvery { fetchAchieves.execute() } returns Resource.success(achieves)
-        val viewModel = AchievesViewModel(fetchAchieves)
+    fun getListUserData() {
+        coEvery { fetchData.execute() } returns Resource.success(userData)
+        val viewModel = UserDataViewModel(fetchData)
 
         testCoroutineRule.runBlockingTest {
             val job = launch {
 
-                viewModel.listUserAchieves.collect {
-                    assert(it.data == achieves)
+                viewModel.listUserData.collect {
+                    assert(it.data == userData)
                 }
             }
             job.cancel()
