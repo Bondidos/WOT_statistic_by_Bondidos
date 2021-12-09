@@ -12,6 +12,9 @@
     <string name="wot_logo">WOT logo</string>
     <string name="login_information">Login information</string>
     <string name="image">Image</string>
+    <string name="are_you_sure_want_to_exit">are_you_sure_want_to_exit</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
     <!-- TODO: Remove or change this placeholder text -->
     <!-- Preference Titles -->
 

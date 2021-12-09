@@ -13,28 +13,30 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.preference.PreferenceManager
 import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.THEME_PREFERENCE
+import com.bondidos.wotstatisticbybondidos.presentation.ui.login.dialog_fragment.ExitFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var navController: NavController
+    private var _navController: NavController? = null
+    private val navController: NavController get() = requireNotNull(_navController)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-       applyTheme()
-        navController = findNavController(R.id.nav_host_fragment_container)
+        applyTheme()
+        _navController = findNavController(R.id.nav_host_fragment_container)
         setupActionBarWithNavController(navController)
     }
 
-    private fun applyTheme(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+    private fun applyTheme() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val themePref = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
                 THEME_PREFERENCE, false
             )
-            when(themePref){
+            when (themePref) {
                 true -> setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 false -> setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu,menu)
+        menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -53,10 +55,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         navController.navigate(R.id.loginFragment)
-        return  super.onSupportNavigateUp()
+        return super.onSupportNavigateUp()
     }
 
     override fun onBackPressed() {
-
+        val dialog = ExitFragment()
+        dialog.show(supportFragmentManager, "Exit?")
     }
 }

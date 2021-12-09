@@ -1,5 +1,6 @@
 package com.bondidos.wotstatisticbybondidos.presentation.ui.statistic
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -16,26 +17,26 @@ import androidx.preference.PreferenceManager
 import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.databinding.ActivityStatisticBinding
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants
+import com.bondidos.wotstatisticbybondidos.presentation.ui.login.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class Statistic : AppCompatActivity() {
 
-    private lateinit var binding: ActivityStatisticBinding
+    private var _binding: ActivityStatisticBinding? = null
+    private val binding: ActivityStatisticBinding get() = requireNotNull(_binding)
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityStatisticBinding.inflate(layoutInflater)
+        _binding = ActivityStatisticBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         applyTheme()
 
         val navView: BottomNavigationView = binding.navView
         navController = findNavController(R.id.nav_host_fragment_activity_statistic)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.userDataFragment, R.id.achievesFragment
@@ -45,12 +46,12 @@ class Statistic : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
-    private fun applyTheme(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+    private fun applyTheme() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val themePref = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
                 Constants.THEME_PREFERENCE, false
             )
-            when(themePref){
+            when (themePref) {
                 true -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 false -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
@@ -58,7 +59,7 @@ class Statistic : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu,menu)
+        menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -69,10 +70,15 @@ class Statistic : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         navController.navigate(R.id.userDataFragment)
-        return  super.onSupportNavigateUp()
+        return super.onSupportNavigateUp()
     }
 
     override fun onBackPressed() {
-
+        startActivity(
+            Intent(
+                this,
+                MainActivity::class.java
+            )
+        )
     }
 }
