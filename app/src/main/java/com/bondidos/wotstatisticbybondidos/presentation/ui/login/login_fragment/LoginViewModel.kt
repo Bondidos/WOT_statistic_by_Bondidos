@@ -30,9 +30,8 @@ class LoginViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-
             _isDatabaseCreated.value = Resource.loading(null)
-            _isDatabaseCreated.value =createAchievesDBIfNotExist.execute()
+            _isDatabaseCreated.value = createAchievesDBIfNotExist.execute()
             _isExistSavedUser.value = login.execute()
         }
     }
@@ -45,7 +44,8 @@ class LoginViewModel @Inject constructor(
     fun continueAsSavedUser() {
         _navigation.value = Event(NAVIGATE_CONTINUE)
     }
-    fun logout(){
+
+    fun logout() {
         viewModelScope.launch {
             _isExistSavedUser.value = Resource.loading(null)
             _isExistSavedUser.value = logout.execute()

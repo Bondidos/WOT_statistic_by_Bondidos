@@ -24,8 +24,9 @@ object Constants {
 
     // repository
     const val APPLICATION_ID = "5d489c586717c2b76ade8bea16607167"
-    const val FIELDS_DATA = "-statistics"
+    const val FIELDS_DATA = "-statistics.trees_cut,-statistics.stronghold_skirmish,-statistics.stronghold_defense,-statistics.clan,-statistics.regular_team,-statistics.company,-statistics.historical,-statistics.team,-statistics.frags"
     const val FIELDS_ACHIEVES = "-frags, -max_series"
+    const val FIELDS_TANKS = "images"
     const val ACHIEVES_COUNT = 365
 
     //recycler
@@ -34,13 +35,4 @@ object Constants {
     const val TYPE_CARD_WITH_TEXT = 2
     const val TYPE_CARD_ACHIEVE = 3
     const val TYPE_BANNER_WITHOUT_IMAGE = 4
-
-    //second account
-    /*{
-        "status": "ok",
-        "access_token": "5395a3b4e15b97bce7d6bdac442f3e60a75652d9",
-        "nickname": "vladimir_khodarenok",
-        "account_id": "560508080",
-        "expires_at": "1640110681"
-    }*/
 }

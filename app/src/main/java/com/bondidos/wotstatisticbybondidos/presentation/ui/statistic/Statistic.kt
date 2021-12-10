@@ -23,14 +23,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class Statistic : AppCompatActivity() {
 
-    private var _binding: ActivityStatisticBinding? = null
-    private val binding: ActivityStatisticBinding get() = requireNotNull(_binding)
+    private lateinit var binding: ActivityStatisticBinding
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        _binding = ActivityStatisticBinding.inflate(layoutInflater)
+        binding = ActivityStatisticBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         applyTheme()

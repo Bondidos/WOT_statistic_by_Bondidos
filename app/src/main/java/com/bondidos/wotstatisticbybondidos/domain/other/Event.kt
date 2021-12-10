@@ -1,12 +1,12 @@
 package com.bondidos.wotstatisticbybondidos.domain.other
 
-open class  Event<out T>(private val data: T) {
+open class Event<out T>(private val data: T) {
 
     var hasBeenHandled = false
         private set
 
     fun getContentIfNotHandled(): T? {
-        return if(hasBeenHandled) {
+        return if (hasBeenHandled) {
             null
         } else {
             hasBeenHandled = true

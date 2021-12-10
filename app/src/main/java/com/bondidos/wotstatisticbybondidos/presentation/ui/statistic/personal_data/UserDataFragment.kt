@@ -10,12 +10,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bondidos.wotstatisticbybondidos.databinding.UserDataFragmentBinding
+import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
 import com.bondidos.wotstatisticbybondidos.domain.other.Status.*
 import com.bondidos.wotstatisticbybondidos.domain.other.makeToast
 import com.bondidos.wotstatisticbybondidos.presentation.ui.statistic.recycler_adapter.DataAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -33,36 +33,30 @@ class UserDataFragment : Fragment() {
     ): View {
         _binding = UserDataFragmentBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setUpFragment()
-
     }
 
-    private fun setUpRecycler() = binding.userDataRecycler.apply {
+    private fun setUpRecycler(list: List<MultiViewModel>) = binding.userDataRecycler.apply {
         layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         itemAnimator = (DefaultItemAnimator())
+        userDataAdapter.setData(list)
         adapter = userDataAdapter
     }
 
     private fun setUpFragment() {
         lifecycleScope.launchWhenCreated {
             viewModel.listUserData.collect { resources ->
-
                 when (resources.status) {
                     INITIALIZED -> Unit
                     LOADING -> binding.userDataProgressBar.isVisible = true
                     SUCCESS -> {
-                        try {
-                            userDataAdapter.setData(resources.data ?: emptyList())
-                        } catch (e: IllegalArgumentException) {
-                            makeToast(requireContext(), e.toString())
+                        resources.data?.let {
+                            setUpRecycler(it)
                         }
-                        setUpRecycler()
                         binding.userDataProgressBar.isVisible = false
                     }
                     ERROR -> {
@@ -72,5 +66,10 @@ class UserDataFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

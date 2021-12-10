@@ -10,12 +10,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class WebViewViewModel@Inject constructor(private val saveUser: UseCaseSaveUser) : ViewModel() {
+class WebViewViewModel @Inject constructor(private val saveUser: UseCaseSaveUser) : ViewModel() {
 
     private val _isSaved = MutableStateFlow<Event<Boolean?>>(Event(null))
-    val isSaved : StateFlow<Event<Boolean?>> = _isSaved.asStateFlow()
+    val isSaved: StateFlow<Event<Boolean?>> = _isSaved.asStateFlow()
 
-    fun saveUser (url: String){
+    fun saveUser(url: String) {
         viewModelScope.launch {
             _isSaved.value = saveUser.execute(url)
         }

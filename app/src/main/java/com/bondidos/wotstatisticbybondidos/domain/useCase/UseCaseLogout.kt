@@ -9,14 +9,15 @@ import javax.inject.Inject
 
 class UseCaseLogout @Inject constructor(private val repository: Repository) {
 
-    suspend fun execute(): Resource<User>{
-        return withContext(Dispatchers.IO){
+    suspend fun execute(): Resource<User> {
+        return withContext(Dispatchers.IO) {
             try {
-                if(repository.logout())
+                val user = requireNotNull(repository.getUser())
+                if (repository.logout(user))
                     Resource.success(null)
-                else Resource.error("Error while logging out",null)
-            } catch (e: Exception){
-                Resource.error(e.toString(),null)
+                else Resource.error("Error while logging out", null)
+            } catch (e: Exception) {
+                Resource.error(e.toString(), null)
             }
         }
     }

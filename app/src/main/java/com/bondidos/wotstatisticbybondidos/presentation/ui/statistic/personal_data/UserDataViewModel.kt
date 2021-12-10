@@ -19,7 +19,6 @@ class UserDataViewModel @Inject constructor(
     val listUserData: StateFlow<Resource<List<MultiViewModel>>> = _listUserData.asStateFlow()
 
     init {
-
         viewModelScope.launch {
             _listUserData.value = Resource.loading(null)
              _listUserData.value = fetchData.execute()

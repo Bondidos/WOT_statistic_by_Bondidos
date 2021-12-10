@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.UrlQuerySanitizer
 import com.bondidos.wotstatisticbybondidos.R
 import com.bondidos.wotstatisticbybondidos.data.entityes.achievesDB.AchievesDBItem
+import com.bondidos.wotstatisticbybondidos.data.entityes.tankImageApi.TankImage
 import com.bondidos.wotstatisticbybondidos.data.entityes.userClanApi.ApiClanResponse
 import com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi.ApiDataResponse
 import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
@@ -30,7 +31,6 @@ class Utils @Inject constructor(private val context: Context) {
         return adapter.fromJson(myJson) ?: emptyList()
     }
 
-    //todo remove magic numbers
     fun isUserValid(user: User): Boolean {
         return user.account_id != -1 &&
                 user.nickname != "" &&
@@ -39,7 +39,7 @@ class Utils @Inject constructor(private val context: Context) {
     }
 
     private fun isExpired(expiresAt: Long): Boolean =
-        System.currentTimeMillis() <= expiresAt*1000
+        System.currentTimeMillis() <= expiresAt * 1000
 
     fun getUserFromUrl(url: String): User? {
         val sanitizer = UrlQuerySanitizer().apply {
@@ -59,13 +59,28 @@ class Utils @Inject constructor(private val context: Context) {
     fun createMultiViewModelList(
         apiData: ApiDataResponse,
         apiClan: ApiClanResponse,
-        user: User
+        user: User,
+        bestTanksImages: List<String>
     ): List<MultiViewModel> {
 
         val result = mutableListOf<MultiViewModel>()
         val privateData = apiData.data["${user.account_id}"]?.private
         val commonData = apiData.data["${user.account_id}"]
         val clanId = apiData.data["${user.account_id}"]?.clanId.toString()
+        val statistics = mapOf(
+            "Battles played:" to "battles",
+            "Frags:" to "frags",
+            "Wins:" to "wins",
+            "Losses:" to "losses",
+            "Max. damage tank" to bestTanksImages[0],
+            "Max. frags:" to "max_frags",
+            "Max damage" to "max_damage",
+            "Explosion hits:" to "explosion_hits",
+            "Survived:" to "survived_battles",
+            "Max. frags tank" to bestTanksImages[1],
+            "Avg. Exp:" to "battle_avg_xp",
+            "Hits percents:" to "hits_percents",
+        )
 
         result.add(
             MultiViewModel.Banner(
@@ -73,6 +88,33 @@ class Utils @Inject constructor(private val context: Context) {
                 apiClan.data[clanId]?.emblems?.x256?.wowp ?: ""
             )
         )
+
+        result.add(
+            MultiViewModel.Banner(
+                "Global Rating \n${commonData?.globalRating}",
+                R.drawable.wot_logo
+            )
+        )
+
+        statistics.forEach {
+            if (it.key == "Max. damage tank" ||
+                it.key == "Max. frags tank"
+            ) {
+                result.add(
+                    MultiViewModel.Banner(
+                        header = it.key,
+                        image = it.value.replace("http","https")
+                    )
+                )
+            } else
+                result.add(
+                    MultiViewModel.CardWithText(
+                        it.key,
+                        apiData.data["${user.account_id}"]?.statistics?.all?.get(it.value)
+                            .toString()
+                    )
+                )
+        }
 
         result.add(
             MultiViewModel.CardWithText(
@@ -91,51 +133,51 @@ class Utils @Inject constructor(private val context: Context) {
 
         result.add(
             MultiViewModel.Banner(
-                "Global Rating \n${commonData?.globalRating}",
-                R.drawable.wot_logo
-            )
-        )
-
-        result.add(
-            MultiViewModel.Banner(
                 "Wealth",
                 R.drawable.wealth
             )
         )
-        result.add(
-            MultiViewModel.Banner(
-                "Expire at: ${
-                    (privateData?.get("premium_expires_at") as Double).toLong().toDataFormat()
-                }",
-                R.drawable.premium
-            )
-        )
+
         result.add(
             MultiViewModel.CardWithImage(
-                "Gold: ${(privateData["gold"] as Double).toLong()}",
+                "Gold:\n${(privateData?.get("gold") as Double).toLong()}",
                 R.drawable.gold
             )
         )
         result.add(
             MultiViewModel.CardWithImage(
-                "Credits: ${(privateData["credits"] as Double).toInt()}",
+                "Credits:\n${(privateData["credits"] as Double).toInt()}",
                 R.drawable.credits
             )
         )
         result.add(
             MultiViewModel.CardWithImage(
-                "Free exp.: ${(privateData["free_xp"] as Double).toInt()}",
+                "Free exp.:\n${(privateData["free_xp"] as Double).toInt()}",
                 R.drawable.free_exp
             )
         )
         result.add(
             MultiViewModel.CardWithImage(
-                "Bonds: ${(privateData["bonds"] as Double).toInt()}",
+                "Bonds:\n${(privateData["bonds"] as Double).toInt()}",
                 R.drawable.bonds
             )
         )
 
         return result.toList()
+    }
+
+    fun getBestTanksId(apiData: ApiDataResponse, user: User): List<Number?> {
+        return listOf(
+            apiData.data["${user.account_id}"]?.statistics?.all?.get("max_damage_tank_id"),
+            apiData.data["${user.account_id}"]?.statistics?.all?.get("max_frags_tank_id")
+        )
+    }
+
+    fun tankImageToImage(tank: TankImage, numbers: List<Number?>): List<String> {
+        return listOf(
+            tank.data[numbers[0].toString()]?.images?.bigIcon ?: "",
+            tank.data[numbers[1].toString()]?.images?.bigIcon ?: ""
+        )
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -182,7 +224,7 @@ class Utils @Inject constructor(private val context: Context) {
                 resultSet.add(
                     MultiViewModel.AchieveCard(
                         scored = api[it.name].toString(),
-                        image = findImage(it,api[it.name])
+                        image = findImage(it, api[it.name])
                     )
                 )
             }
@@ -190,16 +232,19 @@ class Utils @Inject constructor(private val context: Context) {
         return resultSet.toList()
     }
 
-    private fun findImage(it: AchievesDBItem, i: Int?): String {            // http do not work. no time to find out
+    private fun findImage(
+        it: AchievesDBItem,
+        i: Int?
+    ): String {            // http do not work. no time to find out
         return when {
             it.options != null -> {
-                if (it.options[i!!-1].imageBig != null) {
-                    it.options[i-1].imageBig?.replace("http","https") ?: ""
-                } else it.options[i-1].image?.replace("http","https") ?: ""
+                if (it.options[i!! - 1].imageBig != null) {
+                    it.options[i - 1].imageBig?.replace("http", "https") ?: ""
+                } else it.options[i - 1].image?.replace("http", "https") ?: ""
             }
-            it.imageBig != null -> it.imageBig.replace("http","https")
+            it.imageBig != null -> it.imageBig.replace("http", "https")
 
-            it.image != null -> it.image.replace("http","https")
+            it.image != null -> it.image.replace("http", "https")
 
             else -> ""
         }

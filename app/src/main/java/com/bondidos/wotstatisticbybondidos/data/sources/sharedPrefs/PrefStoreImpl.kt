@@ -14,10 +14,10 @@ class PrefStoreImpl @Inject constructor(
 
     override suspend fun saveUser(user: User): Boolean {
         prefs.edit()
-            .putString(USER_NICKNAME,user.nickname)
-            .putInt(USER_ACCOUNT_ID,user.account_id)
-            .putString(USER_TOKEN,user.access_token)
-            .putLong(TOKEN_EXPIRES,user.expires_at)
+            .putString(USER_NICKNAME, user.nickname)
+            .putInt(USER_ACCOUNT_ID, user.account_id)
+            .putString(USER_TOKEN, user.access_token)
+            .putLong(TOKEN_EXPIRES, user.expires_at)
             .apply()
         return true
     }
@@ -33,10 +33,10 @@ class PrefStoreImpl @Inject constructor(
 
     override suspend fun logout() {
         prefs.edit()
-            .putString(USER_NICKNAME,"")
-            .putInt(USER_ACCOUNT_ID,-1)
-            .putString(USER_TOKEN,"")
-            .putLong(TOKEN_EXPIRES,-1L)
+            .putString(USER_NICKNAME, "")
+            .putInt(USER_ACCOUNT_ID, -1)
+            .putString(USER_TOKEN, "")
+            .putLong(TOKEN_EXPIRES, -1L)
             .apply()
     }
 }

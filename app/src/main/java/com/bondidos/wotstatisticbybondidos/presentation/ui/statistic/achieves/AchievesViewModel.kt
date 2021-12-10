@@ -11,10 +11,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AchievesViewModel @Inject constructor(private val fetchAchieves: UseCaseGetAchieves) : ViewModel() {
+class AchievesViewModel @Inject constructor(private val fetchAchieves: UseCaseGetAchieves) :
+    ViewModel() {
 
-    private val _listUserAchieves = MutableStateFlow<Resource<List<MultiViewModel>>>(Resource.initialized(null))
-    val listUserAchieves: StateFlow<Resource<List<MultiViewModel>>> = _listUserAchieves.asStateFlow()
+    private val _listUserAchieves =
+        MutableStateFlow<Resource<List<MultiViewModel>>>(Resource.initialized(null))
+    val listUserAchieves: StateFlow<Resource<List<MultiViewModel>>> =
+        _listUserAchieves.asStateFlow()
 
     init {
 
