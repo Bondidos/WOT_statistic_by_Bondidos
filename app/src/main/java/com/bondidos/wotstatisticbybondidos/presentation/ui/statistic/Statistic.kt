@@ -79,5 +79,6 @@ class Statistic : AppCompatActivity() {
                 MainActivity::class.java
             )
         )
+        finish()
     }
 }
