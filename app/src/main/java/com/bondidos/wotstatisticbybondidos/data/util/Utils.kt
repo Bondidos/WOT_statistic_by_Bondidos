@@ -61,13 +61,27 @@ class Utils @Inject constructor(private val context: Context) {
         apiData: ApiDataResponse,
         apiClan: ApiClanResponse,
         user: User,
-        bestTanksImages: TankImage
+        bestTanksImages: List<String>
     ): List<MultiViewModel> {
 
         val result = mutableListOf<MultiViewModel>()
         val privateData = apiData.data["${user.account_id}"]?.private
         val commonData = apiData.data["${user.account_id}"]
         val clanId = apiData.data["${user.account_id}"]?.clanId.toString()
+        val statistics = mapOf(
+            "Battles played:" to "battles",
+            "Frags:" to "frags",
+            "Wins:" to "wins",
+            "Losses:" to "losses",
+            "Max. damage tank" to bestTanksImages[0],
+            "Max. frags:" to "max_frags",
+            "Max damage" to "max_damage",
+            "Explosion hits:" to "explosion_hits",
+            "Survived:" to "survived_battles",
+            "Max. frags tank" to bestTanksImages[1],
+            "Avg. Exp:" to "battle_avg_xp",
+            "Hits percents:" to "hits_percents",
+        )
 
         result.add(
             MultiViewModel.Banner(
@@ -83,118 +97,25 @@ class Utils @Inject constructor(private val context: Context) {
             )
         )
 
-        result.add(
-            MultiViewModel.CardWithText(
-                "Battles played:",
-                apiData.data["${user.account_id}"]?.statistics?.all?.get("battles").toString()
-            )
-        )
-
-        result.add(
-            MultiViewModel.CardWithText(
-                "Frags:",
-                apiData.data["${user.account_id}"]?.statistics?.all?.get("frags")
-                    .toString()
-            )
-        )
-
-        result.add(
-            MultiViewModel.CardWithText(
-                "Wins:",
-                apiData.data["${user.account_id}"]?.statistics?.all?.get("wins")
-                    .toString()
-            )
-        )
-
-        result.add(
-            MultiViewModel.CardWithText(
-                "Losses:",
-                apiData.data["${user.account_id}"]?.statistics?.all?.get("losses")
-                    .toString()
-            )
-        )
-
-        result.add(
-            MultiViewModel.CardWithText(
-                "Max_damage:",
-                apiData.data["${user.account_id}"]?.statistics?.all?.get("max_damage")
-                    .toString()
-            )
-        )
-
-        result.add(
-            MultiViewModel.CardWithText(
-                "Max. frags:",
-                apiData.data["${user.account_id}"]?.statistics?.all?.get("max_frags")
-                    .toString()
-            )
-        )
-
-        result.add(
-            MultiViewModel.CardWithText(
-                "Explosion hits:",
-                apiData.data["${user.account_id}"]?.statistics?.all?.get("explosion_hits")
-                    .toString()
-            )
-        )
-
-        result.add(
-            MultiViewModel.CardWithText(
-                "Survived:",
-                apiData.data["${user.account_id}"]?.statistics?.all?.get("survived_battles")
-                    .toString()
-            )
-        )
-
-        result.add(
-            MultiViewModel.CardWithText(
-                "Avg. dmg blocked:",
-                apiData.data["${user.account_id}"]?.statistics?.all?.get("avg_damage_blocked")
-                    .toString()
-            )
-        )
-
-
-
-        /*result.add(
-            MultiViewModel.CardWithText(
-                "Capture points:",
-                apiData.data["${user.account_id}"]?.statistics?.all?.get("capture_points")
-                    .toString()
-            )
-        )*/
-
-        /*result.add(
-            MultiViewModel.CardWithText(
-                "Dropped capture points:",
-                apiData.data["${user.account_id}"]?.statistics?.all?.get("dropped_capture_points")
-                    .toString()
-            )
-        )*/
-
-
-
-        result.add(
-            MultiViewModel.CardWithText(
-                "Avg. Exp:",
-                apiData.data["${user.account_id}"]?.statistics?.all?.get("battle_avg_xp")
-                    .toString()
-            )
-        )
-
-
-
-
-        //todo
-        // max_damage_tank_id=19969
-        //max_frags_tank_id=58113
-
-        result.add(
-            MultiViewModel.CardWithText(
-                "Hits percents:",
-                apiData.data["${user.account_id}"]?.statistics?.all?.get("hits_percents").toString()
-            )
-        )
+        statistics.forEach {
+            if (it.key == "Max. damage tank" ||
+                it.key == "Max. frags tank"
+            ) {
+                result.add(
+                    MultiViewModel.Banner(
+                        header = it.key,
+                        image = it.value.replace("http","https")
+                    )
+                )
+            } else
+                result.add(
+                    MultiViewModel.CardWithText(
+                        it.key,
+                        apiData.data["${user.account_id}"]?.statistics?.all?.get(it.value)
+                            .toString()
+                    )
+                )
+        }
 
         result.add(
             MultiViewModel.CardWithText(
@@ -211,8 +132,6 @@ class Utils @Inject constructor(private val context: Context) {
             )
         )
 
-
-
         result.add(
             MultiViewModel.Banner(
                 "Wealth",
@@ -222,30 +141,44 @@ class Utils @Inject constructor(private val context: Context) {
 
         result.add(
             MultiViewModel.CardWithImage(
-                "Gold: ${(privateData?.get("gold") as Double).toLong()}",
+                "Gold:\n${(privateData?.get("gold") as Double).toLong()}",
                 R.drawable.gold
             )
         )
         result.add(
             MultiViewModel.CardWithImage(
-                "Credits: ${(privateData["credits"] as Double).toInt()}",
+                "Credits:\n${(privateData["credits"] as Double).toInt()}",
                 R.drawable.credits
             )
         )
         result.add(
             MultiViewModel.CardWithImage(
-                "Free exp.: ${(privateData["free_xp"] as Double).toInt()}",
+                "Free exp.:\n${(privateData["free_xp"] as Double).toInt()}",
                 R.drawable.free_exp
             )
         )
         result.add(
             MultiViewModel.CardWithImage(
-                "Bonds: ${(privateData["bonds"] as Double).toInt()}",
+                "Bonds:\n${(privateData["bonds"] as Double).toInt()}",
                 R.drawable.bonds
             )
         )
 
         return result.toList()
+    }
+
+    fun getBestTanksId(apiData: ApiDataResponse, user: User): List<Number?> {
+        return listOf(
+            apiData.data["${user.account_id}"]?.statistics?.all?.get("max_damage_tank_id"),
+            apiData.data["${user.account_id}"]?.statistics?.all?.get("max_frags_tank_id")
+        )
+    }
+
+    fun tankImageToImage(tank: TankImage, numbers: List<Number?>): List<String> {
+        return listOf(
+            tank.data[numbers[0].toString()]?.images?.bigIcon ?: "",
+            tank.data[numbers[1].toString()]?.images?.bigIcon ?: ""
+        )
     }
 
     @SuppressLint("SimpleDateFormat")

@@ -54,16 +54,13 @@ class RepositoryImpl @Inject constructor(
             FIELDS_DATA
         )
         // make shorter this method
-        val bestTanks = listOf(
-            apiData.data["${user.account_id}"]?.statistics?.all?.get("max_damage_tank_id"),
-            apiData.data["${user.account_id}"]?.statistics?.all?.get("max_frags_tank_id")
-        )
+        val bestTanks = utils.getBestTanksId(apiData, user)
         val bestTanksImages = networkService.getBestTanksImage(
             APPLICATION_ID,
             "${bestTanks[0]},${bestTanks[1]}",
             FIELDS_TANKS
         )
-        Log.d("Repository",bestTanksImages.toString())
+        Log.d("Repository", bestTanksImages.toString())
         val apiClan = networkService.getUserClanImage(
             APPLICATION_ID,
             apiData.data["${user.account_id}"]?.clanId ?: 0
@@ -73,7 +70,7 @@ class RepositoryImpl @Inject constructor(
             apiData,
             apiClan,
             user,
-            bestTanksImages
+            utils.tankImageToImage(bestTanksImages, bestTanks)
         )
     }
 
