@@ -32,6 +32,7 @@ object DataModule {
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)
 
+    @Singleton
     @Provides
     fun provideUtilsClass(@ApplicationContext context: Context): Utils = Utils(context)
 
@@ -61,9 +62,8 @@ object DataModule {
     fun provideRepository(
         wotApi: WotApi,
         room: RoomRepositoryDao,
-        prefStore: PrefStoreImpl,
-        utils: Utils
-    ): Repository = RepositoryImpl(wotApi, room, prefStore, utils)
+        prefStore: PrefStoreImpl
+    ): Repository = RepositoryImpl(wotApi, room, prefStore)
 }
 
 @Module

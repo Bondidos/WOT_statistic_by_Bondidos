@@ -1,101 +1,70 @@
 package com.bondidos.wotstatisticbybondidos.data
 
-import android.util.Log
+import com.bondidos.wotstatisticbybondidos.data.entityes.achievesApi.ApiAchievesResponse
+import com.bondidos.wotstatisticbybondidos.data.entityes.achievesDB.AchievesDBItem
+import com.bondidos.wotstatisticbybondidos.data.entityes.tankImageApi.TankImage
+import com.bondidos.wotstatisticbybondidos.data.entityes.userDataApi.ApiDataResponse
 import com.bondidos.wotstatisticbybondidos.data.sources.api.WotApi
 import com.bondidos.wotstatisticbybondidos.data.sources.room.RoomRepositoryDao
 import com.bondidos.wotstatisticbybondidos.data.sources.sharedPrefs.PrefStoreImpl
-import com.bondidos.wotstatisticbybondidos.data.util.Utils
 import com.bondidos.wotstatisticbybondidos.domain.Repository
-import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.ACHIEVES_COUNT
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.APPLICATION_ID
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.FIELDS_ACHIEVES
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.FIELDS_DATA
 import com.bondidos.wotstatisticbybondidos.domain.constatnts.Constants.FIELDS_TANKS
-import com.bondidos.wotstatisticbybondidos.domain.entityes.MultiViewModel
 import com.bondidos.wotstatisticbybondidos.domain.entityes.User
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
     private val networkService: WotApi,
     private val roomStorage: RoomRepositoryDao,
-    private val prefStore: PrefStoreImpl,
-    private val utils: Utils
+    private val prefStore: PrefStoreImpl
 ) : Repository {
 
-    override suspend fun createAchievesDB() {
-        val list = utils.jsonToAchievesList()
-        roomStorage.createAchievesDB(list)
-    }
+    override suspend fun createAchievesDB(list: List<AchievesDBItem>) = roomStorage.createAchievesDB(list)
 
-    override suspend fun isAchievesDataBaseExist(): Boolean {
-        return roomStorage.isAchievesDBExist() == ACHIEVES_COUNT
-    }
+    override suspend fun isAchievesDataBaseExist() = roomStorage.isAchievesDBExist()
 
-    override suspend fun saveUser(url: String): Boolean {
+    override suspend fun saveUser(user: User): Boolean = prefStore.saveUser(user)
 
-        val user = utils.getUserFromUrl(url)
-        user?.let {
-            return prefStore.saveUser(user)
-        }
-        return false
-    }
+    override suspend fun getUser(): User = prefStore.getUser()
 
-    override suspend fun getUser(): User? {
-        val user = prefStore.getUser()
-        return if (utils.isUserValid(user)) user else null
-    }
-
-    override suspend fun fetchData(): List<MultiViewModel> {
-        val user = prefStore.getUser()
-        val apiData = networkService.getUserData(
+    override suspend fun getApiDataResponse(user: User): ApiDataResponse {
+        return networkService.getUserData(
             APPLICATION_ID,
             user.account_id,
             user.access_token,
             FIELDS_DATA
         )
-        // make shorter this method
-        val bestTanks = utils.getBestTanksId(apiData, user)
-        val bestTanksImages = networkService.getBestTanksImage(
+    }
+
+    override suspend fun getApiClanResponse(user: User, clanId: Int) =
+        networkService.getUserClanImage(
             APPLICATION_ID,
-            "${bestTanks[0]},${bestTanks[1]}",
-            FIELDS_TANKS
-        )
-        Log.d("Repository", bestTanksImages.toString())
-        val apiClan = networkService.getUserClanImage(
-            APPLICATION_ID,
-            apiData.data["${user.account_id}"]?.clanId ?: 0
+            clanId
         )
 
-        return utils.createMultiViewModelList(
-            apiData,
-            apiClan,
-            user,
-            utils.tankImageToImage(bestTanksImages, bestTanks)
+    override suspend fun getBestTanksImages(list:  List<Number?>): TankImage {
+        return networkService.getBestTanksImage(
+            APPLICATION_ID,
+            "${list[0]},${list[1]}",
+            FIELDS_TANKS
         )
     }
 
-    override suspend fun fetchAchieves(): List<MultiViewModel> {
-        val user = prefStore.getUser()
-        val apiAchievesResponse = networkService.getUserAchieves(
+    override suspend fun getApiAchievesResponse(user: User): ApiAchievesResponse {
+        return networkService.getUserAchieves(
             APPLICATION_ID,
             user.account_id,
             FIELDS_ACHIEVES
         )
-        val achievesNamesList =
-            utils.getAchievesNamesFromResponse(
-                apiAchievesResponse.data["${user.account_id}"]?.achievements ?: emptyMap()
-            )
-
-        val achievesByNameFromDB = roomStorage.getAchieves(achievesNamesList)
-
-        return utils.generateSortedMultiViewModelList(
-            achievesByNameFromDB,
-            apiAchievesResponse.data["${user.account_id}"]?.achievements ?: emptyMap()
-        )
     }
 
-    override suspend fun logout(): Boolean {
-        val user = prefStore.getUser()
+    override suspend fun getAchievesFromDatabase(achievesNamesList: List<String>): List<AchievesDBItem> {
+        return roomStorage.getAchieves(achievesNamesList)
+    }
+
+    override suspend fun logout(user: User): Boolean {
         networkService.logout(APPLICATION_ID, user.access_token)
         prefStore.logout()
         return true

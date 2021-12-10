@@ -31,7 +31,6 @@ class Utils @Inject constructor(private val context: Context) {
         return adapter.fromJson(myJson) ?: emptyList()
     }
 
-    //todo remove magic numbers
     fun isUserValid(user: User): Boolean {
         return user.account_id != -1 &&
                 user.nickname != "" &&
